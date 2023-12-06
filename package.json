@@ -1,0 +1,39 @@
+{
+  "name": "@algea_care/scaleway-provider",
+  "description": "Scaleway provider for CDK for Terraform",
+  "version": "2.34.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "PRIVATE",
+  "private": true,
+  "engineStrict": true,
+  "volta": {
+    "node": "18.0.0"
+  },
+  "pre-publish": "npm run build",
+  "scripts": {
+    "get": "cdktf get",
+    "build": "tsc"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "dependencies": {
+    "cdktf": "^0.17.0",
+    "constructs": "^10.1.128"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x.x",
+    "@typescript-eslint/eslint-plugin": "^5.x.x",
+    "@typescript-eslint/parser": "^5.x.x",
+    "eslint": "^8.x.x",
+    "eslint-config-prettier": "^8.x.x",
+    "eslint-plugin-prettier": "^4.x.x",
+    "prettier": "^2.x.x",
+    "ts-node": "^10.x.x",
+    "typescript": "^4.x.x"
+  }
+}

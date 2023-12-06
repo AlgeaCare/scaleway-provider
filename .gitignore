@@ -1,0 +1,12 @@
+*.d.ts
+/dist/
+node_modules
+cdktf.out
+cdktf.backend.out
+cdktf.log
+*terraform.*.tfstate*
+.gen
+.terraform
+tsconfig.tsbuildinfo
+!jest.config.js
+!setup.js

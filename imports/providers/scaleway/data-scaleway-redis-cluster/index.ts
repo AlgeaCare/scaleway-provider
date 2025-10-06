@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayRedisClusterConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the Redis cluster
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/redis_cluster#cluster_id DataScalewayRedisCluster#cluster_id}
   */
   readonly clusterId?: string;
@@ -22,13 +22,13 @@ export interface DataScalewayRedisClusterConfig extends cdktf.TerraformMetaArgum
   readonly id?: string;
   /**
   * Name of the redis cluster
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/redis_cluster#name DataScalewayRedisCluster#name}
   */
   readonly name?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/redis_cluster#zone DataScalewayRedisCluster#zone}
   */
   readonly zone?: string;
@@ -43,6 +43,17 @@ export function dataScalewayRedisClusterAclToTerraform(struct?: DataScalewayRedi
   }
   return {
   }
+}
+
+
+export function dataScalewayRedisClusterAclToHclTerraform(struct?: DataScalewayRedisClusterAcl): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayRedisClusterAclOutputReference extends cdktf.ComplexObject {
@@ -117,6 +128,17 @@ export function dataScalewayRedisClusterPrivateNetworkToTerraform(struct?: DataS
   }
   return {
   }
+}
+
+
+export function dataScalewayRedisClusterPrivateNetworkToHclTerraform(struct?: DataScalewayRedisClusterPrivateNetwork): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayRedisClusterPrivateNetworkOutputReference extends cdktf.ComplexObject {
@@ -198,6 +220,17 @@ export function dataScalewayRedisClusterPublicNetworkToTerraform(struct?: DataSc
   }
 }
 
+
+export function dataScalewayRedisClusterPublicNetworkToHclTerraform(struct?: DataScalewayRedisClusterPublicNetwork): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayRedisClusterPublicNetworkOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -270,6 +303,20 @@ export class DataScalewayRedisCluster extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_redis_cluster";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayRedisCluster resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayRedisCluster to import
+  * @param importFromId The id of the existing DataScalewayRedisCluster that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/redis_cluster#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayRedisCluster to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_redis_cluster", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -462,5 +509,37 @@ export class DataScalewayRedisCluster extends cdktf.TerraformDataSource {
       name: cdktf.stringToTerraform(this._name),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      cluster_id: {
+        value: cdktf.stringToHclTerraform(this._clusterId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

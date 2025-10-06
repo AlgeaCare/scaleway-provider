@@ -16,19 +16,19 @@ export interface DataScalewayBlockVolumeConfig extends cdktf.TerraformMetaArgume
   readonly id?: string;
   /**
   * The volume name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/block_volume#name DataScalewayBlockVolume#name}
   */
   readonly name?: string;
   /**
   * The ID of the volume
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/block_volume#volume_id DataScalewayBlockVolume#volume_id}
   */
   readonly volumeId?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/block_volume#zone DataScalewayBlockVolume#zone}
   */
   readonly zone?: string;
@@ -43,6 +43,20 @@ export class DataScalewayBlockVolume extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_block_volume";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayBlockVolume resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayBlockVolume to import
+  * @param importFromId The id of the existing DataScalewayBlockVolume that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/block_volume#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayBlockVolume to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_block_volume", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -181,5 +195,37 @@ export class DataScalewayBlockVolume extends cdktf.TerraformDataSource {
       volume_id: cdktf.stringToTerraform(this._volumeId),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      volume_id: {
+        value: cdktf.stringToHclTerraform(this._volumeId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -16,49 +16,49 @@ export interface DataScalewayIpamIpConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The MAC address to filter for
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#mac_address DataScalewayIpamIp#mac_address}
   */
   readonly macAddress?: string;
   /**
   * The private Network to filter for
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#private_network_id DataScalewayIpamIp#private_network_id}
   */
   readonly privateNetworkId?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#project_id DataScalewayIpamIp#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#region DataScalewayIpamIp#region}
   */
   readonly region?: string;
   /**
   * The tags associated with the IP
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#tags DataScalewayIpamIp#tags}
   */
   readonly tags?: string[];
   /**
   * IP Type (ipv4, ipv6)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#type DataScalewayIpamIp#type}
   */
   readonly type: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#zonal DataScalewayIpamIp#zonal}
   */
   readonly zonal?: string;
   /**
   * resource block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#resource DataScalewayIpamIp#resource}
   */
   readonly resource?: DataScalewayIpamIpResource;
@@ -66,7 +66,7 @@ export interface DataScalewayIpamIpConfig extends cdktf.TerraformMetaArguments {
 export interface DataScalewayIpamIpResource {
   /**
   * ID of the resource to filter for
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#id DataScalewayIpamIp#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
@@ -75,13 +75,13 @@ export interface DataScalewayIpamIpResource {
   readonly id?: string;
   /**
   * Name of the resource to filter for
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#name DataScalewayIpamIp#name}
   */
   readonly name?: string;
   /**
   * Type of resource to filter for
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#type DataScalewayIpamIp#type}
   */
   readonly type: string;
@@ -97,6 +97,37 @@ export function dataScalewayIpamIpResourceToTerraform(struct?: DataScalewayIpamI
     name: cdktf.stringToTerraform(struct!.name),
     type: cdktf.stringToTerraform(struct!.type),
   }
+}
+
+
+export function dataScalewayIpamIpResourceToHclTerraform(struct?: DataScalewayIpamIpResourceOutputReference | DataScalewayIpamIpResource): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    id: {
+      value: cdktf.stringToHclTerraform(struct!.id),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    name: {
+      value: cdktf.stringToHclTerraform(struct!.name),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    type: {
+      value: cdktf.stringToHclTerraform(struct!.type),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class DataScalewayIpamIpResourceOutputReference extends cdktf.ComplexObject {
@@ -198,6 +229,20 @@ export class DataScalewayIpamIp extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_ipam_ip";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayIpamIp resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayIpamIp to import
+  * @param importFromId The id of the existing DataScalewayIpamIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/ipam_ip#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayIpamIp to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_ipam_ip", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -408,5 +453,67 @@ export class DataScalewayIpamIp extends cdktf.TerraformDataSource {
       zonal: cdktf.stringToTerraform(this._zonal),
       resource: dataScalewayIpamIpResourceToTerraform(this._resource.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      mac_address: {
+        value: cdktf.stringToHclTerraform(this._macAddress),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      private_network_id: {
+        value: cdktf.stringToHclTerraform(this._privateNetworkId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      type: {
+        value: cdktf.stringToHclTerraform(this._type),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zonal: {
+        value: cdktf.stringToHclTerraform(this._zonal),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      resource: {
+        value: dataScalewayIpamIpResourceToHclTerraform(this._resource.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "DataScalewayIpamIpResourceList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

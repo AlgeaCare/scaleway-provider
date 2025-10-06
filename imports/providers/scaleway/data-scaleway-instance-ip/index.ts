@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayInstanceIpConfig extends cdktf.TerraformMetaArguments {
   /**
   * The IP address
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_ip#address DataScalewayInstanceIp#address}
   */
   readonly address?: string;
   /**
   * The ID of the IP address
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_ip#id DataScalewayInstanceIp#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
@@ -33,6 +33,20 @@ export class DataScalewayInstanceIp extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_instance_ip";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayInstanceIp resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayInstanceIp to import
+  * @param importFromId The id of the existing DataScalewayInstanceIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_ip#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayInstanceIp to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_ip", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -150,5 +164,25 @@ export class DataScalewayInstanceIp extends cdktf.TerraformDataSource {
       address: cdktf.stringToTerraform(this._address),
       id: cdktf.stringToTerraform(this._id),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      address: {
+        value: cdktf.stringToHclTerraform(this._address),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -16,31 +16,31 @@ export interface InstanceUserDataConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The key of the user data to set.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_user_data#key InstanceUserData#key}
   */
   readonly key: string;
   /**
   * The ID of the server
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_user_data#server_id InstanceUserData#server_id}
   */
   readonly serverId: string;
   /**
   * The value of the user data to set.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_user_data#value InstanceUserData#value}
   */
   readonly value: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_user_data#zone InstanceUserData#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_user_data#timeouts InstanceUserData#timeouts}
   */
   readonly timeouts?: InstanceUserDataTimeouts;
@@ -80,6 +80,49 @@ export function instanceUserDataTimeoutsToTerraform(struct?: InstanceUserDataTim
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function instanceUserDataTimeoutsToHclTerraform(struct?: InstanceUserDataTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class InstanceUserDataTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -239,6 +282,20 @@ export class InstanceUserData extends cdktf.TerraformResource {
   // =================
   public static readonly tfResourceType = "scaleway_instance_user_data";
 
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a InstanceUserData resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the InstanceUserData to import
+  * @param importFromId The id of the existing InstanceUserData that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_user_data#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the InstanceUserData to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_user_data", importId: importFromId, provider });
+      }
+
   // ===========
   // INITIALIZER
   // ===========
@@ -378,5 +435,49 @@ export class InstanceUserData extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: instanceUserDataTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      key: {
+        value: cdktf.stringToHclTerraform(this._key),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      server_id: {
+        value: cdktf.stringToHclTerraform(this._serverId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      value: {
+        value: cdktf.stringToHclTerraform(this._value),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: instanceUserDataTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "InstanceUserDataTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

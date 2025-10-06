@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayIamUserConfig extends cdktf.TerraformMetaArguments {
   /**
   * The email address of the IAM user
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_user#email DataScalewayIamUser#email}
   */
   readonly email?: string;
@@ -22,13 +22,13 @@ export interface DataScalewayIamUserConfig extends cdktf.TerraformMetaArguments 
   readonly id?: string;
   /**
   * The organization_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_user#organization_id DataScalewayIamUser#organization_id}
   */
   readonly organizationId?: string;
   /**
   * The ID of the IAM user
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_user#user_id DataScalewayIamUser#user_id}
   */
   readonly userId?: string;
@@ -43,6 +43,20 @@ export class DataScalewayIamUser extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iam_user";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayIamUser resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayIamUser to import
+  * @param importFromId The id of the existing DataScalewayIamUser that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_user#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayIamUser to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iam_user", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -156,5 +170,37 @@ export class DataScalewayIamUser extends cdktf.TerraformDataSource {
       organization_id: cdktf.stringToTerraform(this._organizationId),
       user_id: cdktf.stringToTerraform(this._userId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      email: {
+        value: cdktf.stringToHclTerraform(this._email),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      user_id: {
+        value: cdktf.stringToHclTerraform(this._userId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

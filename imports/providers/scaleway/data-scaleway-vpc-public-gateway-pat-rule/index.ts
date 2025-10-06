@@ -16,13 +16,13 @@ export interface DataScalewayVpcPublicGatewayPatRuleConfig extends cdktf.Terrafo
   readonly id?: string;
   /**
   * The ID of the public gateway PAT rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_pat_rule#pat_rule_id DataScalewayVpcPublicGatewayPatRule#pat_rule_id}
   */
   readonly patRuleId: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_pat_rule#zone DataScalewayVpcPublicGatewayPatRule#zone}
   */
   readonly zone?: string;
@@ -37,6 +37,20 @@ export class DataScalewayVpcPublicGatewayPatRule extends cdktf.TerraformDataSour
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_public_gateway_pat_rule";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayVpcPublicGatewayPatRule resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayVpcPublicGatewayPatRule to import
+  * @param importFromId The id of the existing DataScalewayVpcPublicGatewayPatRule that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_pat_rule#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayVpcPublicGatewayPatRule to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_public_gateway_pat_rule", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -169,5 +183,31 @@ export class DataScalewayVpcPublicGatewayPatRule extends cdktf.TerraformDataSour
       pat_rule_id: cdktf.stringToTerraform(this._patRuleId),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      pat_rule_id: {
+        value: cdktf.stringToHclTerraform(this._patRuleId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

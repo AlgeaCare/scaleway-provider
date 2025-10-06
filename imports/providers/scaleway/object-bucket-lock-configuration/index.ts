@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface ObjectBucketLockConfigurationConfig extends cdktf.TerraformMetaArguments {
   /**
   * The bucket name.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#bucket ObjectBucketLockConfiguration#bucket}
   */
   readonly bucket: string;
@@ -22,19 +22,19 @@ export interface ObjectBucketLockConfigurationConfig extends cdktf.TerraformMeta
   readonly id?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#project_id ObjectBucketLockConfiguration#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#region ObjectBucketLockConfiguration#region}
   */
   readonly region?: string;
   /**
   * rule block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#rule ObjectBucketLockConfiguration#rule}
   */
   readonly rule: ObjectBucketLockConfigurationRule;
@@ -42,19 +42,19 @@ export interface ObjectBucketLockConfigurationConfig extends cdktf.TerraformMeta
 export interface ObjectBucketLockConfigurationRuleDefaultRetention {
   /**
   * The number of days that you want to specify for the default retention period.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#days ObjectBucketLockConfiguration#days}
   */
   readonly days?: number;
   /**
   * The default Object Lock retention mode you want to apply to new objects placed in the specified bucket.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#mode ObjectBucketLockConfiguration#mode}
   */
   readonly mode: string;
   /**
   * The number of years that you want to specify for the default retention period.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#years ObjectBucketLockConfiguration#years}
   */
   readonly years?: number;
@@ -70,6 +70,37 @@ export function objectBucketLockConfigurationRuleDefaultRetentionToTerraform(str
     mode: cdktf.stringToTerraform(struct!.mode),
     years: cdktf.numberToTerraform(struct!.years),
   }
+}
+
+
+export function objectBucketLockConfigurationRuleDefaultRetentionToHclTerraform(struct?: ObjectBucketLockConfigurationRuleDefaultRetentionOutputReference | ObjectBucketLockConfigurationRuleDefaultRetention): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    days: {
+      value: cdktf.numberToHclTerraform(struct!.days),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+    mode: {
+      value: cdktf.stringToHclTerraform(struct!.mode),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    years: {
+      value: cdktf.numberToHclTerraform(struct!.years),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketLockConfigurationRuleDefaultRetentionOutputReference extends cdktf.ComplexObject {
@@ -164,7 +195,7 @@ export class ObjectBucketLockConfigurationRuleDefaultRetentionOutputReference ex
 export interface ObjectBucketLockConfigurationRule {
   /**
   * default_retention block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#default_retention ObjectBucketLockConfiguration#default_retention}
   */
   readonly defaultRetention: ObjectBucketLockConfigurationRuleDefaultRetention;
@@ -178,6 +209,25 @@ export function objectBucketLockConfigurationRuleToTerraform(struct?: ObjectBuck
   return {
     default_retention: objectBucketLockConfigurationRuleDefaultRetentionToTerraform(struct!.defaultRetention),
   }
+}
+
+
+export function objectBucketLockConfigurationRuleToHclTerraform(struct?: ObjectBucketLockConfigurationRuleOutputReference | ObjectBucketLockConfigurationRule): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default_retention: {
+      value: objectBucketLockConfigurationRuleDefaultRetentionToHclTerraform(struct!.defaultRetention),
+      isBlock: true,
+      type: "list",
+      storageClassType: "ObjectBucketLockConfigurationRuleDefaultRetentionList",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketLockConfigurationRuleOutputReference extends cdktf.ComplexObject {
@@ -235,6 +285,20 @@ export class ObjectBucketLockConfiguration extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_object_bucket_lock_configuration";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a ObjectBucketLockConfiguration resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the ObjectBucketLockConfiguration to import
+  * @param importFromId The id of the existing ObjectBucketLockConfiguration that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_lock_configuration#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the ObjectBucketLockConfiguration to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_object_bucket_lock_configuration", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -360,5 +424,43 @@ export class ObjectBucketLockConfiguration extends cdktf.TerraformResource {
       region: cdktf.stringToTerraform(this._region),
       rule: objectBucketLockConfigurationRuleToTerraform(this._rule.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      bucket: {
+        value: cdktf.stringToHclTerraform(this._bucket),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      rule: {
+        value: objectBucketLockConfigurationRuleToHclTerraform(this._rule.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "ObjectBucketLockConfigurationRuleList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

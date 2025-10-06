@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface AccountProjectConfig extends cdktf.TerraformMetaArguments {
   /**
   * Description of the project
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/account_project#description AccountProject#description}
   */
   readonly description?: string;
@@ -22,13 +22,13 @@ export interface AccountProjectConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the project
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/account_project#name AccountProject#name}
   */
   readonly name?: string;
   /**
   * The organization_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/account_project#organization_id AccountProject#organization_id}
   */
   readonly organizationId?: string;
@@ -43,6 +43,20 @@ export class AccountProject extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_account_project";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a AccountProject resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the AccountProject to import
+  * @param importFromId The id of the existing AccountProject that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/account_project#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the AccountProject to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_account_project", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -166,5 +180,37 @@ export class AccountProject extends cdktf.TerraformResource {
       name: cdktf.stringToTerraform(this._name),
       organization_id: cdktf.stringToTerraform(this._organizationId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

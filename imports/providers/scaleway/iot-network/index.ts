@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface IotNetworkConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the hub on which this network will be created
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iot_network#hub_id IotNetwork#hub_id}
   */
   readonly hubId: string;
@@ -22,25 +22,25 @@ export interface IotNetworkConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the network
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iot_network#name IotNetwork#name}
   */
   readonly name: string;
   /**
   * The prefix that will be prepended to all topics for this Network
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iot_network#topic_prefix IotNetwork#topic_prefix}
   */
   readonly topicPrefix?: string;
   /**
   * The type of the network
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iot_network#type IotNetwork#type}
   */
   readonly type: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iot_network#timeouts IotNetwork#timeouts}
   */
   readonly timeouts?: IotNetworkTimeouts;
@@ -65,6 +65,31 @@ export function iotNetworkTimeoutsToTerraform(struct?: IotNetworkTimeouts | cdkt
     default: cdktf.stringToTerraform(struct!.default),
     delete: cdktf.stringToTerraform(struct!.delete),
   }
+}
+
+
+export function iotNetworkTimeoutsToHclTerraform(struct?: IotNetworkTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class IotNetworkTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -157,6 +182,20 @@ export class IotNetwork extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iot_network";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a IotNetwork resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the IotNetwork to import
+  * @param importFromId The id of the existing IotNetwork that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iot_network#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the IotNetwork to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iot_network", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -312,5 +351,49 @@ export class IotNetwork extends cdktf.TerraformResource {
       type: cdktf.stringToTerraform(this._type),
       timeouts: iotNetworkTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      hub_id: {
+        value: cdktf.stringToHclTerraform(this._hubId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      topic_prefix: {
+        value: cdktf.stringToHclTerraform(this._topicPrefix),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      type: {
+        value: cdktf.stringToHclTerraform(this._type),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: iotNetworkTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "IotNetworkTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

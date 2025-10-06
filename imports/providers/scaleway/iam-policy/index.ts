@@ -9,19 +9,19 @@ import * as cdktf from 'cdktf';
 export interface IamPolicyConfig extends cdktf.TerraformMetaArguments {
   /**
   * Application id
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#application_id IamPolicy#application_id}
   */
   readonly applicationId?: string;
   /**
   * The description of the iam policy
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#description IamPolicy#description}
   */
   readonly description?: string;
   /**
   * Group id
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#group_id IamPolicy#group_id}
   */
   readonly groupId?: string;
@@ -34,37 +34,37 @@ export interface IamPolicyConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the iam policy
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#name IamPolicy#name}
   */
   readonly name?: string;
   /**
   * Deactivate policy to a principal
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#no_principal IamPolicy#no_principal}
   */
   readonly noPrincipal?: boolean | cdktf.IResolvable;
   /**
   * ID of organization the resource is associated to.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#organization_id IamPolicy#organization_id}
   */
   readonly organizationId?: string;
   /**
   * The tags associated with the policy
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#tags IamPolicy#tags}
   */
   readonly tags?: string[];
   /**
   * User id
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#user_id IamPolicy#user_id}
   */
   readonly userId?: string;
   /**
   * rule block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#rule IamPolicy#rule}
   */
   readonly rule: IamPolicyRule[] | cdktf.IResolvable;
@@ -72,19 +72,19 @@ export interface IamPolicyConfig extends cdktf.TerraformMetaArguments {
 export interface IamPolicyRule {
   /**
   * ID of organization scoped to the rule. Only one of project_ids and organization_id may be set.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#organization_id IamPolicy#organization_id}
   */
   readonly organizationId?: string;
   /**
   * Names of permission sets bound to the rule.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#permission_set_names IamPolicy#permission_set_names}
   */
   readonly permissionSetNames: string[];
   /**
   * List of project IDs scoped to the rule. Only one of project_ids and organization_id may be set.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#project_ids IamPolicy#project_ids}
   */
   readonly projectIds?: string[];
@@ -100,6 +100,37 @@ export function iamPolicyRuleToTerraform(struct?: IamPolicyRule | cdktf.IResolva
     permission_set_names: cdktf.listMapper(cdktf.stringToTerraform, false)(struct!.permissionSetNames),
     project_ids: cdktf.listMapper(cdktf.stringToTerraform, false)(struct!.projectIds),
   }
+}
+
+
+export function iamPolicyRuleToHclTerraform(struct?: IamPolicyRule | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    organization_id: {
+      value: cdktf.stringToHclTerraform(struct!.organizationId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    permission_set_names: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.permissionSetNames),
+      isBlock: false,
+      type: "set",
+      storageClassType: "stringList",
+    },
+    project_ids: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.projectIds),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class IamPolicyRuleOutputReference extends cdktf.ComplexObject {
@@ -233,6 +264,20 @@ export class IamPolicy extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iam_policy";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a IamPolicy resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the IamPolicy to import
+  * @param importFromId The id of the existing IamPolicy that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_policy#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the IamPolicy to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iam_policy", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -466,5 +511,73 @@ export class IamPolicy extends cdktf.TerraformResource {
       user_id: cdktf.stringToTerraform(this._userId),
       rule: cdktf.listMapper(iamPolicyRuleToTerraform, true)(this._rule.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      application_id: {
+        value: cdktf.stringToHclTerraform(this._applicationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      group_id: {
+        value: cdktf.stringToHclTerraform(this._groupId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      no_principal: {
+        value: cdktf.booleanToHclTerraform(this._noPrincipal),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      user_id: {
+        value: cdktf.stringToHclTerraform(this._userId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      rule: {
+        value: cdktf.listMapperHcl(iamPolicyRuleToHclTerraform, true)(this._rule.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "IamPolicyRuleList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

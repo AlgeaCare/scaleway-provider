@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface IpamIpConfig extends cdktf.TerraformMetaArguments {
   /**
   * Request a specific IP in the requested source pool
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#address IpamIp#address}
   */
   readonly address?: string;
@@ -22,31 +22,31 @@ export interface IpamIpConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * Request an IPv6 instead of an IPv4
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#is_ipv6 IpamIp#is_ipv6}
   */
   readonly isIpv6?: boolean | cdktf.IResolvable;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#project_id IpamIp#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#region IpamIp#region}
   */
   readonly region?: string;
   /**
   * The tags associated with the IP
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#tags IpamIp#tags}
   */
   readonly tags?: string[];
   /**
   * source block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#source IpamIp#source}
   */
   readonly source: IpamIpSource[] | cdktf.IResolvable;
@@ -61,6 +61,17 @@ export function ipamIpResourceToTerraform(struct?: IpamIpResource): any {
   }
   return {
   }
+}
+
+
+export function ipamIpResourceToHclTerraform(struct?: IpamIpResource): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class IpamIpResourceOutputReference extends cdktf.ComplexObject {
@@ -133,19 +144,19 @@ export class IpamIpResourceList extends cdktf.ComplexList {
 export interface IpamIpSource {
   /**
   * Private Network the IP lives in if the IP is a private IP
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#private_network_id IpamIp#private_network_id}
   */
   readonly privateNetworkId?: string;
   /**
   * Private Network subnet the IP lives in if the IP is a private IP in a Private Network
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#subnet_id IpamIp#subnet_id}
   */
   readonly subnetId?: string;
   /**
   * Zone the IP lives in if the IP is a public zoned one
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#zonal IpamIp#zonal}
   */
   readonly zonal?: string;
@@ -161,6 +172,37 @@ export function ipamIpSourceToTerraform(struct?: IpamIpSource | cdktf.IResolvabl
     subnet_id: cdktf.stringToTerraform(struct!.subnetId),
     zonal: cdktf.stringToTerraform(struct!.zonal),
   }
+}
+
+
+export function ipamIpSourceToHclTerraform(struct?: IpamIpSource | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    private_network_id: {
+      value: cdktf.stringToHclTerraform(struct!.privateNetworkId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    subnet_id: {
+      value: cdktf.stringToHclTerraform(struct!.subnetId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    zonal: {
+      value: cdktf.stringToHclTerraform(struct!.zonal),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class IpamIpSourceOutputReference extends cdktf.ComplexObject {
@@ -297,6 +339,20 @@ export class IpamIp extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_ipam_ip";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a IpamIp resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the IpamIp to import
+  * @param importFromId The id of the existing IpamIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/ipam_ip#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the IpamIp to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_ipam_ip", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -482,5 +538,55 @@ export class IpamIp extends cdktf.TerraformResource {
       tags: cdktf.listMapper(cdktf.stringToTerraform, false)(this._tags),
       source: cdktf.listMapper(ipamIpSourceToTerraform, true)(this._source.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      address: {
+        value: cdktf.stringToHclTerraform(this._address),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      is_ipv6: {
+        value: cdktf.booleanToHclTerraform(this._isIpv6),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      source: {
+        value: cdktf.listMapperHcl(ipamIpSourceToHclTerraform, true)(this._source.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "IpamIpSourceList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

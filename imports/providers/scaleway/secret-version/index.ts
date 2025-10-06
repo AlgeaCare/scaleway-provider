@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface SecretVersionConfig extends cdktf.TerraformMetaArguments {
   /**
   * The data payload of your secret version.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/secret_version#data SecretVersion#data}
   */
   readonly data: string;
   /**
   * Description of the secret version
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/secret_version#description SecretVersion#description}
   */
   readonly description?: string;
@@ -28,19 +28,19 @@ export interface SecretVersionConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/secret_version#region SecretVersion#region}
   */
   readonly region?: string;
   /**
   * The secret ID associated with this version
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/secret_version#secret_id SecretVersion#secret_id}
   */
   readonly secretId: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/secret_version#timeouts SecretVersion#timeouts}
   */
   readonly timeouts?: SecretVersionTimeouts;
@@ -60,6 +60,25 @@ export function secretVersionTimeoutsToTerraform(struct?: SecretVersionTimeouts 
   return {
     default: cdktf.stringToTerraform(struct!.default),
   }
+}
+
+
+export function secretVersionTimeoutsToHclTerraform(struct?: SecretVersionTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class SecretVersionTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -130,6 +149,20 @@ export class SecretVersion extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_secret_version";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a SecretVersion resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the SecretVersion to import
+  * @param importFromId The id of the existing SecretVersion that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/secret_version#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the SecretVersion to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_secret_version", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -293,5 +326,49 @@ export class SecretVersion extends cdktf.TerraformResource {
       secret_id: cdktf.stringToTerraform(this._secretId),
       timeouts: secretVersionTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      data: {
+        value: cdktf.stringToHclTerraform(this._data),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_id: {
+        value: cdktf.stringToHclTerraform(this._secretId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: secretVersionTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "SecretVersionTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

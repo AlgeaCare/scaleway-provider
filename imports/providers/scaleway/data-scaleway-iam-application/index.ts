@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayIamApplicationConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the IAM application
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_application#application_id DataScalewayIamApplication#application_id}
   */
   readonly applicationId?: string;
@@ -22,13 +22,13 @@ export interface DataScalewayIamApplicationConfig extends cdktf.TerraformMetaArg
   readonly id?: string;
   /**
   * The name of the iam application
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_application#name DataScalewayIamApplication#name}
   */
   readonly name?: string;
   /**
   * The organization_id the application is associated to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_application#organization_id DataScalewayIamApplication#organization_id}
   */
   readonly organizationId?: string;
@@ -43,6 +43,20 @@ export class DataScalewayIamApplication extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iam_application";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayIamApplication resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayIamApplication to import
+  * @param importFromId The id of the existing DataScalewayIamApplication that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/iam_application#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayIamApplication to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iam_application", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -181,5 +195,37 @@ export class DataScalewayIamApplication extends cdktf.TerraformDataSource {
       name: cdktf.stringToTerraform(this._name),
       organization_id: cdktf.stringToTerraform(this._organizationId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      application_id: {
+        value: cdktf.stringToHclTerraform(this._applicationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

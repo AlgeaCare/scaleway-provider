@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayLbCertificateConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the certificate
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_certificate#certificate_id DataScalewayLbCertificate#certificate_id}
   */
   readonly certificateId?: string;
@@ -22,13 +22,13 @@ export interface DataScalewayLbCertificateConfig extends cdktf.TerraformMetaArgu
   readonly id?: string;
   /**
   * The load-balancer ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_certificate#lb_id DataScalewayLbCertificate#lb_id}
   */
   readonly lbId?: string;
   /**
   * The name of the load-balancer certificate
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_certificate#name DataScalewayLbCertificate#name}
   */
   readonly name?: string;
@@ -43,6 +43,17 @@ export function dataScalewayLbCertificateCustomCertificateToTerraform(struct?: D
   }
   return {
   }
+}
+
+
+export function dataScalewayLbCertificateCustomCertificateToHclTerraform(struct?: DataScalewayLbCertificateCustomCertificate): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayLbCertificateCustomCertificateOutputReference extends cdktf.ComplexObject {
@@ -107,6 +118,17 @@ export function dataScalewayLbCertificateLetsencryptToTerraform(struct?: DataSca
   }
   return {
   }
+}
+
+
+export function dataScalewayLbCertificateLetsencryptToHclTerraform(struct?: DataScalewayLbCertificateLetsencrypt): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayLbCertificateLetsencryptOutputReference extends cdktf.ComplexObject {
@@ -176,6 +198,20 @@ export class DataScalewayLbCertificate extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_lb_certificate";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayLbCertificate resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayLbCertificate to import
+  * @param importFromId The id of the existing DataScalewayLbCertificate that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_certificate#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayLbCertificate to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_lb_certificate", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -331,5 +367,37 @@ export class DataScalewayLbCertificate extends cdktf.TerraformDataSource {
       lb_id: cdktf.stringToTerraform(this._lbId),
       name: cdktf.stringToTerraform(this._name),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      certificate_id: {
+        value: cdktf.stringToHclTerraform(this._certificateId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      lb_id: {
+        value: cdktf.stringToHclTerraform(this._lbId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

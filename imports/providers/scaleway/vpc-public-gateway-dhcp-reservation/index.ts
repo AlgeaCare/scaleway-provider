@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface VpcPublicGatewayDhcpReservationConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the owning GatewayNetwork (UUID format).
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp_reservation#gateway_network_id VpcPublicGatewayDhcpReservation#gateway_network_id}
   */
   readonly gatewayNetworkId: string;
@@ -22,25 +22,25 @@ export interface VpcPublicGatewayDhcpReservationConfig extends cdktf.TerraformMe
   readonly id?: string;
   /**
   * The IP address to give to the machine (IPv4 address).
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp_reservation#ip_address VpcPublicGatewayDhcpReservation#ip_address}
   */
   readonly ipAddress: string;
   /**
   * The MAC address to give a static entry to.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp_reservation#mac_address VpcPublicGatewayDhcpReservation#mac_address}
   */
   readonly macAddress: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp_reservation#zone VpcPublicGatewayDhcpReservation#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp_reservation#timeouts VpcPublicGatewayDhcpReservation#timeouts}
   */
   readonly timeouts?: VpcPublicGatewayDhcpReservationTimeouts;
@@ -75,6 +75,43 @@ export function vpcPublicGatewayDhcpReservationTimeoutsToTerraform(struct?: VpcP
     delete: cdktf.stringToTerraform(struct!.delete),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function vpcPublicGatewayDhcpReservationTimeoutsToHclTerraform(struct?: VpcPublicGatewayDhcpReservationTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class VpcPublicGatewayDhcpReservationTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -211,6 +248,20 @@ export class VpcPublicGatewayDhcpReservation extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_public_gateway_dhcp_reservation";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a VpcPublicGatewayDhcpReservation resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the VpcPublicGatewayDhcpReservation to import
+  * @param importFromId The id of the existing VpcPublicGatewayDhcpReservation that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp_reservation#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the VpcPublicGatewayDhcpReservation to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_public_gateway_dhcp_reservation", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -371,5 +422,49 @@ export class VpcPublicGatewayDhcpReservation extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: vpcPublicGatewayDhcpReservationTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      gateway_network_id: {
+        value: cdktf.stringToHclTerraform(this._gatewayNetworkId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      ip_address: {
+        value: cdktf.stringToHclTerraform(this._ipAddress),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      mac_address: {
+        value: cdktf.stringToHclTerraform(this._macAddress),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: vpcPublicGatewayDhcpReservationTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "VpcPublicGatewayDhcpReservationTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

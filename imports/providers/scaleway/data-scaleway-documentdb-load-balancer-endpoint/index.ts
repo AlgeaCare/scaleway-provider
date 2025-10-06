@@ -16,25 +16,25 @@ export interface DataScalewayDocumentdbLoadBalancerEndpointConfig extends cdktf.
   readonly id?: string;
   /**
   * Instance on which the endpoint is attached
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/documentdb_load_balancer_endpoint#instance_id DataScalewayDocumentdbLoadBalancerEndpoint#instance_id}
   */
   readonly instanceId?: string;
   /**
   * Instance Name on which the endpoint is attached
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/documentdb_load_balancer_endpoint#instance_name DataScalewayDocumentdbLoadBalancerEndpoint#instance_name}
   */
   readonly instanceName?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/documentdb_load_balancer_endpoint#project_id DataScalewayDocumentdbLoadBalancerEndpoint#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/documentdb_load_balancer_endpoint#region DataScalewayDocumentdbLoadBalancerEndpoint#region}
   */
   readonly region?: string;
@@ -49,6 +49,20 @@ export class DataScalewayDocumentdbLoadBalancerEndpoint extends cdktf.TerraformD
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_documentdb_load_balancer_endpoint";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayDocumentdbLoadBalancerEndpoint resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayDocumentdbLoadBalancerEndpoint to import
+  * @param importFromId The id of the existing DataScalewayDocumentdbLoadBalancerEndpoint that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/documentdb_load_balancer_endpoint#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayDocumentdbLoadBalancerEndpoint to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_documentdb_load_balancer_endpoint", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -200,5 +214,43 @@ export class DataScalewayDocumentdbLoadBalancerEndpoint extends cdktf.TerraformD
       project_id: cdktf.stringToTerraform(this._projectId),
       region: cdktf.stringToTerraform(this._region),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_id: {
+        value: cdktf.stringToHclTerraform(this._instanceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_name: {
+        value: cdktf.stringToHclTerraform(this._instanceName),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -16,31 +16,31 @@ export interface DataScalewayBaremetalOfferConfig extends cdktf.TerraformMetaArg
   readonly id?: string;
   /**
   * Include disabled offers
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_offer#include_disabled DataScalewayBaremetalOffer#include_disabled}
   */
   readonly includeDisabled?: boolean | cdktf.IResolvable;
   /**
   * Exact name of the desired offer
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_offer#name DataScalewayBaremetalOffer#name}
   */
   readonly name?: string;
   /**
   * ID of the desired offer
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_offer#offer_id DataScalewayBaremetalOffer#offer_id}
   */
   readonly offerId?: string;
   /**
   * Period of subscription the desired offer
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_offer#subscription_period DataScalewayBaremetalOffer#subscription_period}
   */
   readonly subscriptionPeriod?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_offer#zone DataScalewayBaremetalOffer#zone}
   */
   readonly zone?: string;
@@ -55,6 +55,17 @@ export function dataScalewayBaremetalOfferCpuToTerraform(struct?: DataScalewayBa
   }
   return {
   }
+}
+
+
+export function dataScalewayBaremetalOfferCpuToHclTerraform(struct?: DataScalewayBaremetalOfferCpu): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayBaremetalOfferCpuOutputReference extends cdktf.ComplexObject {
@@ -136,6 +147,17 @@ export function dataScalewayBaremetalOfferDiskToTerraform(struct?: DataScalewayB
   }
 }
 
+
+export function dataScalewayBaremetalOfferDiskToHclTerraform(struct?: DataScalewayBaremetalOfferDisk): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayBaremetalOfferDiskOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -203,6 +225,17 @@ export function dataScalewayBaremetalOfferMemoryToTerraform(struct?: DataScalewa
   }
   return {
   }
+}
+
+
+export function dataScalewayBaremetalOfferMemoryToHclTerraform(struct?: DataScalewayBaremetalOfferMemory): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayBaremetalOfferMemoryOutputReference extends cdktf.ComplexObject {
@@ -282,6 +315,20 @@ export class DataScalewayBaremetalOffer extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_baremetal_offer";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayBaremetalOffer resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayBaremetalOffer to import
+  * @param importFromId The id of the existing DataScalewayBaremetalOffer that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_offer#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayBaremetalOffer to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_baremetal_offer", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -464,5 +511,49 @@ export class DataScalewayBaremetalOffer extends cdktf.TerraformDataSource {
       subscription_period: cdktf.stringToTerraform(this._subscriptionPeriod),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      include_disabled: {
+        value: cdktf.booleanToHclTerraform(this._includeDisabled),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      offer_id: {
+        value: cdktf.stringToHclTerraform(this._offerId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      subscription_period: {
+        value: cdktf.stringToHclTerraform(this._subscriptionPeriod),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

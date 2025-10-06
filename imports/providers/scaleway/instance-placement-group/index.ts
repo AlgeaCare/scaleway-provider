@@ -16,43 +16,43 @@ export interface InstancePlacementGroupConfig extends cdktf.TerraformMetaArgumen
   readonly id?: string;
   /**
   * The name of the placement group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#name InstancePlacementGroup#name}
   */
   readonly name?: string;
   /**
   * One of the two policy_mode may be selected: enforced or optional.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#policy_mode InstancePlacementGroup#policy_mode}
   */
   readonly policyMode?: string;
   /**
   * The operating mode is selected by a policy_type
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#policy_type InstancePlacementGroup#policy_type}
   */
   readonly policyType?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#project_id InstancePlacementGroup#project_id}
   */
   readonly projectId?: string;
   /**
   * The tags associated with the placement group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#tags InstancePlacementGroup#tags}
   */
   readonly tags?: string[];
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#zone InstancePlacementGroup#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#timeouts InstancePlacementGroup#timeouts}
   */
   readonly timeouts?: InstancePlacementGroupTimeouts;
@@ -72,6 +72,25 @@ export function instancePlacementGroupTimeoutsToTerraform(struct?: InstancePlace
   return {
     default: cdktf.stringToTerraform(struct!.default),
   }
+}
+
+
+export function instancePlacementGroupTimeoutsToHclTerraform(struct?: InstancePlacementGroupTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class InstancePlacementGroupTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -142,6 +161,20 @@ export class InstancePlacementGroup extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_instance_placement_group";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a InstancePlacementGroup resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the InstancePlacementGroup to import
+  * @param importFromId The id of the existing InstancePlacementGroup that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_placement_group#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the InstancePlacementGroup to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_placement_group", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -337,5 +370,61 @@ export class InstancePlacementGroup extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: instancePlacementGroupTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      policy_mode: {
+        value: cdktf.stringToHclTerraform(this._policyMode),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      policy_type: {
+        value: cdktf.stringToHclTerraform(this._policyType),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: instancePlacementGroupTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "InstancePlacementGroupTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

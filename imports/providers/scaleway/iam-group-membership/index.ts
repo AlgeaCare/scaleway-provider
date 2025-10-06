@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface IamGroupMembershipConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the user
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group_membership#application_id IamGroupMembership#application_id}
   */
   readonly applicationId?: string;
   /**
   * The ID of the group to add the user to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group_membership#group_id IamGroupMembership#group_id}
   */
   readonly groupId: string;
@@ -28,7 +28,7 @@ export interface IamGroupMembershipConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The ID of the user
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group_membership#user_id IamGroupMembership#user_id}
   */
   readonly userId?: string;
@@ -43,6 +43,20 @@ export class IamGroupMembership extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iam_group_membership";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a IamGroupMembership resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the IamGroupMembership to import
+  * @param importFromId The id of the existing IamGroupMembership that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group_membership#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the IamGroupMembership to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iam_group_membership", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -153,5 +167,37 @@ export class IamGroupMembership extends cdktf.TerraformResource {
       id: cdktf.stringToTerraform(this._id),
       user_id: cdktf.stringToTerraform(this._userId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      application_id: {
+        value: cdktf.stringToHclTerraform(this._applicationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      group_id: {
+        value: cdktf.stringToHclTerraform(this._groupId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      user_id: {
+        value: cdktf.stringToHclTerraform(this._userId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

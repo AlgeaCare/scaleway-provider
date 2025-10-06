@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayDomainRecordConfig extends cdktf.TerraformMetaArguments {
   /**
   * The data of the record
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_record#data DataScalewayDomainRecord#data}
   */
   readonly data?: string;
   /**
   * The zone you want to add the record in
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_record#dns_zone DataScalewayDomainRecord#dns_zone}
   */
   readonly dnsZone?: string;
@@ -28,19 +28,19 @@ export interface DataScalewayDomainRecordConfig extends cdktf.TerraformMetaArgum
   readonly id?: string;
   /**
   * The name of the record
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_record#name DataScalewayDomainRecord#name}
   */
   readonly name?: string;
   /**
   * The ID of the record
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_record#record_id DataScalewayDomainRecord#record_id}
   */
   readonly recordId?: string;
   /**
   * The type of the record
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_record#type DataScalewayDomainRecord#type}
   */
   readonly type?: string;
@@ -55,6 +55,17 @@ export function dataScalewayDomainRecordGeoIpMatchesToTerraform(struct?: DataSca
   }
   return {
   }
+}
+
+
+export function dataScalewayDomainRecordGeoIpMatchesToHclTerraform(struct?: DataScalewayDomainRecordGeoIpMatches): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayDomainRecordGeoIpMatchesOutputReference extends cdktf.ComplexObject {
@@ -131,6 +142,17 @@ export function dataScalewayDomainRecordGeoIpToTerraform(struct?: DataScalewayDo
   }
 }
 
+
+export function dataScalewayDomainRecordGeoIpToHclTerraform(struct?: DataScalewayDomainRecordGeoIp): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayDomainRecordGeoIpOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -194,6 +216,17 @@ export function dataScalewayDomainRecordHttpServiceToTerraform(struct?: DataScal
   }
   return {
   }
+}
+
+
+export function dataScalewayDomainRecordHttpServiceToHclTerraform(struct?: DataScalewayDomainRecordHttpService): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayDomainRecordHttpServiceOutputReference extends cdktf.ComplexObject {
@@ -280,6 +313,17 @@ export function dataScalewayDomainRecordViewToTerraform(struct?: DataScalewayDom
   }
 }
 
+
+export function dataScalewayDomainRecordViewToHclTerraform(struct?: DataScalewayDomainRecordView): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayDomainRecordViewOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -349,6 +393,17 @@ export function dataScalewayDomainRecordWeightedToTerraform(struct?: DataScalewa
   }
 }
 
+
+export function dataScalewayDomainRecordWeightedToHclTerraform(struct?: DataScalewayDomainRecordWeighted): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayDomainRecordWeightedOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -416,6 +471,20 @@ export class DataScalewayDomainRecord extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_domain_record";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayDomainRecord resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayDomainRecord to import
+  * @param importFromId The id of the existing DataScalewayDomainRecord that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_record#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayDomainRecord to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_domain_record", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -614,5 +683,49 @@ export class DataScalewayDomainRecord extends cdktf.TerraformDataSource {
       record_id: cdktf.stringToTerraform(this._recordId),
       type: cdktf.stringToTerraform(this._type),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      data: {
+        value: cdktf.stringToHclTerraform(this._data),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      dns_zone: {
+        value: cdktf.stringToHclTerraform(this._dnsZone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      record_id: {
+        value: cdktf.stringToHclTerraform(this._recordId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      type: {
+        value: cdktf.stringToHclTerraform(this._type),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

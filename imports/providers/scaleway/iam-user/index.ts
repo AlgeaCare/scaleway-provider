@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface IamUserConfig extends cdktf.TerraformMetaArguments {
   /**
   * The description of the iam user
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_user#email IamUser#email}
   */
   readonly email: string;
@@ -22,7 +22,7 @@ export interface IamUserConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * ID of organization the resource is associated to.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_user#organization_id IamUser#organization_id}
   */
   readonly organizationId?: string;
@@ -37,6 +37,20 @@ export class IamUser extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iam_user";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a IamUser resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the IamUser to import
+  * @param importFromId The id of the existing IamUser that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_user#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the IamUser to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iam_user", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -169,5 +183,31 @@ export class IamUser extends cdktf.TerraformResource {
       id: cdktf.stringToTerraform(this._id),
       organization_id: cdktf.stringToTerraform(this._organizationId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      email: {
+        value: cdktf.stringToHclTerraform(this._email),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface MnqNatsCredentialsConfig extends cdktf.TerraformMetaArguments {
   /**
   * ID of the nats account
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_nats_credentials#account_id MnqNatsCredentials#account_id}
   */
   readonly accountId: string;
@@ -22,13 +22,13 @@ export interface MnqNatsCredentialsConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The nats credentials name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_nats_credentials#name MnqNatsCredentials#name}
   */
   readonly name?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_nats_credentials#region MnqNatsCredentials#region}
   */
   readonly region?: string;
@@ -43,6 +43,20 @@ export class MnqNatsCredentials extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_mnq_nats_credentials";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a MnqNatsCredentials resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the MnqNatsCredentials to import
+  * @param importFromId The id of the existing MnqNatsCredentials that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_nats_credentials#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the MnqNatsCredentials to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_mnq_nats_credentials", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -158,5 +172,37 @@ export class MnqNatsCredentials extends cdktf.TerraformResource {
       name: cdktf.stringToTerraform(this._name),
       region: cdktf.stringToTerraform(this._region),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      account_id: {
+        value: cdktf.stringToHclTerraform(this._accountId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,19 +9,19 @@ import * as cdktf from 'cdktf';
 export interface ContainerNamespaceConfig extends cdktf.TerraformMetaArguments {
   /**
   * The description of the container namespace
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#description ContainerNamespace#description}
   */
   readonly description?: string;
   /**
   * Destroy registry on deletion
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#destroy_registry ContainerNamespace#destroy_registry}
   */
   readonly destroyRegistry?: boolean | cdktf.IResolvable;
   /**
   * The environment variables of the container namespace
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#environment_variables ContainerNamespace#environment_variables}
   */
   readonly environmentVariables?: { [key: string]: string };
@@ -34,31 +34,31 @@ export interface ContainerNamespaceConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the container namespace
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#name ContainerNamespace#name}
   */
   readonly name?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#project_id ContainerNamespace#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#region ContainerNamespace#region}
   */
   readonly region?: string;
   /**
   * The secret environment variables of the container namespace
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#secret_environment_variables ContainerNamespace#secret_environment_variables}
   */
   readonly secretEnvironmentVariables?: { [key: string]: string };
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#timeouts ContainerNamespace#timeouts}
   */
   readonly timeouts?: ContainerNamespaceTimeouts;
@@ -98,6 +98,49 @@ export function containerNamespaceTimeoutsToTerraform(struct?: ContainerNamespac
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function containerNamespaceTimeoutsToHclTerraform(struct?: ContainerNamespaceTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ContainerNamespaceTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -256,6 +299,20 @@ export class ContainerNamespace extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_container_namespace";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a ContainerNamespace resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the ContainerNamespace to import
+  * @param importFromId The id of the existing ContainerNamespace that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/container_namespace#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the ContainerNamespace to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_container_namespace", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -474,5 +531,67 @@ export class ContainerNamespace extends cdktf.TerraformResource {
       secret_environment_variables: cdktf.hashMapper(cdktf.stringToTerraform)(this._secretEnvironmentVariables),
       timeouts: containerNamespaceTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      destroy_registry: {
+        value: cdktf.booleanToHclTerraform(this._destroyRegistry),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      environment_variables: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._environmentVariables),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_environment_variables: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._secretEnvironmentVariables),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      timeouts: {
+        value: containerNamespaceTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "ContainerNamespaceTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

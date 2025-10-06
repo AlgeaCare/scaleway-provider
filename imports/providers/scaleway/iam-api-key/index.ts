@@ -9,25 +9,25 @@ import * as cdktf from 'cdktf';
 export interface IamApiKeyConfig extends cdktf.TerraformMetaArguments {
   /**
   * ID of the application attached to the api key
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_api_key#application_id IamApiKey#application_id}
   */
   readonly applicationId?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_api_key#default_project_id IamApiKey#default_project_id}
   */
   readonly defaultProjectId?: string;
   /**
   * The description of the iam api key
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_api_key#description IamApiKey#description}
   */
   readonly description?: string;
   /**
   * The date and time of the expiration of the iam api key. Cannot be changed afterwards
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_api_key#expires_at IamApiKey#expires_at}
   */
   readonly expiresAt?: string;
@@ -40,7 +40,7 @@ export interface IamApiKeyConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * ID of the user attached to the api key
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_api_key#user_id IamApiKey#user_id}
   */
   readonly userId?: string;
@@ -55,6 +55,20 @@ export class IamApiKey extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iam_api_key";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a IamApiKey resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the IamApiKey to import
+  * @param importFromId The id of the existing IamApiKey that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_api_key#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the IamApiKey to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iam_api_key", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -234,5 +248,49 @@ export class IamApiKey extends cdktf.TerraformResource {
       id: cdktf.stringToTerraform(this._id),
       user_id: cdktf.stringToTerraform(this._userId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      application_id: {
+        value: cdktf.stringToHclTerraform(this._applicationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      default_project_id: {
+        value: cdktf.stringToHclTerraform(this._defaultProjectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      expires_at: {
+        value: cdktf.stringToHclTerraform(this._expiresAt),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      user_id: {
+        value: cdktf.stringToHclTerraform(this._userId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

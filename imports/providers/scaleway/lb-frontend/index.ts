@@ -9,25 +9,25 @@ import * as cdktf from 'cdktf';
 export interface LbFrontendConfig extends cdktf.TerraformMetaArguments {
   /**
   * The load-balancer backend ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#backend_id LbFrontend#backend_id}
   */
   readonly backendId: string;
   /**
   * Collection of Certificate IDs related to the load balancer and domain
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#certificate_ids LbFrontend#certificate_ids}
   */
   readonly certificateIds?: string[];
   /**
   * Activates HTTP/3 protocol
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#enable_http3 LbFrontend#enable_http3}
   */
   readonly enableHttp3?: boolean | cdktf.IResolvable;
   /**
   * This boolean determines if ACLs should be managed externally through the 'lb_acl' resource. If set to `true`, `acl` attribute cannot be set directly in the lb frontend
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#external_acls LbFrontend#external_acls}
   */
   readonly externalAcls?: boolean | cdktf.IResolvable;
@@ -40,37 +40,37 @@ export interface LbFrontendConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * TCP port to listen on the front side
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#inbound_port LbFrontend#inbound_port}
   */
   readonly inboundPort: number;
   /**
   * The load-balancer ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#lb_id LbFrontend#lb_id}
   */
   readonly lbId: string;
   /**
   * The name of the frontend
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#name LbFrontend#name}
   */
   readonly name?: string;
   /**
   * Set the maximum inactivity time on the client side
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#timeout_client LbFrontend#timeout_client}
   */
   readonly timeoutClient?: string;
   /**
   * acl block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#acl LbFrontend#acl}
   */
   readonly acl?: LbFrontendAcl[] | cdktf.IResolvable;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#timeouts LbFrontend#timeouts}
   */
   readonly timeouts?: LbFrontendTimeouts;
@@ -78,19 +78,19 @@ export interface LbFrontendConfig extends cdktf.TerraformMetaArguments {
 export interface LbFrontendAclActionRedirect {
   /**
   * The HTTP redirect code to use
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#code LbFrontend#code}
   */
   readonly code?: number;
   /**
   * An URL can be used in case of a location redirect 
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#target LbFrontend#target}
   */
   readonly target?: string;
   /**
   * The redirect type
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#type LbFrontend#type}
   */
   readonly type?: string;
@@ -106,6 +106,37 @@ export function lbFrontendAclActionRedirectToTerraform(struct?: LbFrontendAclAct
     target: cdktf.stringToTerraform(struct!.target),
     type: cdktf.stringToTerraform(struct!.type),
   }
+}
+
+
+export function lbFrontendAclActionRedirectToHclTerraform(struct?: LbFrontendAclActionRedirect | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    code: {
+      value: cdktf.numberToHclTerraform(struct!.code),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+    target: {
+      value: cdktf.stringToHclTerraform(struct!.target),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    type: {
+      value: cdktf.stringToHclTerraform(struct!.type),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbFrontendAclActionRedirectOutputReference extends cdktf.ComplexObject {
@@ -235,13 +266,13 @@ export class LbFrontendAclActionRedirectList extends cdktf.ComplexList {
 export interface LbFrontendAclAction {
   /**
   * The action type
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#type LbFrontend#type}
   */
   readonly type: string;
   /**
   * redirect block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#redirect LbFrontend#redirect}
   */
   readonly redirect?: LbFrontendAclActionRedirect[] | cdktf.IResolvable;
@@ -256,6 +287,31 @@ export function lbFrontendAclActionToTerraform(struct?: LbFrontendAclActionOutpu
     type: cdktf.stringToTerraform(struct!.type),
     redirect: cdktf.listMapper(lbFrontendAclActionRedirectToTerraform, true)(struct!.redirect),
   }
+}
+
+
+export function lbFrontendAclActionToHclTerraform(struct?: LbFrontendAclActionOutputReference | LbFrontendAclAction): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    type: {
+      value: cdktf.stringToHclTerraform(struct!.type),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    redirect: {
+      value: cdktf.listMapperHcl(lbFrontendAclActionRedirectToHclTerraform, true)(struct!.redirect),
+      isBlock: true,
+      type: "list",
+      storageClassType: "LbFrontendAclActionRedirectList",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbFrontendAclActionOutputReference extends cdktf.ComplexObject {
@@ -328,31 +384,31 @@ export class LbFrontendAclActionOutputReference extends cdktf.ComplexObject {
 export interface LbFrontendAclMatch {
   /**
   * The HTTP filter to match
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#http_filter LbFrontend#http_filter}
   */
   readonly httpFilter?: string;
   /**
   * You can use this field with http_header_match acl type to set the header name to filter
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#http_filter_option LbFrontend#http_filter_option}
   */
   readonly httpFilterOption?: string;
   /**
   * A list of possible values to match for the given HTTP filter
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#http_filter_value LbFrontend#http_filter_value}
   */
   readonly httpFilterValue?: string[];
   /**
   * If set to true, the condition will be of type "unless"
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#invert LbFrontend#invert}
   */
   readonly invert?: boolean | cdktf.IResolvable;
   /**
   * A list of IPs or CIDR v4/v6 addresses of the client of the session to match
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#ip_subnet LbFrontend#ip_subnet}
   */
   readonly ipSubnet?: string[];
@@ -370,6 +426,49 @@ export function lbFrontendAclMatchToTerraform(struct?: LbFrontendAclMatchOutputR
     invert: cdktf.booleanToTerraform(struct!.invert),
     ip_subnet: cdktf.listMapper(cdktf.stringToTerraform, false)(struct!.ipSubnet),
   }
+}
+
+
+export function lbFrontendAclMatchToHclTerraform(struct?: LbFrontendAclMatchOutputReference | LbFrontendAclMatch): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    http_filter: {
+      value: cdktf.stringToHclTerraform(struct!.httpFilter),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    http_filter_option: {
+      value: cdktf.stringToHclTerraform(struct!.httpFilterOption),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    http_filter_value: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.httpFilterValue),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+    invert: {
+      value: cdktf.booleanToHclTerraform(struct!.invert),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    ip_subnet: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.ipSubnet),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbFrontendAclMatchOutputReference extends cdktf.ComplexObject {
@@ -511,25 +610,25 @@ export class LbFrontendAclMatchOutputReference extends cdktf.ComplexObject {
 export interface LbFrontendAcl {
   /**
   * Description of the ACL
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#description LbFrontend#description}
   */
   readonly description?: string;
   /**
   * The ACL name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#name LbFrontend#name}
   */
   readonly name?: string;
   /**
   * action block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#action LbFrontend#action}
   */
   readonly action: LbFrontendAclAction;
   /**
   * match block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#match LbFrontend#match}
   */
   readonly match: LbFrontendAclMatch;
@@ -546,6 +645,43 @@ export function lbFrontendAclToTerraform(struct?: LbFrontendAcl | cdktf.IResolva
     action: lbFrontendAclActionToTerraform(struct!.action),
     match: lbFrontendAclMatchToTerraform(struct!.match),
   }
+}
+
+
+export function lbFrontendAclToHclTerraform(struct?: LbFrontendAcl | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    description: {
+      value: cdktf.stringToHclTerraform(struct!.description),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    name: {
+      value: cdktf.stringToHclTerraform(struct!.name),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    action: {
+      value: lbFrontendAclActionToHclTerraform(struct!.action),
+      isBlock: true,
+      type: "list",
+      storageClassType: "LbFrontendAclActionList",
+    },
+    match: {
+      value: lbFrontendAclMatchToHclTerraform(struct!.match),
+      isBlock: true,
+      type: "list",
+      storageClassType: "LbFrontendAclMatchList",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbFrontendAclOutputReference extends cdktf.ComplexObject {
@@ -730,6 +866,43 @@ export function lbFrontendTimeoutsToTerraform(struct?: LbFrontendTimeouts | cdkt
   }
 }
 
+
+export function lbFrontendTimeoutsToHclTerraform(struct?: LbFrontendTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
+}
+
 export class LbFrontendTimeoutsOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
   private resolvableValue?: cdktf.IResolvable;
@@ -864,6 +1037,20 @@ export class LbFrontend extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_lb_frontend";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a LbFrontend resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the LbFrontend to import
+  * @param importFromId The id of the existing LbFrontend that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_frontend#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the LbFrontend to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_lb_frontend", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -1099,5 +1286,79 @@ export class LbFrontend extends cdktf.TerraformResource {
       acl: cdktf.listMapper(lbFrontendAclToTerraform, true)(this._acl.internalValue),
       timeouts: lbFrontendTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      backend_id: {
+        value: cdktf.stringToHclTerraform(this._backendId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      certificate_ids: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._certificateIds),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      enable_http3: {
+        value: cdktf.booleanToHclTerraform(this._enableHttp3),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      external_acls: {
+        value: cdktf.booleanToHclTerraform(this._externalAcls),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      inbound_port: {
+        value: cdktf.numberToHclTerraform(this._inboundPort),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      lb_id: {
+        value: cdktf.stringToHclTerraform(this._lbId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeout_client: {
+        value: cdktf.stringToHclTerraform(this._timeoutClient),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      acl: {
+        value: cdktf.listMapperHcl(lbFrontendAclToHclTerraform, true)(this._acl.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "LbFrontendAclList",
+      },
+      timeouts: {
+        value: lbFrontendTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "LbFrontendTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

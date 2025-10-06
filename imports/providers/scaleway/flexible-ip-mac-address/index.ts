@@ -9,15 +9,15 @@ import * as cdktf from 'cdktf';
 export interface FlexibleIpMacAddressConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the flexible IP for which to generate a virtual MAC
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/flexible_ip_mac_address#flexible_ip_id FlexibleIpMacAddress#flexible_ip_id}
   */
   readonly flexibleIpId: string;
   /**
   * The IDs of the flexible IPs on which to duplicate the virtual MAC
-
-**NOTE** : The flexible IPs need to be attached to the same server for the operation to work.
   * 
+  * **NOTE** : The flexible IPs need to be attached to the same server for the operation to work.
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/flexible_ip_mac_address#flexible_ip_ids_to_duplicate FlexibleIpMacAddress#flexible_ip_ids_to_duplicate}
   */
   readonly flexibleIpIdsToDuplicate?: string[];
@@ -30,19 +30,19 @@ export interface FlexibleIpMacAddressConfig extends cdktf.TerraformMetaArguments
   readonly id?: string;
   /**
   * The type of the virtual MAC
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/flexible_ip_mac_address#type FlexibleIpMacAddress#type}
   */
   readonly type: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/flexible_ip_mac_address#zone FlexibleIpMacAddress#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/flexible_ip_mac_address#timeouts FlexibleIpMacAddress#timeouts}
   */
   readonly timeouts?: FlexibleIpMacAddressTimeouts;
@@ -82,6 +82,49 @@ export function flexibleIpMacAddressTimeoutsToTerraform(struct?: FlexibleIpMacAd
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function flexibleIpMacAddressTimeoutsToHclTerraform(struct?: FlexibleIpMacAddressTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class FlexibleIpMacAddressTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -240,6 +283,20 @@ export class FlexibleIpMacAddress extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_flexible_ip_mac_address";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a FlexibleIpMacAddress resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the FlexibleIpMacAddress to import
+  * @param importFromId The id of the existing FlexibleIpMacAddress that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/flexible_ip_mac_address#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the FlexibleIpMacAddress to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_flexible_ip_mac_address", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -403,5 +460,49 @@ export class FlexibleIpMacAddress extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: flexibleIpMacAddressTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      flexible_ip_id: {
+        value: cdktf.stringToHclTerraform(this._flexibleIpId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      flexible_ip_ids_to_duplicate: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._flexibleIpIdsToDuplicate),
+        isBlock: false,
+        type: "set",
+        storageClassType: "stringList",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      type: {
+        value: cdktf.stringToHclTerraform(this._type),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: flexibleIpMacAddressTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "FlexibleIpMacAddressTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

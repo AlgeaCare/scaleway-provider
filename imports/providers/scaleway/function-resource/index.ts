@@ -9,31 +9,31 @@ import * as cdktf from 'cdktf';
 export interface FunctionResourceConfig extends cdktf.TerraformMetaArguments {
   /**
   * Define if the function should be deployed, terraform will wait for function to be deployed
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#deploy FunctionResource#deploy}
   */
   readonly deploy?: boolean | cdktf.IResolvable;
   /**
   * The description of the function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#description FunctionResource#description}
   */
   readonly description?: string;
   /**
   * The environment variables of the function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#environment_variables FunctionResource#environment_variables}
   */
   readonly environmentVariables?: { [key: string]: string };
   /**
   * Handler of the function. Depends on the runtime https://developers.scaleway.com/en/products/functions/api/#create-a-function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#handler FunctionResource#handler}
   */
   readonly handler: string;
   /**
   * HTTP traffic configuration
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#http_option FunctionResource#http_option}
   */
   readonly httpOption?: string;
@@ -46,85 +46,85 @@ export interface FunctionResourceConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * Maximum replicas for your function (defaults to 20), our system will scale your functions automatically based on incoming workload, but will never scale the number of replicas above the configured max_scale.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#max_scale FunctionResource#max_scale}
   */
   readonly maxScale?: number;
   /**
   * Memory limit in MB for your function, defaults to 128MB
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#memory_limit FunctionResource#memory_limit}
   */
   readonly memoryLimit?: number;
   /**
   * Minimum replicas for your function, defaults to 0, Note that a function is billed when it gets executed, and using a min_scale greater than 0 will cause your function to run all the time.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#min_scale FunctionResource#min_scale}
   */
   readonly minScale?: number;
   /**
   * The name of the function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#name FunctionResource#name}
   */
   readonly name?: string;
   /**
   * The namespace ID associated with this function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#namespace_id FunctionResource#namespace_id}
   */
   readonly namespaceId: string;
   /**
   * Privacy of the function. Can be either `private` or `public`
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#privacy FunctionResource#privacy}
   */
   readonly privacy: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#project_id FunctionResource#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#region FunctionResource#region}
   */
   readonly region?: string;
   /**
   * Runtime of the function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#runtime FunctionResource#runtime}
   */
   readonly runtime: string;
   /**
   * The secret environment variables to be injected into your function at runtime.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#secret_environment_variables FunctionResource#secret_environment_variables}
   */
   readonly secretEnvironmentVariables?: { [key: string]: string };
   /**
   * Holds the max duration (in seconds) the function is allowed for responding to a request
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#timeout FunctionResource#timeout}
   */
   readonly timeout?: number;
   /**
   * Location of the zip file to upload containing your function sources
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#zip_file FunctionResource#zip_file}
   */
   readonly zipFile?: string;
   /**
   * The hash of your source zip file, changing it will re-apply function. Can be any string
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#zip_hash FunctionResource#zip_hash}
   */
   readonly zipHash?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#timeouts FunctionResource#timeouts}
   */
   readonly timeouts?: FunctionResourceTimeouts;
@@ -164,6 +164,49 @@ export function functionResourceTimeoutsToTerraform(struct?: FunctionResourceTim
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function functionResourceTimeoutsToHclTerraform(struct?: FunctionResourceTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class FunctionResourceTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -322,6 +365,20 @@ export class FunctionResource extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_function";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a FunctionResource resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the FunctionResource to import
+  * @param importFromId The id of the existing FunctionResource that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the FunctionResource to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_function", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -726,5 +783,133 @@ export class FunctionResource extends cdktf.TerraformResource {
       zip_hash: cdktf.stringToTerraform(this._zipHash),
       timeouts: functionResourceTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      deploy: {
+        value: cdktf.booleanToHclTerraform(this._deploy),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      environment_variables: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._environmentVariables),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      handler: {
+        value: cdktf.stringToHclTerraform(this._handler),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      http_option: {
+        value: cdktf.stringToHclTerraform(this._httpOption),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      max_scale: {
+        value: cdktf.numberToHclTerraform(this._maxScale),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      memory_limit: {
+        value: cdktf.numberToHclTerraform(this._memoryLimit),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      min_scale: {
+        value: cdktf.numberToHclTerraform(this._minScale),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      namespace_id: {
+        value: cdktf.stringToHclTerraform(this._namespaceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      privacy: {
+        value: cdktf.stringToHclTerraform(this._privacy),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      runtime: {
+        value: cdktf.stringToHclTerraform(this._runtime),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_environment_variables: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._secretEnvironmentVariables),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      timeout: {
+        value: cdktf.numberToHclTerraform(this._timeout),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      zip_file: {
+        value: cdktf.stringToHclTerraform(this._zipFile),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zip_hash: {
+        value: cdktf.stringToHclTerraform(this._zipHash),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: functionResourceTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "FunctionResourceTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

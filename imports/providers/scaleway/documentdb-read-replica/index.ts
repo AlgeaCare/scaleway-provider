@@ -16,31 +16,31 @@ export interface DocumentdbReadReplicaConfig extends cdktf.TerraformMetaArgument
   readonly id?: string;
   /**
   * Id of the rdb instance to replicate
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#instance_id DocumentdbReadReplica#instance_id}
   */
   readonly instanceId: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#region DocumentdbReadReplica#region}
   */
   readonly region?: string;
   /**
   * direct_access block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#direct_access DocumentdbReadReplica#direct_access}
   */
   readonly directAccess?: DocumentdbReadReplicaDirectAccess;
   /**
   * private_network block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#private_network DocumentdbReadReplica#private_network}
   */
   readonly privateNetwork?: DocumentdbReadReplicaPrivateNetwork;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#timeouts DocumentdbReadReplica#timeouts}
   */
   readonly timeouts?: DocumentdbReadReplicaTimeouts;
@@ -55,6 +55,17 @@ export function documentdbReadReplicaDirectAccessToTerraform(struct?: Documentdb
   }
   return {
   }
+}
+
+
+export function documentdbReadReplicaDirectAccessToHclTerraform(struct?: DocumentdbReadReplicaDirectAccessOutputReference | DocumentdbReadReplicaDirectAccess): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DocumentdbReadReplicaDirectAccessOutputReference extends cdktf.ComplexObject {
@@ -111,13 +122,13 @@ export class DocumentdbReadReplicaDirectAccessOutputReference extends cdktf.Comp
 export interface DocumentdbReadReplicaPrivateNetwork {
   /**
   * UUID of the private network to be connected to the read replica (UUID format)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#private_network_id DocumentdbReadReplica#private_network_id}
   */
   readonly privateNetworkId: string;
   /**
   * The IP network address within the private subnet
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#service_ip DocumentdbReadReplica#service_ip}
   */
   readonly serviceIp?: string;
@@ -132,6 +143,31 @@ export function documentdbReadReplicaPrivateNetworkToTerraform(struct?: Document
     private_network_id: cdktf.stringToTerraform(struct!.privateNetworkId),
     service_ip: cdktf.stringToTerraform(struct!.serviceIp),
   }
+}
+
+
+export function documentdbReadReplicaPrivateNetworkToHclTerraform(struct?: DocumentdbReadReplicaPrivateNetworkOutputReference | DocumentdbReadReplicaPrivateNetwork): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    private_network_id: {
+      value: cdktf.stringToHclTerraform(struct!.privateNetworkId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    service_ip: {
+      value: cdktf.stringToHclTerraform(struct!.serviceIp),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class DocumentdbReadReplicaPrivateNetworkOutputReference extends cdktf.ComplexObject {
@@ -266,6 +302,49 @@ export function documentdbReadReplicaTimeoutsToTerraform(struct?: DocumentdbRead
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function documentdbReadReplicaTimeoutsToHclTerraform(struct?: DocumentdbReadReplicaTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class DocumentdbReadReplicaTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -425,6 +504,20 @@ export class DocumentdbReadReplica extends cdktf.TerraformResource {
   // =================
   public static readonly tfResourceType = "scaleway_documentdb_read_replica";
 
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DocumentdbReadReplica resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DocumentdbReadReplica to import
+  * @param importFromId The id of the existing DocumentdbReadReplica that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_read_replica#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DocumentdbReadReplica to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_documentdb_read_replica", importId: importFromId, provider });
+      }
+
   // ===========
   // INITIALIZER
   // ===========
@@ -570,5 +663,49 @@ export class DocumentdbReadReplica extends cdktf.TerraformResource {
       private_network: documentdbReadReplicaPrivateNetworkToTerraform(this._privateNetwork.internalValue),
       timeouts: documentdbReadReplicaTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_id: {
+        value: cdktf.stringToHclTerraform(this._instanceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      direct_access: {
+        value: documentdbReadReplicaDirectAccessToHclTerraform(this._directAccess.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "DocumentdbReadReplicaDirectAccessList",
+      },
+      private_network: {
+        value: documentdbReadReplicaPrivateNetworkToHclTerraform(this._privateNetwork.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "DocumentdbReadReplicaPrivateNetworkList",
+      },
+      timeouts: {
+        value: documentdbReadReplicaTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "DocumentdbReadReplicaTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

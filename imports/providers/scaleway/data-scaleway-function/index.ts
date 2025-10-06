@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayFunctionConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function#function_id DataScalewayFunction#function_id}
   */
   readonly functionId?: string;
@@ -22,13 +22,13 @@ export interface DataScalewayFunctionConfig extends cdktf.TerraformMetaArguments
   readonly id?: string;
   /**
   * The name of the function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function#name DataScalewayFunction#name}
   */
   readonly name?: string;
   /**
   * The namespace ID associated with this function
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function#namespace_id DataScalewayFunction#namespace_id}
   */
   readonly namespaceId: string;
@@ -43,6 +43,20 @@ export class DataScalewayFunction extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_function";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayFunction resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayFunction to import
+  * @param importFromId The id of the existing DataScalewayFunction that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayFunction to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_function", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -250,5 +264,37 @@ export class DataScalewayFunction extends cdktf.TerraformDataSource {
       name: cdktf.stringToTerraform(this._name),
       namespace_id: cdktf.stringToTerraform(this._namespaceId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      function_id: {
+        value: cdktf.stringToHclTerraform(this._functionId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      namespace_id: {
+        value: cdktf.stringToHclTerraform(this._namespaceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

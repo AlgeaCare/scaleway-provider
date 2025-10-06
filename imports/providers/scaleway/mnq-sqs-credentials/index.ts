@@ -16,25 +16,25 @@ export interface MnqSqsCredentialsConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The credentials name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#name MnqSqsCredentials#name}
   */
   readonly name?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#project_id MnqSqsCredentials#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#region MnqSqsCredentials#region}
   */
   readonly region?: string;
   /**
   * permissions block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#permissions MnqSqsCredentials#permissions}
   */
   readonly permissions?: MnqSqsCredentialsPermissions;
@@ -42,19 +42,19 @@ export interface MnqSqsCredentialsConfig extends cdktf.TerraformMetaArguments {
 export interface MnqSqsCredentialsPermissions {
   /**
   * Allow manage the associated resource
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#can_manage MnqSqsCredentials#can_manage}
   */
   readonly canManage?: boolean | cdktf.IResolvable;
   /**
   * Allow publish messages to the service
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#can_publish MnqSqsCredentials#can_publish}
   */
   readonly canPublish?: boolean | cdktf.IResolvable;
   /**
   * Allow receive messages from the service
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#can_receive MnqSqsCredentials#can_receive}
   */
   readonly canReceive?: boolean | cdktf.IResolvable;
@@ -70,6 +70,37 @@ export function mnqSqsCredentialsPermissionsToTerraform(struct?: MnqSqsCredentia
     can_publish: cdktf.booleanToTerraform(struct!.canPublish),
     can_receive: cdktf.booleanToTerraform(struct!.canReceive),
   }
+}
+
+
+export function mnqSqsCredentialsPermissionsToHclTerraform(struct?: MnqSqsCredentialsPermissionsOutputReference | MnqSqsCredentialsPermissions): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    can_manage: {
+      value: cdktf.booleanToHclTerraform(struct!.canManage),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    can_publish: {
+      value: cdktf.booleanToHclTerraform(struct!.canPublish),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    can_receive: {
+      value: cdktf.booleanToHclTerraform(struct!.canReceive),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class MnqSqsCredentialsPermissionsOutputReference extends cdktf.ComplexObject {
@@ -174,6 +205,20 @@ export class MnqSqsCredentials extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_mnq_sqs_credentials";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a MnqSqsCredentials resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the MnqSqsCredentials to import
+  * @param importFromId The id of the existing MnqSqsCredentials that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/mnq_sqs_credentials#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the MnqSqsCredentials to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_mnq_sqs_credentials", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -315,5 +360,43 @@ export class MnqSqsCredentials extends cdktf.TerraformResource {
       region: cdktf.stringToTerraform(this._region),
       permissions: mnqSqsCredentialsPermissionsToTerraform(this._permissions.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      permissions: {
+        value: mnqSqsCredentialsPermissionsToHclTerraform(this._permissions.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "MnqSqsCredentialsPermissionsList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

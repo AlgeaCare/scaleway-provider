@@ -16,31 +16,31 @@ export interface DataScalewaySecretConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The secret name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret#name DataScalewaySecret#name}
   */
   readonly name?: string;
   /**
   * ID of organization the resource is associated to.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret#organization_id DataScalewaySecret#organization_id}
   */
   readonly organizationId?: string;
   /**
   * The project ID the resource is associated to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret#project_id DataScalewaySecret#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret#region DataScalewaySecret#region}
   */
   readonly region?: string;
   /**
   * The ID of the secret
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret#secret_id DataScalewaySecret#secret_id}
   */
   readonly secretId?: string;
@@ -55,6 +55,20 @@ export class DataScalewaySecret extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_secret";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewaySecret resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewaySecret to import
+  * @param importFromId The id of the existing DataScalewaySecret that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewaySecret to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_secret", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -234,5 +248,49 @@ export class DataScalewaySecret extends cdktf.TerraformDataSource {
       region: cdktf.stringToTerraform(this._region),
       secret_id: cdktf.stringToTerraform(this._secretId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_id: {
+        value: cdktf.stringToHclTerraform(this._secretId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

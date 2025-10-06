@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayWebhostingConfig extends cdktf.TerraformMetaArguments {
   /**
   * The domain name of the hosting
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/webhosting#domain DataScalewayWebhosting#domain}
   */
   readonly domain?: string;
@@ -22,19 +22,19 @@ export interface DataScalewayWebhostingConfig extends cdktf.TerraformMetaArgumen
   readonly id?: string;
   /**
   * ID of organization the resource is associated to.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/webhosting#organization_id DataScalewayWebhosting#organization_id}
   */
   readonly organizationId?: string;
   /**
   * The project ID the resource is associated to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/webhosting#project_id DataScalewayWebhosting#project_id}
   */
   readonly projectId?: string;
   /**
   * The ID of the Webhosting
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/webhosting#webhosting_id DataScalewayWebhosting#webhosting_id}
   */
   readonly webhostingId?: string;
@@ -49,6 +49,17 @@ export function dataScalewayWebhostingCpanelUrlsToTerraform(struct?: DataScalewa
   }
   return {
   }
+}
+
+
+export function dataScalewayWebhostingCpanelUrlsToHclTerraform(struct?: DataScalewayWebhostingCpanelUrls): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayWebhostingCpanelUrlsOutputReference extends cdktf.ComplexObject {
@@ -120,6 +131,17 @@ export function dataScalewayWebhostingOptionsToTerraform(struct?: DataScalewayWe
   }
 }
 
+
+export function dataScalewayWebhostingOptionsToHclTerraform(struct?: DataScalewayWebhostingOptions): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayWebhostingOptionsOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -187,6 +209,20 @@ export class DataScalewayWebhosting extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_webhosting";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayWebhosting resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayWebhosting to import
+  * @param importFromId The id of the existing DataScalewayWebhosting that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/webhosting#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayWebhosting to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_webhosting", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -395,5 +431,43 @@ export class DataScalewayWebhosting extends cdktf.TerraformDataSource {
       project_id: cdktf.stringToTerraform(this._projectId),
       webhosting_id: cdktf.stringToTerraform(this._webhostingId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      domain: {
+        value: cdktf.stringToHclTerraform(this._domain),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      webhosting_id: {
+        value: cdktf.stringToHclTerraform(this._webhostingId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

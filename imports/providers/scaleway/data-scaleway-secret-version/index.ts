@@ -16,25 +16,25 @@ export interface DataScalewaySecretVersionConfig extends cdktf.TerraformMetaArgu
   readonly id?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret_version#region DataScalewaySecretVersion#region}
   */
   readonly region?: string;
   /**
   * The revision of secret version
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret_version#revision DataScalewaySecretVersion#revision}
   */
   readonly revision?: string;
   /**
   * The ID of the secret
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret_version#secret_id DataScalewaySecretVersion#secret_id}
   */
   readonly secretId?: string;
   /**
   * The Name of the secret
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret_version#secret_name DataScalewaySecretVersion#secret_name}
   */
   readonly secretName?: string;
@@ -49,6 +49,20 @@ export class DataScalewaySecretVersion extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_secret_version";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewaySecretVersion resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewaySecretVersion to import
+  * @param importFromId The id of the existing DataScalewaySecretVersion that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/secret_version#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewaySecretVersion to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_secret_version", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -205,5 +219,43 @@ export class DataScalewaySecretVersion extends cdktf.TerraformDataSource {
       secret_id: cdktf.stringToTerraform(this._secretId),
       secret_name: cdktf.stringToTerraform(this._secretName),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      revision: {
+        value: cdktf.stringToHclTerraform(this._revision),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_id: {
+        value: cdktf.stringToHclTerraform(this._secretId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_name: {
+        value: cdktf.stringToHclTerraform(this._secretName),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

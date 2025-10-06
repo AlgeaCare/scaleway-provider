@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface FunctionCronConfig extends cdktf.TerraformMetaArguments {
   /**
   * Functions arguments as json object to pass through during execution.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_cron#args FunctionCron#args}
   */
   readonly args: string;
   /**
   * The ID of the function to create a cron for.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_cron#function_id FunctionCron#function_id}
   */
   readonly functionId: string;
@@ -28,19 +28,19 @@ export interface FunctionCronConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_cron#region FunctionCron#region}
   */
   readonly region?: string;
   /**
   * Cron format string, e.g. 0 * * * * or @hourly, as schedule time of its jobs to be created and executed.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_cron#schedule FunctionCron#schedule}
   */
   readonly schedule: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_cron#timeouts FunctionCron#timeouts}
   */
   readonly timeouts?: FunctionCronTimeouts;
@@ -80,6 +80,49 @@ export function functionCronTimeoutsToTerraform(struct?: FunctionCronTimeouts | 
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function functionCronTimeoutsToHclTerraform(struct?: FunctionCronTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class FunctionCronTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -239,6 +282,20 @@ export class FunctionCron extends cdktf.TerraformResource {
   // =================
   public static readonly tfResourceType = "scaleway_function_cron";
 
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a FunctionCron resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the FunctionCron to import
+  * @param importFromId The id of the existing FunctionCron that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_cron#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the FunctionCron to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_function_cron", importId: importFromId, provider });
+      }
+
   // ===========
   // INITIALIZER
   // ===========
@@ -383,5 +440,49 @@ export class FunctionCron extends cdktf.TerraformResource {
       schedule: cdktf.stringToTerraform(this._schedule),
       timeouts: functionCronTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      args: {
+        value: cdktf.stringToHclTerraform(this._args),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      function_id: {
+        value: cdktf.stringToHclTerraform(this._functionId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      schedule: {
+        value: cdktf.stringToHclTerraform(this._schedule),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: functionCronTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "FunctionCronTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

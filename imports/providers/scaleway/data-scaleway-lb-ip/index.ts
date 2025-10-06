@@ -16,13 +16,13 @@ export interface DataScalewayLbIpConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The IP address
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip#ip_address DataScalewayLbIp#ip_address}
   */
   readonly ipAddress?: string;
   /**
   * The ID of the IP address
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip#ip_id DataScalewayLbIp#ip_id}
   */
   readonly ipId?: string;
@@ -37,6 +37,20 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_lb_ip";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayLbIp resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayLbIp to import
+  * @param importFromId The id of the existing DataScalewayLbIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayLbIp to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_lb_ip", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -162,5 +176,31 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
       ip_address: cdktf.stringToTerraform(this._ipAddress),
       ip_id: cdktf.stringToTerraform(this._ipId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      ip_address: {
+        value: cdktf.stringToHclTerraform(this._ipAddress),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      ip_id: {
+        value: cdktf.stringToHclTerraform(this._ipId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

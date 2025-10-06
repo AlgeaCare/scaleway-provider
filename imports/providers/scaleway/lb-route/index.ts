@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface LbRouteConfig extends cdktf.TerraformMetaArguments {
   /**
   * The backend ID destination of redirection
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_route#backend_id LbRoute#backend_id}
   */
   readonly backendId: string;
   /**
   * The frontend ID origin of redirection
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_route#frontend_id LbRoute#frontend_id}
   */
   readonly frontendId: string;
@@ -28,19 +28,19 @@ export interface LbRouteConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * Specifies the host of the server to which the request is being sent
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_route#match_host_header LbRoute#match_host_header}
   */
   readonly matchHostHeader?: string;
   /**
   * Server Name Indication TLS extension field from an incoming connection made via an SSL/TLS transport layer
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_route#match_sni LbRoute#match_sni}
   */
   readonly matchSni?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_route#timeouts LbRoute#timeouts}
   */
   readonly timeouts?: LbRouteTimeouts;
@@ -60,6 +60,25 @@ export function lbRouteTimeoutsToTerraform(struct?: LbRouteTimeouts | cdktf.IRes
   return {
     default: cdktf.stringToTerraform(struct!.default),
   }
+}
+
+
+export function lbRouteTimeoutsToHclTerraform(struct?: LbRouteTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbRouteTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -130,6 +149,20 @@ export class LbRoute extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_lb_route";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a LbRoute resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the LbRoute to import
+  * @param importFromId The id of the existing LbRoute that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_route#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the LbRoute to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_lb_route", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -283,5 +316,49 @@ export class LbRoute extends cdktf.TerraformResource {
       match_sni: cdktf.stringToTerraform(this._matchSni),
       timeouts: lbRouteTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      backend_id: {
+        value: cdktf.stringToHclTerraform(this._backendId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      frontend_id: {
+        value: cdktf.stringToHclTerraform(this._frontendId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      match_host_header: {
+        value: cdktf.stringToHclTerraform(this._matchHostHeader),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      match_sni: {
+        value: cdktf.stringToHclTerraform(this._matchSni),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: lbRouteTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "LbRouteTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -16,31 +16,31 @@ export interface DataScalewayInstancePrivateNicConfig extends cdktf.TerraformMet
   readonly id?: string;
   /**
   * The private network ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_private_nic#private_network_id DataScalewayInstancePrivateNic#private_network_id}
   */
   readonly privateNetworkId?: string;
   /**
   * The ID of the Private NIC
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_private_nic#private_nic_id DataScalewayInstancePrivateNic#private_nic_id}
   */
   readonly privateNicId?: string;
   /**
   * The server ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_private_nic#server_id DataScalewayInstancePrivateNic#server_id}
   */
   readonly serverId: string;
   /**
   * The tags associated with the private-nic
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_private_nic#tags DataScalewayInstancePrivateNic#tags}
   */
   readonly tags?: string[];
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_private_nic#zone DataScalewayInstancePrivateNic#zone}
   */
   readonly zone?: string;
@@ -55,6 +55,20 @@ export class DataScalewayInstancePrivateNic extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_instance_private_nic";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayInstancePrivateNic resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayInstancePrivateNic to import
+  * @param importFromId The id of the existing DataScalewayInstancePrivateNic that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_private_nic#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayInstancePrivateNic to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_private_nic", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -211,5 +225,49 @@ export class DataScalewayInstancePrivateNic extends cdktf.TerraformDataSource {
       tags: cdktf.listMapper(cdktf.stringToTerraform, false)(this._tags),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      private_network_id: {
+        value: cdktf.stringToHclTerraform(this._privateNetworkId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      private_nic_id: {
+        value: cdktf.stringToHclTerraform(this._privateNicId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      server_id: {
+        value: cdktf.stringToHclTerraform(this._serverId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface RdbDatabaseBackupConfig extends cdktf.TerraformMetaArguments {
   /**
   * Name of the database of this backup.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_database_backup#database_name RdbDatabaseBackup#database_name}
   */
   readonly databaseName: string;
   /**
   * Expiration date (Format ISO 8601). Cannot be removed.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_database_backup#expires_at RdbDatabaseBackup#expires_at}
   */
   readonly expiresAt?: string;
@@ -28,25 +28,25 @@ export interface RdbDatabaseBackupConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * Instance on which the user is created
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_database_backup#instance_id RdbDatabaseBackup#instance_id}
   */
   readonly instanceId: string;
   /**
   * Name of the backup.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_database_backup#name RdbDatabaseBackup#name}
   */
   readonly name?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_database_backup#region RdbDatabaseBackup#region}
   */
   readonly region?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_database_backup#timeouts RdbDatabaseBackup#timeouts}
   */
   readonly timeouts?: RdbDatabaseBackupTimeouts;
@@ -86,6 +86,49 @@ export function rdbDatabaseBackupTimeoutsToTerraform(struct?: RdbDatabaseBackupT
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function rdbDatabaseBackupTimeoutsToHclTerraform(struct?: RdbDatabaseBackupTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class RdbDatabaseBackupTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -244,6 +287,20 @@ export class RdbDatabaseBackup extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_rdb_database_backup";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a RdbDatabaseBackup resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the RdbDatabaseBackup to import
+  * @param importFromId The id of the existing RdbDatabaseBackup that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_database_backup#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the RdbDatabaseBackup to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_rdb_database_backup", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -425,5 +482,55 @@ export class RdbDatabaseBackup extends cdktf.TerraformResource {
       region: cdktf.stringToTerraform(this._region),
       timeouts: rdbDatabaseBackupTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      database_name: {
+        value: cdktf.stringToHclTerraform(this._databaseName),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      expires_at: {
+        value: cdktf.stringToHclTerraform(this._expiresAt),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_id: {
+        value: cdktf.stringToHclTerraform(this._instanceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: rdbDatabaseBackupTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "RdbDatabaseBackupTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

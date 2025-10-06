@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface InstanceSecurityGroupConfig extends cdktf.TerraformMetaArguments {
   /**
   * The description of the security group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#description InstanceSecurityGroup#description}
   */
   readonly description?: string;
   /**
   * Enable blocking of SMTP on IPv4 and IPv6
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#enable_default_security InstanceSecurityGroup#enable_default_security}
   */
   readonly enableDefaultSecurity?: boolean | cdktf.IResolvable;
@@ -32,61 +32,61 @@ export interface InstanceSecurityGroupConfig extends cdktf.TerraformMetaArgument
   readonly id?: string;
   /**
   * Default inbound traffic policy for this security group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#inbound_default_policy InstanceSecurityGroup#inbound_default_policy}
   */
   readonly inboundDefaultPolicy?: string;
   /**
   * The name of the security group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#name InstanceSecurityGroup#name}
   */
   readonly name?: string;
   /**
   * Default outbound traffic policy for this security group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#outbound_default_policy InstanceSecurityGroup#outbound_default_policy}
   */
   readonly outboundDefaultPolicy?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#project_id InstanceSecurityGroup#project_id}
   */
   readonly projectId?: string;
   /**
   * The stateful value of the security group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#stateful InstanceSecurityGroup#stateful}
   */
   readonly stateful?: boolean | cdktf.IResolvable;
   /**
   * The tags associated with the security group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#tags InstanceSecurityGroup#tags}
   */
   readonly tags?: string[];
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#zone InstanceSecurityGroup#zone}
   */
   readonly zone?: string;
   /**
   * inbound_rule block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#inbound_rule InstanceSecurityGroup#inbound_rule}
   */
   readonly inboundRule?: InstanceSecurityGroupInboundRule[] | cdktf.IResolvable;
   /**
   * outbound_rule block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#outbound_rule InstanceSecurityGroup#outbound_rule}
   */
   readonly outboundRule?: InstanceSecurityGroupOutboundRule[] | cdktf.IResolvable;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#timeouts InstanceSecurityGroup#timeouts}
   */
   readonly timeouts?: InstanceSecurityGroupTimeouts;
@@ -94,37 +94,37 @@ export interface InstanceSecurityGroupConfig extends cdktf.TerraformMetaArgument
 export interface InstanceSecurityGroupInboundRule {
   /**
   * Action when rule match request (drop or accept)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#action InstanceSecurityGroup#action}
   */
   readonly action: string;
   /**
   * Ip address for this rule (e.g: 1.1.1.1). Only one of ip or ip_range should be provided
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#ip InstanceSecurityGroup#ip}
   */
   readonly ip?: string;
   /**
   * Ip range for this rule (e.g: 192.168.1.0/24). Only one of ip or ip_range should be provided
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#ip_range InstanceSecurityGroup#ip_range}
   */
   readonly ipRange?: string;
   /**
   * Network port for this rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#port InstanceSecurityGroup#port}
   */
   readonly port?: number;
   /**
   * Computed port range for this rule (e.g: 1-1024, 22-22)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#port_range InstanceSecurityGroup#port_range}
   */
   readonly portRange?: string;
   /**
   * Protocol for this rule (TCP, UDP, ICMP or ANY)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#protocol InstanceSecurityGroup#protocol}
   */
   readonly protocol?: string;
@@ -143,6 +143,55 @@ export function instanceSecurityGroupInboundRuleToTerraform(struct?: InstanceSec
     port_range: cdktf.stringToTerraform(struct!.portRange),
     protocol: cdktf.stringToTerraform(struct!.protocol),
   }
+}
+
+
+export function instanceSecurityGroupInboundRuleToHclTerraform(struct?: InstanceSecurityGroupInboundRule | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    action: {
+      value: cdktf.stringToHclTerraform(struct!.action),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    ip: {
+      value: cdktf.stringToHclTerraform(struct!.ip),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    ip_range: {
+      value: cdktf.stringToHclTerraform(struct!.ipRange),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    port: {
+      value: cdktf.numberToHclTerraform(struct!.port),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+    port_range: {
+      value: cdktf.stringToHclTerraform(struct!.portRange),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    protocol: {
+      value: cdktf.stringToHclTerraform(struct!.protocol),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class InstanceSecurityGroupInboundRuleOutputReference extends cdktf.ComplexObject {
@@ -335,37 +384,37 @@ export class InstanceSecurityGroupInboundRuleList extends cdktf.ComplexList {
 export interface InstanceSecurityGroupOutboundRule {
   /**
   * Action when rule match request (drop or accept)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#action InstanceSecurityGroup#action}
   */
   readonly action: string;
   /**
   * Ip address for this rule (e.g: 1.1.1.1). Only one of ip or ip_range should be provided
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#ip InstanceSecurityGroup#ip}
   */
   readonly ip?: string;
   /**
   * Ip range for this rule (e.g: 192.168.1.0/24). Only one of ip or ip_range should be provided
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#ip_range InstanceSecurityGroup#ip_range}
   */
   readonly ipRange?: string;
   /**
   * Network port for this rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#port InstanceSecurityGroup#port}
   */
   readonly port?: number;
   /**
   * Computed port range for this rule (e.g: 1-1024, 22-22)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#port_range InstanceSecurityGroup#port_range}
   */
   readonly portRange?: string;
   /**
   * Protocol for this rule (TCP, UDP, ICMP or ANY)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#protocol InstanceSecurityGroup#protocol}
   */
   readonly protocol?: string;
@@ -384,6 +433,55 @@ export function instanceSecurityGroupOutboundRuleToTerraform(struct?: InstanceSe
     port_range: cdktf.stringToTerraform(struct!.portRange),
     protocol: cdktf.stringToTerraform(struct!.protocol),
   }
+}
+
+
+export function instanceSecurityGroupOutboundRuleToHclTerraform(struct?: InstanceSecurityGroupOutboundRule | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    action: {
+      value: cdktf.stringToHclTerraform(struct!.action),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    ip: {
+      value: cdktf.stringToHclTerraform(struct!.ip),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    ip_range: {
+      value: cdktf.stringToHclTerraform(struct!.ipRange),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    port: {
+      value: cdktf.numberToHclTerraform(struct!.port),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+    port_range: {
+      value: cdktf.stringToHclTerraform(struct!.portRange),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    protocol: {
+      value: cdktf.stringToHclTerraform(struct!.protocol),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class InstanceSecurityGroupOutboundRuleOutputReference extends cdktf.ComplexObject {
@@ -590,6 +688,25 @@ export function instanceSecurityGroupTimeoutsToTerraform(struct?: InstanceSecuri
   }
 }
 
+
+export function instanceSecurityGroupTimeoutsToHclTerraform(struct?: InstanceSecurityGroupTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
+}
+
 export class InstanceSecurityGroupTimeoutsOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
   private resolvableValue?: cdktf.IResolvable;
@@ -658,6 +775,20 @@ export class InstanceSecurityGroup extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_instance_security_group";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a InstanceSecurityGroup resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the InstanceSecurityGroup to import
+  * @param importFromId The id of the existing InstanceSecurityGroup that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_security_group#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the InstanceSecurityGroup to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_security_group", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -956,5 +1087,97 @@ export class InstanceSecurityGroup extends cdktf.TerraformResource {
       outbound_rule: cdktf.listMapper(instanceSecurityGroupOutboundRuleToTerraform, true)(this._outboundRule.internalValue),
       timeouts: instanceSecurityGroupTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      enable_default_security: {
+        value: cdktf.booleanToHclTerraform(this._enableDefaultSecurity),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      external_rules: {
+        value: cdktf.booleanToHclTerraform(this._externalRules),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      inbound_default_policy: {
+        value: cdktf.stringToHclTerraform(this._inboundDefaultPolicy),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      outbound_default_policy: {
+        value: cdktf.stringToHclTerraform(this._outboundDefaultPolicy),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      stateful: {
+        value: cdktf.booleanToHclTerraform(this._stateful),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      inbound_rule: {
+        value: cdktf.listMapperHcl(instanceSecurityGroupInboundRuleToHclTerraform, true)(this._inboundRule.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "InstanceSecurityGroupInboundRuleList",
+      },
+      outbound_rule: {
+        value: cdktf.listMapperHcl(instanceSecurityGroupOutboundRuleToHclTerraform, true)(this._outboundRule.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "InstanceSecurityGroupOutboundRuleList",
+      },
+      timeouts: {
+        value: instanceSecurityGroupTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "InstanceSecurityGroupTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

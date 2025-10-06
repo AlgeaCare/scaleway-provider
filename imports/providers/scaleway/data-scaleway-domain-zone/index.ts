@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayDomainZoneConfig extends cdktf.TerraformMetaArguments {
   /**
   * The domain where the DNS zone will be created.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_zone#domain DataScalewayDomainZone#domain}
   */
   readonly domain?: string;
@@ -22,7 +22,7 @@ export interface DataScalewayDomainZoneConfig extends cdktf.TerraformMetaArgumen
   readonly id?: string;
   /**
   * The subdomain of the DNS zone to create.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_zone#subdomain DataScalewayDomainZone#subdomain}
   */
   readonly subdomain?: string;
@@ -37,6 +37,20 @@ export class DataScalewayDomainZone extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_domain_zone";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayDomainZone resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayDomainZone to import
+  * @param importFromId The id of the existing DataScalewayDomainZone that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/domain_zone#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayDomainZone to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_domain_zone", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -167,5 +181,31 @@ export class DataScalewayDomainZone extends cdktf.TerraformDataSource {
       id: cdktf.stringToTerraform(this._id),
       subdomain: cdktf.stringToTerraform(this._subdomain),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      domain: {
+        value: cdktf.stringToHclTerraform(this._domain),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      subdomain: {
+        value: cdktf.stringToHclTerraform(this._subdomain),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface VpcPublicGatewayIpReverseDnsConfig extends cdktf.TerraformMetaArguments {
   /**
   * The IP ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_ip_reverse_dns#gateway_ip_id VpcPublicGatewayIpReverseDns#gateway_ip_id}
   */
   readonly gatewayIpId: string;
@@ -22,19 +22,19 @@ export interface VpcPublicGatewayIpReverseDnsConfig extends cdktf.TerraformMetaA
   readonly id?: string;
   /**
   * The reverse DNS for this IP
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_ip_reverse_dns#reverse VpcPublicGatewayIpReverseDns#reverse}
   */
   readonly reverse: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_ip_reverse_dns#zone VpcPublicGatewayIpReverseDns#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_ip_reverse_dns#timeouts VpcPublicGatewayIpReverseDns#timeouts}
   */
   readonly timeouts?: VpcPublicGatewayIpReverseDnsTimeouts;
@@ -64,6 +64,37 @@ export function vpcPublicGatewayIpReverseDnsTimeoutsToTerraform(struct?: VpcPubl
     default: cdktf.stringToTerraform(struct!.default),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function vpcPublicGatewayIpReverseDnsTimeoutsToHclTerraform(struct?: VpcPublicGatewayIpReverseDnsTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class VpcPublicGatewayIpReverseDnsTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -178,6 +209,20 @@ export class VpcPublicGatewayIpReverseDns extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_public_gateway_ip_reverse_dns";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a VpcPublicGatewayIpReverseDns resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the VpcPublicGatewayIpReverseDns to import
+  * @param importFromId The id of the existing VpcPublicGatewayIpReverseDns that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_ip_reverse_dns#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the VpcPublicGatewayIpReverseDns to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_public_gateway_ip_reverse_dns", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -303,5 +348,43 @@ export class VpcPublicGatewayIpReverseDns extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: vpcPublicGatewayIpReverseDnsTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      gateway_ip_id: {
+        value: cdktf.stringToHclTerraform(this._gatewayIpId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      reverse: {
+        value: cdktf.stringToHclTerraform(this._reverse),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: vpcPublicGatewayIpReverseDnsTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "VpcPublicGatewayIpReverseDnsTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

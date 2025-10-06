@@ -40,19 +40,19 @@ export interface JobDefinitionConfig extends cdktf.TerraformMetaArguments {
   readonly memoryLimit: number;
   /**
   * The job name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/job_definition#name JobDefinition#name}
   */
   readonly name?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/job_definition#project_id JobDefinition#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/job_definition#region JobDefinition#region}
   */
   readonly region?: string;
@@ -71,6 +71,20 @@ export class JobDefinition extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_job_definition";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a JobDefinition resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the JobDefinition to import
+  * @param importFromId The id of the existing JobDefinition that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/job_definition#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the JobDefinition to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_job_definition", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -304,5 +318,79 @@ export class JobDefinition extends cdktf.TerraformResource {
       region: cdktf.stringToTerraform(this._region),
       timeout: cdktf.stringToTerraform(this._timeout),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      command: {
+        value: cdktf.stringToHclTerraform(this._command),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      cpu_limit: {
+        value: cdktf.numberToHclTerraform(this._cpuLimit),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      env: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._env),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      image_uri: {
+        value: cdktf.stringToHclTerraform(this._imageUri),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      memory_limit: {
+        value: cdktf.numberToHclTerraform(this._memoryLimit),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeout: {
+        value: cdktf.stringToHclTerraform(this._timeout),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayK8SClusterConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the cluster
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_cluster#cluster_id DataScalewayK8SCluster#cluster_id}
   */
   readonly clusterId?: string;
@@ -22,13 +22,13 @@ export interface DataScalewayK8SClusterConfig extends cdktf.TerraformMetaArgumen
   readonly id?: string;
   /**
   * The name of the cluster
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_cluster#name DataScalewayK8SCluster#name}
   */
   readonly name?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_cluster#region DataScalewayK8SCluster#region}
   */
   readonly region?: string;
@@ -43,6 +43,17 @@ export function dataScalewayK8SClusterAutoUpgradeToTerraform(struct?: DataScalew
   }
   return {
   }
+}
+
+
+export function dataScalewayK8SClusterAutoUpgradeToHclTerraform(struct?: DataScalewayK8SClusterAutoUpgrade): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayK8SClusterAutoUpgradeOutputReference extends cdktf.ComplexObject {
@@ -117,6 +128,17 @@ export function dataScalewayK8SClusterAutoscalerConfigToTerraform(struct?: DataS
   }
   return {
   }
+}
+
+
+export function dataScalewayK8SClusterAutoscalerConfigToHclTerraform(struct?: DataScalewayK8SClusterAutoscalerConfig): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayK8SClusterAutoscalerConfigOutputReference extends cdktf.ComplexObject {
@@ -228,6 +250,17 @@ export function dataScalewayK8SClusterKubeconfigToTerraform(struct?: DataScalewa
   }
 }
 
+
+export function dataScalewayK8SClusterKubeconfigToHclTerraform(struct?: DataScalewayK8SClusterKubeconfig): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayK8SClusterKubeconfigOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -305,6 +338,17 @@ export function dataScalewayK8SClusterOpenIdConnectConfigToTerraform(struct?: Da
   }
   return {
   }
+}
+
+
+export function dataScalewayK8SClusterOpenIdConnectConfigToHclTerraform(struct?: DataScalewayK8SClusterOpenIdConnectConfig): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayK8SClusterOpenIdConnectConfigOutputReference extends cdktf.ComplexObject {
@@ -399,6 +443,20 @@ export class DataScalewayK8SCluster extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_k8s_cluster";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayK8SCluster resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayK8SCluster to import
+  * @param importFromId The id of the existing DataScalewayK8SCluster that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_cluster#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayK8SCluster to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_k8s_cluster", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -621,5 +679,37 @@ export class DataScalewayK8SCluster extends cdktf.TerraformDataSource {
       name: cdktf.stringToTerraform(this._name),
       region: cdktf.stringToTerraform(this._region),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      cluster_id: {
+        value: cdktf.stringToHclTerraform(this._clusterId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -16,37 +16,37 @@ export interface RdbReadReplicaConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * Id of the rdb instance to replicate
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#instance_id RdbReadReplica#instance_id}
   */
   readonly instanceId: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#region RdbReadReplica#region}
   */
   readonly region?: string;
   /**
   * Defines whether to create the replica in the same availability zone as the main instance nodes or not.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#same_zone RdbReadReplica#same_zone}
   */
   readonly sameZone?: boolean | cdktf.IResolvable;
   /**
   * direct_access block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#direct_access RdbReadReplica#direct_access}
   */
   readonly directAccess?: RdbReadReplicaDirectAccess;
   /**
   * private_network block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#private_network RdbReadReplica#private_network}
   */
   readonly privateNetwork?: RdbReadReplicaPrivateNetwork;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#timeouts RdbReadReplica#timeouts}
   */
   readonly timeouts?: RdbReadReplicaTimeouts;
@@ -61,6 +61,17 @@ export function rdbReadReplicaDirectAccessToTerraform(struct?: RdbReadReplicaDir
   }
   return {
   }
+}
+
+
+export function rdbReadReplicaDirectAccessToHclTerraform(struct?: RdbReadReplicaDirectAccessOutputReference | RdbReadReplicaDirectAccess): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class RdbReadReplicaDirectAccessOutputReference extends cdktf.ComplexObject {
@@ -117,13 +128,13 @@ export class RdbReadReplicaDirectAccessOutputReference extends cdktf.ComplexObje
 export interface RdbReadReplicaPrivateNetwork {
   /**
   * UUID of the private network to be connected to the read replica (UUID format)
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#private_network_id RdbReadReplica#private_network_id}
   */
   readonly privateNetworkId: string;
   /**
   * The IP network address within the private subnet
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#service_ip RdbReadReplica#service_ip}
   */
   readonly serviceIp?: string;
@@ -138,6 +149,31 @@ export function rdbReadReplicaPrivateNetworkToTerraform(struct?: RdbReadReplicaP
     private_network_id: cdktf.stringToTerraform(struct!.privateNetworkId),
     service_ip: cdktf.stringToTerraform(struct!.serviceIp),
   }
+}
+
+
+export function rdbReadReplicaPrivateNetworkToHclTerraform(struct?: RdbReadReplicaPrivateNetworkOutputReference | RdbReadReplicaPrivateNetwork): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    private_network_id: {
+      value: cdktf.stringToHclTerraform(struct!.privateNetworkId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    service_ip: {
+      value: cdktf.stringToHclTerraform(struct!.serviceIp),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class RdbReadReplicaPrivateNetworkOutputReference extends cdktf.ComplexObject {
@@ -272,6 +308,49 @@ export function rdbReadReplicaTimeoutsToTerraform(struct?: RdbReadReplicaTimeout
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function rdbReadReplicaTimeoutsToHclTerraform(struct?: RdbReadReplicaTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class RdbReadReplicaTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -430,6 +509,20 @@ export class RdbReadReplica extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_rdb_read_replica";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a RdbReadReplica resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the RdbReadReplica to import
+  * @param importFromId The id of the existing RdbReadReplica that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/rdb_read_replica#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the RdbReadReplica to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_rdb_read_replica", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -594,5 +687,55 @@ export class RdbReadReplica extends cdktf.TerraformResource {
       private_network: rdbReadReplicaPrivateNetworkToTerraform(this._privateNetwork.internalValue),
       timeouts: rdbReadReplicaTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_id: {
+        value: cdktf.stringToHclTerraform(this._instanceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      same_zone: {
+        value: cdktf.booleanToHclTerraform(this._sameZone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      direct_access: {
+        value: rdbReadReplicaDirectAccessToHclTerraform(this._directAccess.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "RdbReadReplicaDirectAccessList",
+      },
+      private_network: {
+        value: rdbReadReplicaPrivateNetworkToHclTerraform(this._privateNetwork.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "RdbReadReplicaPrivateNetworkList",
+      },
+      timeouts: {
+        value: rdbReadReplicaTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "RdbReadReplicaTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

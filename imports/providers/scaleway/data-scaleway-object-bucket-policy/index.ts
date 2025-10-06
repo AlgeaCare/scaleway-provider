@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayObjectBucketPolicyConfig extends cdktf.TerraformMetaArguments {
   /**
   * The bucket's name or regional ID.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/object_bucket_policy#bucket DataScalewayObjectBucketPolicy#bucket}
   */
   readonly bucket: string;
@@ -22,13 +22,13 @@ export interface DataScalewayObjectBucketPolicyConfig extends cdktf.TerraformMet
   readonly id?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/object_bucket_policy#project_id DataScalewayObjectBucketPolicy#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/object_bucket_policy#region DataScalewayObjectBucketPolicy#region}
   */
   readonly region?: string;
@@ -43,6 +43,20 @@ export class DataScalewayObjectBucketPolicy extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_object_bucket_policy";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayObjectBucketPolicy resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayObjectBucketPolicy to import
+  * @param importFromId The id of the existing DataScalewayObjectBucketPolicy that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/object_bucket_policy#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayObjectBucketPolicy to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_object_bucket_policy", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -158,5 +172,37 @@ export class DataScalewayObjectBucketPolicy extends cdktf.TerraformDataSource {
       project_id: cdktf.stringToTerraform(this._projectId),
       region: cdktf.stringToTerraform(this._region),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      bucket: {
+        value: cdktf.stringToHclTerraform(this._bucket),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -16,49 +16,49 @@ export interface InstanceSnapshotConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the snapshot
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#name InstanceSnapshot#name}
   */
   readonly name?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#project_id InstanceSnapshot#project_id}
   */
   readonly projectId?: string;
   /**
   * The tags associated with the snapshot
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#tags InstanceSnapshot#tags}
   */
   readonly tags?: string[];
   /**
   * The snapshot's volume type
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#type InstanceSnapshot#type}
   */
   readonly type?: string;
   /**
   * ID of the volume to take a snapshot from
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#volume_id InstanceSnapshot#volume_id}
   */
   readonly volumeId?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#zone InstanceSnapshot#zone}
   */
   readonly zone?: string;
   /**
   * import block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#import InstanceSnapshot#import}
   */
   readonly import?: InstanceSnapshotImport;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#timeouts InstanceSnapshot#timeouts}
   */
   readonly timeouts?: InstanceSnapshotTimeouts;
@@ -66,13 +66,13 @@ export interface InstanceSnapshotConfig extends cdktf.TerraformMetaArguments {
 export interface InstanceSnapshotImport {
   /**
   * Bucket containing qcow
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#bucket InstanceSnapshot#bucket}
   */
   readonly bucket: string;
   /**
   * Key of the qcow file in the specified bucket
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#key InstanceSnapshot#key}
   */
   readonly key: string;
@@ -87,6 +87,31 @@ export function instanceSnapshotImportToTerraform(struct?: InstanceSnapshotImpor
     bucket: cdktf.stringToTerraform(struct!.bucket),
     key: cdktf.stringToTerraform(struct!.key),
   }
+}
+
+
+export function instanceSnapshotImportToHclTerraform(struct?: InstanceSnapshotImportOutputReference | InstanceSnapshotImport): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    bucket: {
+      value: cdktf.stringToHclTerraform(struct!.bucket),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    key: {
+      value: cdktf.stringToHclTerraform(struct!.key),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class InstanceSnapshotImportOutputReference extends cdktf.ComplexObject {
@@ -178,6 +203,37 @@ export function instanceSnapshotTimeoutsToTerraform(struct?: InstanceSnapshotTim
     default: cdktf.stringToTerraform(struct!.default),
     delete: cdktf.stringToTerraform(struct!.delete),
   }
+}
+
+
+export function instanceSnapshotTimeoutsToHclTerraform(struct?: InstanceSnapshotTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class InstanceSnapshotTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -292,6 +348,20 @@ export class InstanceSnapshot extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_instance_snapshot";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a InstanceSnapshot resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the InstanceSnapshot to import
+  * @param importFromId The id of the existing InstanceSnapshot that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_snapshot#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the InstanceSnapshot to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_snapshot", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -510,5 +580,67 @@ export class InstanceSnapshot extends cdktf.TerraformResource {
       import: instanceSnapshotImportToTerraform(this._import.internalValue),
       timeouts: instanceSnapshotTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      type: {
+        value: cdktf.stringToHclTerraform(this._type),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      volume_id: {
+        value: cdktf.stringToHclTerraform(this._volumeId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      import: {
+        value: instanceSnapshotImportToHclTerraform(this._import.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "InstanceSnapshotImportList",
+      },
+      timeouts: {
+        value: instanceSnapshotTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "InstanceSnapshotTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

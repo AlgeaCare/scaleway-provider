@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface VpcPublicGatewayPatRuleConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the gateway this PAT rule is applied to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#gateway_id VpcPublicGatewayPatRule#gateway_id}
   */
   readonly gatewayId: string;
@@ -22,37 +22,37 @@ export interface VpcPublicGatewayPatRuleConfig extends cdktf.TerraformMetaArgume
   readonly id?: string;
   /**
   * The private IP used in the PAT rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#private_ip VpcPublicGatewayPatRule#private_ip}
   */
   readonly privateIp: string;
   /**
   * The private port used in the PAT rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#private_port VpcPublicGatewayPatRule#private_port}
   */
   readonly privatePort: number;
   /**
   * The protocol used in the PAT rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#protocol VpcPublicGatewayPatRule#protocol}
   */
   readonly protocol?: string;
   /**
   * The public port used in the PAT rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#public_port VpcPublicGatewayPatRule#public_port}
   */
   readonly publicPort: number;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#zone VpcPublicGatewayPatRule#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#timeouts VpcPublicGatewayPatRule#timeouts}
   */
   readonly timeouts?: VpcPublicGatewayPatRuleTimeouts;
@@ -87,6 +87,43 @@ export function vpcPublicGatewayPatRuleTimeoutsToTerraform(struct?: VpcPublicGat
     delete: cdktf.stringToTerraform(struct!.delete),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function vpcPublicGatewayPatRuleTimeoutsToHclTerraform(struct?: VpcPublicGatewayPatRuleTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class VpcPublicGatewayPatRuleTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -223,6 +260,20 @@ export class VpcPublicGatewayPatRule extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_public_gateway_pat_rule";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a VpcPublicGatewayPatRule resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the VpcPublicGatewayPatRule to import
+  * @param importFromId The id of the existing VpcPublicGatewayPatRule that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_pat_rule#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the VpcPublicGatewayPatRule to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_public_gateway_pat_rule", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -411,5 +462,61 @@ export class VpcPublicGatewayPatRule extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: vpcPublicGatewayPatRuleTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      gateway_id: {
+        value: cdktf.stringToHclTerraform(this._gatewayId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      private_ip: {
+        value: cdktf.stringToHclTerraform(this._privateIp),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      private_port: {
+        value: cdktf.numberToHclTerraform(this._privatePort),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      protocol: {
+        value: cdktf.stringToHclTerraform(this._protocol),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      public_port: {
+        value: cdktf.numberToHclTerraform(this._publicPort),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: vpcPublicGatewayPatRuleTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "VpcPublicGatewayPatRuleTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,31 +9,31 @@ import * as cdktf from 'cdktf';
 export interface VpcPublicGatewayDhcpConfig extends cdktf.TerraformMetaArguments {
   /**
   * The address of the DHCP server. This will be the gateway's address in the private network. Defaults to the first address of the subnet
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#address VpcPublicGatewayDhcp#address}
   */
   readonly address?: string;
   /**
   * TLD given to hostnames in the Private Network. Allowed characters are `a-z0-9-.`. Defaults to the slugified Private Network name if created along a GatewayNetwork, or else to `priv`.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#dns_local_name VpcPublicGatewayDhcp#dns_local_name}
   */
   readonly dnsLocalName?: string;
   /**
   * Additional DNS search paths.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#dns_search VpcPublicGatewayDhcp#dns_search}
   */
   readonly dnsSearch?: string[];
   /**
   * Override the DNS server list pushed to DHCP clients, instead of the gateway itself.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#dns_servers_override VpcPublicGatewayDhcp#dns_servers_override}
   */
   readonly dnsServersOverride?: string[];
   /**
   * Whether to enable dynamic pooling of IPs. By turning the dynamic pool off, only pre-existing DHCP reservations will be handed out. Defaults to true.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#enable_dynamic VpcPublicGatewayDhcp#enable_dynamic}
   */
   readonly enableDynamic?: boolean | cdktf.IResolvable;
@@ -46,61 +46,61 @@ export interface VpcPublicGatewayDhcpConfig extends cdktf.TerraformMetaArguments
   readonly id?: string;
   /**
   * High IP (included) of the dynamic address pool. Defaults to the last address of the subnet.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#pool_high VpcPublicGatewayDhcp#pool_high}
   */
   readonly poolHigh?: string;
   /**
   * Low IP (included) of the dynamic address pool. Defaults to the second address of the subnet.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#pool_low VpcPublicGatewayDhcp#pool_low}
   */
   readonly poolLow?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#project_id VpcPublicGatewayDhcp#project_id}
   */
   readonly projectId?: string;
   /**
   * Whether the gateway should push a default route to DHCP clients or only hand out IPs. Defaults to true.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#push_default_route VpcPublicGatewayDhcp#push_default_route}
   */
   readonly pushDefaultRoute?: boolean | cdktf.IResolvable;
   /**
   * Whether the gateway should push custom DNS servers to clients. This allows for instance hostname -> IP resolution. Defaults to true.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#push_dns_server VpcPublicGatewayDhcp#push_dns_server}
   */
   readonly pushDnsServer?: boolean | cdktf.IResolvable;
   /**
   * After how long, in seconds, a DHCP client will query for a new lease if previous renews fail. Must be 30s lower than `valid_lifetime`. Defaults to 51m (3060s).
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#rebind_timer VpcPublicGatewayDhcp#rebind_timer}
   */
   readonly rebindTimer?: number;
   /**
   * After how long, in seconds, a renew will be attempted. Must be 30s lower than `rebind_timer`. Defaults to 50m (3000s).
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#renew_timer VpcPublicGatewayDhcp#renew_timer}
   */
   readonly renewTimer?: number;
   /**
   * Subnet for the DHCP server
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#subnet VpcPublicGatewayDhcp#subnet}
   */
   readonly subnet: string;
   /**
   * For how long, in seconds, will DHCP entries will be valid. Defaults to 1h (3600s).
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#valid_lifetime VpcPublicGatewayDhcp#valid_lifetime}
   */
   readonly validLifetime?: number;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#zone VpcPublicGatewayDhcp#zone}
   */
   readonly zone?: string;
@@ -115,6 +115,20 @@ export class VpcPublicGatewayDhcp extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_public_gateway_dhcp";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a VpcPublicGatewayDhcp resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the VpcPublicGatewayDhcp to import
+  * @param importFromId The id of the existing VpcPublicGatewayDhcp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/vpc_public_gateway_dhcp#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the VpcPublicGatewayDhcp to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_public_gateway_dhcp", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -456,5 +470,109 @@ export class VpcPublicGatewayDhcp extends cdktf.TerraformResource {
       valid_lifetime: cdktf.numberToTerraform(this._validLifetime),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      address: {
+        value: cdktf.stringToHclTerraform(this._address),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      dns_local_name: {
+        value: cdktf.stringToHclTerraform(this._dnsLocalName),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      dns_search: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._dnsSearch),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      dns_servers_override: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._dnsServersOverride),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      enable_dynamic: {
+        value: cdktf.booleanToHclTerraform(this._enableDynamic),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      pool_high: {
+        value: cdktf.stringToHclTerraform(this._poolHigh),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      pool_low: {
+        value: cdktf.stringToHclTerraform(this._poolLow),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      push_default_route: {
+        value: cdktf.booleanToHclTerraform(this._pushDefaultRoute),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      push_dns_server: {
+        value: cdktf.booleanToHclTerraform(this._pushDnsServer),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      rebind_timer: {
+        value: cdktf.numberToHclTerraform(this._rebindTimer),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      renew_timer: {
+        value: cdktf.numberToHclTerraform(this._renewTimer),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      subnet: {
+        value: cdktf.stringToHclTerraform(this._subnet),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      valid_lifetime: {
+        value: cdktf.numberToHclTerraform(this._validLifetime),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

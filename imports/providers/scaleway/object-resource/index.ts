@@ -9,31 +9,31 @@ import * as cdktf from 'cdktf';
 export interface ObjectResourceConfig extends cdktf.TerraformMetaArguments {
   /**
   * The name of the bucket
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#bucket ObjectResource#bucket}
   */
   readonly bucket: string;
   /**
   * Content of the file to upload
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#content ObjectResource#content}
   */
   readonly content?: string;
   /**
   * Content of the file to upload, should be base64 encoded
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#content_base64 ObjectResource#content_base64}
   */
   readonly contentBase64?: string;
   /**
   * Path of the file to upload, defaults to an empty file
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#file ObjectResource#file}
   */
   readonly file?: string;
   /**
   * File hash to trigger upload
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#hash ObjectResource#hash}
   */
   readonly hash?: string;
@@ -46,49 +46,49 @@ export interface ObjectResourceConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * Key of the object
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#key ObjectResource#key}
   */
   readonly key: string;
   /**
   * Map of object's metadata, only lower case keys are allowed
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#metadata ObjectResource#metadata}
   */
   readonly metadata?: { [key: string]: string };
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#project_id ObjectResource#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#region ObjectResource#region}
   */
   readonly region?: string;
   /**
   * Specifies the Scaleway Object Storage class to which you want the object to transition
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#storage_class ObjectResource#storage_class}
   */
   readonly storageClass?: string;
   /**
   * Map of object's tags
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#tags ObjectResource#tags}
   */
   readonly tags?: { [key: string]: string };
   /**
   * Visibility of the object, public-read or private
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#visibility ObjectResource#visibility}
   */
   readonly visibility?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#timeouts ObjectResource#timeouts}
   */
   readonly timeouts?: ObjectResourceTimeouts;
@@ -128,6 +128,49 @@ export function objectResourceTimeoutsToTerraform(struct?: ObjectResourceTimeout
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function objectResourceTimeoutsToHclTerraform(struct?: ObjectResourceTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectResourceTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -286,6 +329,20 @@ export class ObjectResource extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_object";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a ObjectResource resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the ObjectResource to import
+  * @param importFromId The id of the existing ObjectResource that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the ObjectResource to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_object", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -573,5 +630,97 @@ export class ObjectResource extends cdktf.TerraformResource {
       visibility: cdktf.stringToTerraform(this._visibility),
       timeouts: objectResourceTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      bucket: {
+        value: cdktf.stringToHclTerraform(this._bucket),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      content: {
+        value: cdktf.stringToHclTerraform(this._content),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      content_base64: {
+        value: cdktf.stringToHclTerraform(this._contentBase64),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      file: {
+        value: cdktf.stringToHclTerraform(this._file),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      hash: {
+        value: cdktf.stringToHclTerraform(this._hash),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      key: {
+        value: cdktf.stringToHclTerraform(this._key),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      metadata: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._metadata),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      storage_class: {
+        value: cdktf.stringToHclTerraform(this._storageClass),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._tags),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      visibility: {
+        value: cdktf.stringToHclTerraform(this._visibility),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: objectResourceTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "ObjectResourceTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

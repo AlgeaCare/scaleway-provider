@@ -9,25 +9,25 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayVpcGatewayNetworkConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the public gateway DHCP config
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_gateway_network#dhcp_id DataScalewayVpcGatewayNetwork#dhcp_id}
   */
   readonly dhcpId?: string;
   /**
   * Enable masquerade on this network
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_gateway_network#enable_masquerade DataScalewayVpcGatewayNetwork#enable_masquerade}
   */
   readonly enableMasquerade?: boolean | cdktf.IResolvable;
   /**
   * The ID of the public gateway where connect to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_gateway_network#gateway_id DataScalewayVpcGatewayNetwork#gateway_id}
   */
   readonly gatewayId?: string;
   /**
   * The ID of the gateway network
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_gateway_network#gateway_network_id DataScalewayVpcGatewayNetwork#gateway_network_id}
   */
   readonly gatewayNetworkId?: string;
@@ -40,7 +40,7 @@ export interface DataScalewayVpcGatewayNetworkConfig extends cdktf.TerraformMeta
   readonly id?: string;
   /**
   * The ID of the private network where connect to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_gateway_network#private_network_id DataScalewayVpcGatewayNetwork#private_network_id}
   */
   readonly privateNetworkId?: string;
@@ -55,6 +55,17 @@ export function dataScalewayVpcGatewayNetworkIpamConfigToTerraform(struct?: Data
   }
   return {
   }
+}
+
+
+export function dataScalewayVpcGatewayNetworkIpamConfigToHclTerraform(struct?: DataScalewayVpcGatewayNetworkIpamConfig): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayVpcGatewayNetworkIpamConfigOutputReference extends cdktf.ComplexObject {
@@ -124,6 +135,20 @@ export class DataScalewayVpcGatewayNetwork extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_gateway_network";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayVpcGatewayNetwork resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayVpcGatewayNetwork to import
+  * @param importFromId The id of the existing DataScalewayVpcGatewayNetwork that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_gateway_network#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayVpcGatewayNetwork to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_gateway_network", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -319,5 +344,49 @@ export class DataScalewayVpcGatewayNetwork extends cdktf.TerraformDataSource {
       id: cdktf.stringToTerraform(this._id),
       private_network_id: cdktf.stringToTerraform(this._privateNetworkId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      dhcp_id: {
+        value: cdktf.stringToHclTerraform(this._dhcpId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      enable_masquerade: {
+        value: cdktf.booleanToHclTerraform(this._enableMasquerade),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      gateway_id: {
+        value: cdktf.stringToHclTerraform(this._gatewayId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      gateway_network_id: {
+        value: cdktf.stringToHclTerraform(this._gatewayNetworkId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      private_network_id: {
+        value: cdktf.stringToHclTerraform(this._privateNetworkId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

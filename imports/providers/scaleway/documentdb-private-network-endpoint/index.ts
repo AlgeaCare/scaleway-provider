@@ -16,43 +16,43 @@ export interface DocumentdbPrivateNetworkEndpointConfig extends cdktf.TerraformM
   readonly id?: string;
   /**
   * Instance on which the endpoint is attached
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#instance_id DocumentdbPrivateNetworkEndpoint#instance_id}
   */
   readonly instanceId: string;
   /**
   * The IP with the given mask within the private subnet
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#ip_net DocumentdbPrivateNetworkEndpoint#ip_net}
   */
   readonly ipNet?: string;
   /**
   * The port of your private service
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#port DocumentdbPrivateNetworkEndpoint#port}
   */
   readonly port?: number;
   /**
   * The private network ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#private_network_id DocumentdbPrivateNetworkEndpoint#private_network_id}
   */
   readonly privateNetworkId: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#region DocumentdbPrivateNetworkEndpoint#region}
   */
   readonly region?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#zone DocumentdbPrivateNetworkEndpoint#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#timeouts DocumentdbPrivateNetworkEndpoint#timeouts}
   */
   readonly timeouts?: DocumentdbPrivateNetworkEndpointTimeouts;
@@ -72,6 +72,25 @@ export function documentdbPrivateNetworkEndpointTimeoutsToTerraform(struct?: Doc
   return {
     default: cdktf.stringToTerraform(struct!.default),
   }
+}
+
+
+export function documentdbPrivateNetworkEndpointTimeoutsToHclTerraform(struct?: DocumentdbPrivateNetworkEndpointTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class DocumentdbPrivateNetworkEndpointTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -142,6 +161,20 @@ export class DocumentdbPrivateNetworkEndpoint extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_documentdb_private_network_endpoint";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DocumentdbPrivateNetworkEndpoint resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DocumentdbPrivateNetworkEndpoint to import
+  * @param importFromId The id of the existing DocumentdbPrivateNetworkEndpoint that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_private_network_endpoint#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DocumentdbPrivateNetworkEndpoint to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_documentdb_private_network_endpoint", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -336,5 +369,61 @@ export class DocumentdbPrivateNetworkEndpoint extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: documentdbPrivateNetworkEndpointTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_id: {
+        value: cdktf.stringToHclTerraform(this._instanceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      ip_net: {
+        value: cdktf.stringToHclTerraform(this._ipNet),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      port: {
+        value: cdktf.numberToHclTerraform(this._port),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      private_network_id: {
+        value: cdktf.stringToHclTerraform(this._privateNetworkId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: documentdbPrivateNetworkEndpointTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "DocumentdbPrivateNetworkEndpointTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

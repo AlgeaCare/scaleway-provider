@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface FunctionTriggerConfig extends cdktf.TerraformMetaArguments {
   /**
   * The trigger description
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#description FunctionTrigger#description}
   */
   readonly description?: string;
   /**
   * The ID of the function to create a trigger for
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#function_id FunctionTrigger#function_id}
   */
   readonly functionId: string;
@@ -28,31 +28,31 @@ export interface FunctionTriggerConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The trigger name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#name FunctionTrigger#name}
   */
   readonly name?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#region FunctionTrigger#region}
   */
   readonly region?: string;
   /**
   * nats block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#nats FunctionTrigger#nats}
   */
   readonly nats?: FunctionTriggerNats;
   /**
   * sqs block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#sqs FunctionTrigger#sqs}
   */
   readonly sqs?: FunctionTriggerSqs;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#timeouts FunctionTrigger#timeouts}
   */
   readonly timeouts?: FunctionTriggerTimeouts;
@@ -60,25 +60,25 @@ export interface FunctionTriggerConfig extends cdktf.TerraformMetaArguments {
 export interface FunctionTriggerNats {
   /**
   * ID of the mnq nats account
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#account_id FunctionTrigger#account_id}
   */
   readonly accountId?: string;
   /**
   * Project ID of the project where the mnq sqs exists, defaults to provider project_id
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#project_id FunctionTrigger#project_id}
   */
   readonly projectId?: string;
   /**
   * Region where the mnq sqs exists, defaults to function's region
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#region FunctionTrigger#region}
   */
   readonly region?: string;
   /**
   * Subject to listen to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#subject FunctionTrigger#subject}
   */
   readonly subject: string;
@@ -95,6 +95,43 @@ export function functionTriggerNatsToTerraform(struct?: FunctionTriggerNatsOutpu
     region: cdktf.stringToTerraform(struct!.region),
     subject: cdktf.stringToTerraform(struct!.subject),
   }
+}
+
+
+export function functionTriggerNatsToHclTerraform(struct?: FunctionTriggerNatsOutputReference | FunctionTriggerNats): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    account_id: {
+      value: cdktf.stringToHclTerraform(struct!.accountId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    project_id: {
+      value: cdktf.stringToHclTerraform(struct!.projectId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    region: {
+      value: cdktf.stringToHclTerraform(struct!.region),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    subject: {
+      value: cdktf.stringToHclTerraform(struct!.subject),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class FunctionTriggerNatsOutputReference extends cdktf.ComplexObject {
@@ -211,25 +248,25 @@ export class FunctionTriggerNatsOutputReference extends cdktf.ComplexObject {
 export interface FunctionTriggerSqs {
   /**
   * ID of the mnq namespace
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#namespace_id FunctionTrigger#namespace_id}
   */
   readonly namespaceId?: string;
   /**
   * Project ID of the project where the mnq sqs exists, defaults to provider project_id
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#project_id FunctionTrigger#project_id}
   */
   readonly projectId?: string;
   /**
   * Name of the queue
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#queue FunctionTrigger#queue}
   */
   readonly queue: string;
   /**
   * Region where the mnq sqs exists, defaults to function's region
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#region FunctionTrigger#region}
   */
   readonly region?: string;
@@ -246,6 +283,43 @@ export function functionTriggerSqsToTerraform(struct?: FunctionTriggerSqsOutputR
     queue: cdktf.stringToTerraform(struct!.queue),
     region: cdktf.stringToTerraform(struct!.region),
   }
+}
+
+
+export function functionTriggerSqsToHclTerraform(struct?: FunctionTriggerSqsOutputReference | FunctionTriggerSqs): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    namespace_id: {
+      value: cdktf.stringToHclTerraform(struct!.namespaceId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    project_id: {
+      value: cdktf.stringToHclTerraform(struct!.projectId),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    queue: {
+      value: cdktf.stringToHclTerraform(struct!.queue),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    region: {
+      value: cdktf.stringToHclTerraform(struct!.region),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class FunctionTriggerSqsOutputReference extends cdktf.ComplexObject {
@@ -394,6 +468,49 @@ export function functionTriggerTimeoutsToTerraform(struct?: FunctionTriggerTimeo
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function functionTriggerTimeoutsToHclTerraform(struct?: FunctionTriggerTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class FunctionTriggerTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -552,6 +669,20 @@ export class FunctionTrigger extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_function_trigger";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a FunctionTrigger resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the FunctionTrigger to import
+  * @param importFromId The id of the existing FunctionTrigger that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_trigger#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the FunctionTrigger to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_function_trigger", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -734,5 +865,61 @@ export class FunctionTrigger extends cdktf.TerraformResource {
       sqs: functionTriggerSqsToTerraform(this._sqs.internalValue),
       timeouts: functionTriggerTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      function_id: {
+        value: cdktf.stringToHclTerraform(this._functionId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      nats: {
+        value: functionTriggerNatsToHclTerraform(this._nats.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "FunctionTriggerNatsList",
+      },
+      sqs: {
+        value: functionTriggerSqsToHclTerraform(this._sqs.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "FunctionTriggerSqsList",
+      },
+      timeouts: {
+        value: functionTriggerTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "FunctionTriggerTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

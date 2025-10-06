@@ -9,55 +9,55 @@ import * as cdktf from 'cdktf';
 export interface ScalewayProviderConfig {
   /**
   * The Scaleway access key.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#access_key ScalewayProvider#access_key}
   */
   readonly accessKey?: string;
   /**
   * The Scaleway API URL to use.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#api_url ScalewayProvider#api_url}
   */
   readonly apiUrl?: string;
   /**
   * The Scaleway organization ID.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#organization_id ScalewayProvider#organization_id}
   */
   readonly organizationId?: string;
   /**
   * The Scaleway profile to use.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#profile ScalewayProvider#profile}
   */
   readonly profile?: string;
   /**
   * The Scaleway project ID.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#project_id ScalewayProvider#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#region ScalewayProvider#region}
   */
   readonly region?: string;
   /**
   * The Scaleway secret Key.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#secret_key ScalewayProvider#secret_key}
   */
   readonly secretKey?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#zone ScalewayProvider#zone}
   */
   readonly zone?: string;
   /**
   * Alias name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#alias ScalewayProvider#alias}
   */
   readonly alias?: string;
@@ -72,6 +72,20 @@ export class ScalewayProvider extends cdktf.TerraformProvider {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a ScalewayProvider resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the ScalewayProvider to import
+  * @param importFromId The id of the existing ScalewayProvider that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the ScalewayProvider to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -269,5 +283,67 @@ export class ScalewayProvider extends cdktf.TerraformProvider {
       zone: cdktf.stringToTerraform(this._zone),
       alias: cdktf.stringToTerraform(this._alias),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      access_key: {
+        value: cdktf.stringToHclTerraform(this._accessKey),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      api_url: {
+        value: cdktf.stringToHclTerraform(this._apiUrl),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      profile: {
+        value: cdktf.stringToHclTerraform(this._profile),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_key: {
+        value: cdktf.stringToHclTerraform(this._secretKey),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      alias: {
+        value: cdktf.stringToHclTerraform(this._alias),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

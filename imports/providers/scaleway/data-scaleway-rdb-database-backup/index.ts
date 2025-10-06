@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayRdbDatabaseBackupConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the Backup
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_database_backup#backup_id DataScalewayRdbDatabaseBackup#backup_id}
   */
   readonly backupId?: string;
@@ -22,19 +22,19 @@ export interface DataScalewayRdbDatabaseBackupConfig extends cdktf.TerraformMeta
   readonly id?: string;
   /**
   * Instance on which the user is created
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_database_backup#instance_id DataScalewayRdbDatabaseBackup#instance_id}
   */
   readonly instanceId?: string;
   /**
   * Name of the backup.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_database_backup#name DataScalewayRdbDatabaseBackup#name}
   */
   readonly name?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_database_backup#region DataScalewayRdbDatabaseBackup#region}
   */
   readonly region?: string;
@@ -49,6 +49,20 @@ export class DataScalewayRdbDatabaseBackup extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_rdb_database_backup";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayRdbDatabaseBackup resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayRdbDatabaseBackup to import
+  * @param importFromId The id of the existing DataScalewayRdbDatabaseBackup that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_database_backup#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayRdbDatabaseBackup to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_rdb_database_backup", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -210,5 +224,43 @@ export class DataScalewayRdbDatabaseBackup extends cdktf.TerraformDataSource {
       name: cdktf.stringToTerraform(this._name),
       region: cdktf.stringToTerraform(this._region),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      backup_id: {
+        value: cdktf.stringToHclTerraform(this._backupId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_id: {
+        value: cdktf.stringToHclTerraform(this._instanceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

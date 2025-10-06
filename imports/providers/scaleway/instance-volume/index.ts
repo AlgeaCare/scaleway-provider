@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface InstanceVolumeConfig extends cdktf.TerraformMetaArguments {
   /**
   * Create a volume based on a image
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#from_snapshot_id InstanceVolume#from_snapshot_id}
   */
   readonly fromSnapshotId?: string;
@@ -22,43 +22,43 @@ export interface InstanceVolumeConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the volume
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#name InstanceVolume#name}
   */
   readonly name?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#project_id InstanceVolume#project_id}
   */
   readonly projectId?: string;
   /**
   * The size of the volume in gigabyte
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#size_in_gb InstanceVolume#size_in_gb}
   */
   readonly sizeInGb?: number;
   /**
   * The tags associated with the volume
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#tags InstanceVolume#tags}
   */
   readonly tags?: string[];
   /**
   * The volume type
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#type InstanceVolume#type}
   */
   readonly type: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#zone InstanceVolume#zone}
   */
   readonly zone?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#timeouts InstanceVolume#timeouts}
   */
   readonly timeouts?: InstanceVolumeTimeouts;
@@ -93,6 +93,43 @@ export function instanceVolumeTimeoutsToTerraform(struct?: InstanceVolumeTimeout
     delete: cdktf.stringToTerraform(struct!.delete),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function instanceVolumeTimeoutsToHclTerraform(struct?: InstanceVolumeTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class InstanceVolumeTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -229,6 +266,20 @@ export class InstanceVolume extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_instance_volume";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a InstanceVolume resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the InstanceVolume to import
+  * @param importFromId The id of the existing InstanceVolume that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/instance_volume#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the InstanceVolume to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_volume", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -439,5 +490,67 @@ export class InstanceVolume extends cdktf.TerraformResource {
       zone: cdktf.stringToTerraform(this._zone),
       timeouts: instanceVolumeTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      from_snapshot_id: {
+        value: cdktf.stringToHclTerraform(this._fromSnapshotId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      size_in_gb: {
+        value: cdktf.numberToHclTerraform(this._sizeInGb),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      type: {
+        value: cdktf.stringToHclTerraform(this._type),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: instanceVolumeTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "InstanceVolumeTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

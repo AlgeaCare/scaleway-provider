@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DocumentdbInstanceConfig extends cdktf.TerraformMetaArguments {
   /**
   * Database's engine version id
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#engine DocumentdbInstance#engine}
   */
   readonly engine: string;
@@ -22,73 +22,73 @@ export interface DocumentdbInstanceConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * Enable or disable high availability for the database instance
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#is_ha_cluster DocumentdbInstance#is_ha_cluster}
   */
   readonly isHaCluster?: boolean | cdktf.IResolvable;
   /**
   * The document db instance name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#name DocumentdbInstance#name}
   */
   readonly name?: string;
   /**
   * The type of database instance you want to create
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#node_type DocumentdbInstance#node_type}
   */
   readonly nodeType: string;
   /**
   * Password for the first user of the database instance
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#password DocumentdbInstance#password}
   */
   readonly password?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#project_id DocumentdbInstance#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#region DocumentdbInstance#region}
   */
   readonly region?: string;
   /**
   * List of tags ["tag1", "tag2", ...] attached to a database instance
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#tags DocumentdbInstance#tags}
   */
   readonly tags?: string[];
   /**
   *  Enable telemetry to collects basic anonymous usage data and sends them to FerretDB telemetry service
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#telemetry_enabled DocumentdbInstance#telemetry_enabled}
   */
   readonly telemetryEnabled?: boolean | cdktf.IResolvable;
   /**
   * Identifier for the first user of the database instance
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#user_name DocumentdbInstance#user_name}
   */
   readonly userName?: string;
   /**
   * Volume size (in GB) when volume_type is not lssd
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#volume_size_in_gb DocumentdbInstance#volume_size_in_gb}
   */
   readonly volumeSizeInGb?: number;
   /**
   * Type of volume where data are stored
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#volume_type DocumentdbInstance#volume_type}
   */
   readonly volumeType?: string;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#timeouts DocumentdbInstance#timeouts}
   */
   readonly timeouts?: DocumentdbInstanceTimeouts;
@@ -128,6 +128,49 @@ export function documentdbInstanceTimeoutsToTerraform(struct?: DocumentdbInstanc
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function documentdbInstanceTimeoutsToHclTerraform(struct?: DocumentdbInstanceTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class DocumentdbInstanceTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -286,6 +329,20 @@ export class DocumentdbInstance extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_documentdb_instance";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DocumentdbInstance resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DocumentdbInstance to import
+  * @param importFromId The id of the existing DocumentdbInstance that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/documentdb_instance#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DocumentdbInstance to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_documentdb_instance", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -573,5 +630,97 @@ export class DocumentdbInstance extends cdktf.TerraformResource {
       volume_type: cdktf.stringToTerraform(this._volumeType),
       timeouts: documentdbInstanceTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      engine: {
+        value: cdktf.stringToHclTerraform(this._engine),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      is_ha_cluster: {
+        value: cdktf.booleanToHclTerraform(this._isHaCluster),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      node_type: {
+        value: cdktf.stringToHclTerraform(this._nodeType),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      password: {
+        value: cdktf.stringToHclTerraform(this._password),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      telemetry_enabled: {
+        value: cdktf.booleanToHclTerraform(this._telemetryEnabled),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      user_name: {
+        value: cdktf.stringToHclTerraform(this._userName),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      volume_size_in_gb: {
+        value: cdktf.numberToHclTerraform(this._volumeSizeInGb),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+      volume_type: {
+        value: cdktf.stringToHclTerraform(this._volumeType),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      timeouts: {
+        value: documentdbInstanceTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "DocumentdbInstanceTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

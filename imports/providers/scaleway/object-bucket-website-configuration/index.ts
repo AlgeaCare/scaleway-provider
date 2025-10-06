@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface ObjectBucketWebsiteConfigurationConfig extends cdktf.TerraformMetaArguments {
   /**
   * The bucket name.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_website_configuration#bucket ObjectBucketWebsiteConfiguration#bucket}
   */
   readonly bucket: string;
@@ -22,25 +22,25 @@ export interface ObjectBucketWebsiteConfigurationConfig extends cdktf.TerraformM
   readonly id?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_website_configuration#project_id ObjectBucketWebsiteConfiguration#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_website_configuration#region ObjectBucketWebsiteConfiguration#region}
   */
   readonly region?: string;
   /**
   * error_document block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_website_configuration#error_document ObjectBucketWebsiteConfiguration#error_document}
   */
   readonly errorDocument?: ObjectBucketWebsiteConfigurationErrorDocument;
   /**
   * index_document block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_website_configuration#index_document ObjectBucketWebsiteConfiguration#index_document}
   */
   readonly indexDocument: ObjectBucketWebsiteConfigurationIndexDocument;
@@ -60,6 +60,25 @@ export function objectBucketWebsiteConfigurationErrorDocumentToTerraform(struct?
   return {
     key: cdktf.stringToTerraform(struct!.key),
   }
+}
+
+
+export function objectBucketWebsiteConfigurationErrorDocumentToHclTerraform(struct?: ObjectBucketWebsiteConfigurationErrorDocumentOutputReference | ObjectBucketWebsiteConfigurationErrorDocument): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    key: {
+      value: cdktf.stringToHclTerraform(struct!.key),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketWebsiteConfigurationErrorDocumentOutputReference extends cdktf.ComplexObject {
@@ -124,6 +143,25 @@ export function objectBucketWebsiteConfigurationIndexDocumentToTerraform(struct?
   }
 }
 
+
+export function objectBucketWebsiteConfigurationIndexDocumentToHclTerraform(struct?: ObjectBucketWebsiteConfigurationIndexDocumentOutputReference | ObjectBucketWebsiteConfigurationIndexDocument): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    suffix: {
+      value: cdktf.stringToHclTerraform(struct!.suffix),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
+}
+
 export class ObjectBucketWebsiteConfigurationIndexDocumentOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -179,6 +217,20 @@ export class ObjectBucketWebsiteConfiguration extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_object_bucket_website_configuration";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a ObjectBucketWebsiteConfiguration resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the ObjectBucketWebsiteConfiguration to import
+  * @param importFromId The id of the existing ObjectBucketWebsiteConfiguration that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket_website_configuration#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the ObjectBucketWebsiteConfiguration to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_object_bucket_website_configuration", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -332,5 +384,49 @@ export class ObjectBucketWebsiteConfiguration extends cdktf.TerraformResource {
       error_document: objectBucketWebsiteConfigurationErrorDocumentToTerraform(this._errorDocument.internalValue),
       index_document: objectBucketWebsiteConfigurationIndexDocumentToTerraform(this._indexDocument.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      bucket: {
+        value: cdktf.stringToHclTerraform(this._bucket),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      error_document: {
+        value: objectBucketWebsiteConfigurationErrorDocumentToHclTerraform(this._errorDocument.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "ObjectBucketWebsiteConfigurationErrorDocumentList",
+      },
+      index_document: {
+        value: objectBucketWebsiteConfigurationIndexDocumentToHclTerraform(this._indexDocument.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "ObjectBucketWebsiteConfigurationIndexDocumentList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayVpcPublicGatewayDhcpReservationConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the owning GatewayNetwork (UUID format).
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_dhcp_reservation#gateway_network_id DataScalewayVpcPublicGatewayDhcpReservation#gateway_network_id}
   */
   readonly gatewayNetworkId?: string;
@@ -22,25 +22,25 @@ export interface DataScalewayVpcPublicGatewayDhcpReservationConfig extends cdktf
   readonly id?: string;
   /**
   * The MAC address to give a static entry to.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_dhcp_reservation#mac_address DataScalewayVpcPublicGatewayDhcpReservation#mac_address}
   */
   readonly macAddress?: string;
   /**
   * The ID of dhcp entry reservation
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_dhcp_reservation#reservation_id DataScalewayVpcPublicGatewayDhcpReservation#reservation_id}
   */
   readonly reservationId?: string;
   /**
   * Wait the the mac address in dhcp entries
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_dhcp_reservation#wait_for_dhcp DataScalewayVpcPublicGatewayDhcpReservation#wait_for_dhcp}
   */
   readonly waitForDhcp?: boolean | cdktf.IResolvable;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_dhcp_reservation#zone DataScalewayVpcPublicGatewayDhcpReservation#zone}
   */
   readonly zone?: string;
@@ -55,6 +55,20 @@ export class DataScalewayVpcPublicGatewayDhcpReservation extends cdktf.Terraform
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_public_gateway_dhcp_reservation";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayVpcPublicGatewayDhcpReservation resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayVpcPublicGatewayDhcpReservation to import
+  * @param importFromId The id of the existing DataScalewayVpcPublicGatewayDhcpReservation that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_dhcp_reservation#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayVpcPublicGatewayDhcpReservation to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_public_gateway_dhcp_reservation", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -229,5 +243,49 @@ export class DataScalewayVpcPublicGatewayDhcpReservation extends cdktf.Terraform
       wait_for_dhcp: cdktf.booleanToTerraform(this._waitForDhcp),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      gateway_network_id: {
+        value: cdktf.stringToHclTerraform(this._gatewayNetworkId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      mac_address: {
+        value: cdktf.stringToHclTerraform(this._macAddress),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      reservation_id: {
+        value: cdktf.stringToHclTerraform(this._reservationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      wait_for_dhcp: {
+        value: cdktf.booleanToHclTerraform(this._waitForDhcp),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

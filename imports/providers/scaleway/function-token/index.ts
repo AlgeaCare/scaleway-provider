@@ -32,7 +32,7 @@ export interface FunctionTokenConfig extends cdktf.TerraformMetaArguments {
   readonly namespaceId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_token#region FunctionToken#region}
   */
   readonly region?: string;
@@ -47,6 +47,20 @@ export class FunctionToken extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_function_token";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a FunctionToken resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the FunctionToken to import
+  * @param importFromId The id of the existing FunctionToken that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/function_token#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the FunctionToken to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_function_token", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -201,5 +215,49 @@ export class FunctionToken extends cdktf.TerraformResource {
       namespace_id: cdktf.stringToTerraform(this._namespaceId),
       region: cdktf.stringToTerraform(this._region),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      expires_at: {
+        value: cdktf.stringToHclTerraform(this._expiresAt),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      function_id: {
+        value: cdktf.stringToHclTerraform(this._functionId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      namespace_id: {
+        value: cdktf.stringToHclTerraform(this._namespaceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

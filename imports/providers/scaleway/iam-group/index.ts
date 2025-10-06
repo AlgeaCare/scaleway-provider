@@ -9,19 +9,19 @@ import * as cdktf from 'cdktf';
 export interface IamGroupConfig extends cdktf.TerraformMetaArguments {
   /**
   * List of IDs of the applications attached to the group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#application_ids IamGroup#application_ids}
   */
   readonly applicationIds?: string[];
   /**
   * The description of the iam group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#description IamGroup#description}
   */
   readonly description?: string;
   /**
   * Handle user and application memberships externally
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#external_membership IamGroup#external_membership}
   */
   readonly externalMembership?: boolean | cdktf.IResolvable;
@@ -34,25 +34,25 @@ export interface IamGroupConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the iam group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#name IamGroup#name}
   */
   readonly name?: string;
   /**
   * ID of organization the resource is associated to.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#organization_id IamGroup#organization_id}
   */
   readonly organizationId?: string;
   /**
   * The tags associated with the application
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#tags IamGroup#tags}
   */
   readonly tags?: string[];
   /**
   * List of IDs of the users attached to the group
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#user_ids IamGroup#user_ids}
   */
   readonly userIds?: string[];
@@ -67,6 +67,20 @@ export class IamGroup extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_iam_group";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a IamGroup resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the IamGroup to import
+  * @param importFromId The id of the existing IamGroup that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/iam_group#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the IamGroup to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_iam_group", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -262,5 +276,61 @@ export class IamGroup extends cdktf.TerraformResource {
       tags: cdktf.listMapper(cdktf.stringToTerraform, false)(this._tags),
       user_ids: cdktf.listMapper(cdktf.stringToTerraform, false)(this._userIds),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      application_ids: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._applicationIds),
+        isBlock: false,
+        type: "set",
+        storageClassType: "stringList",
+      },
+      description: {
+        value: cdktf.stringToHclTerraform(this._description),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      external_membership: {
+        value: cdktf.booleanToHclTerraform(this._externalMembership),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      organization_id: {
+        value: cdktf.stringToHclTerraform(this._organizationId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._tags),
+        isBlock: false,
+        type: "list",
+        storageClassType: "stringList",
+      },
+      user_ids: {
+        value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(this._userIds),
+        isBlock: false,
+        type: "set",
+        storageClassType: "stringList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

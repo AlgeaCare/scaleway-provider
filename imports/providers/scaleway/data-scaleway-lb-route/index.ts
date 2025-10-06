@@ -16,7 +16,7 @@ export interface DataScalewayLbRouteConfig extends cdktf.TerraformMetaArguments 
   readonly id?: string;
   /**
   * The ID of the route
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_route#route_id DataScalewayLbRoute#route_id}
   */
   readonly routeId: string;
@@ -31,6 +31,20 @@ export class DataScalewayLbRoute extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_lb_route";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayLbRoute resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayLbRoute to import
+  * @param importFromId The id of the existing DataScalewayLbRoute that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_route#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayLbRoute to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_lb_route", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -135,5 +149,25 @@ export class DataScalewayLbRoute extends cdktf.TerraformDataSource {
       id: cdktf.stringToTerraform(this._id),
       route_id: cdktf.stringToTerraform(this._routeId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      route_id: {
+        value: cdktf.stringToHclTerraform(this._routeId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayFlexibleIpConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the IPv4 address
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/flexible_ip#flexible_ip_id DataScalewayFlexibleIp#flexible_ip_id}
   */
   readonly flexibleIpId?: string;
@@ -22,13 +22,13 @@ export interface DataScalewayFlexibleIpConfig extends cdktf.TerraformMetaArgumen
   readonly id?: string;
   /**
   * The IPv4 address
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/flexible_ip#ip_address DataScalewayFlexibleIp#ip_address}
   */
   readonly ipAddress?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/flexible_ip#project_id DataScalewayFlexibleIp#project_id}
   */
   readonly projectId?: string;
@@ -43,6 +43,20 @@ export class DataScalewayFlexibleIp extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_flexible_ip";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayFlexibleIp resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayFlexibleIp to import
+  * @param importFromId The id of the existing DataScalewayFlexibleIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/flexible_ip#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayFlexibleIp to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_flexible_ip", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -206,5 +220,37 @@ export class DataScalewayFlexibleIp extends cdktf.TerraformDataSource {
       ip_address: cdktf.stringToTerraform(this._ipAddress),
       project_id: cdktf.stringToTerraform(this._projectId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      flexible_ip_id: {
+        value: cdktf.stringToHclTerraform(this._flexibleIpId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      ip_address: {
+        value: cdktf.stringToHclTerraform(this._ipAddress),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

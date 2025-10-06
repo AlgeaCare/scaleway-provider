@@ -16,31 +16,31 @@ export interface LbCertificateConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The load-balancer ID
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#lb_id LbCertificate#lb_id}
   */
   readonly lbId: string;
   /**
   * The name of the load-balancer certificate
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#name LbCertificate#name}
   */
   readonly name?: string;
   /**
   * custom_certificate block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#custom_certificate LbCertificate#custom_certificate}
   */
   readonly customCertificate?: LbCertificateCustomCertificate;
   /**
   * letsencrypt block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#letsencrypt LbCertificate#letsencrypt}
   */
   readonly letsencrypt?: LbCertificateLetsencrypt;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#timeouts LbCertificate#timeouts}
   */
   readonly timeouts?: LbCertificateTimeouts;
@@ -48,7 +48,7 @@ export interface LbCertificateConfig extends cdktf.TerraformMetaArguments {
 export interface LbCertificateCustomCertificate {
   /**
   * The full PEM-formatted certificate chain
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#certificate_chain LbCertificate#certificate_chain}
   */
   readonly certificateChain: string;
@@ -62,6 +62,25 @@ export function lbCertificateCustomCertificateToTerraform(struct?: LbCertificate
   return {
     certificate_chain: cdktf.stringToTerraform(struct!.certificateChain),
   }
+}
+
+
+export function lbCertificateCustomCertificateToHclTerraform(struct?: LbCertificateCustomCertificateOutputReference | LbCertificateCustomCertificate): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    certificate_chain: {
+      value: cdktf.stringToHclTerraform(struct!.certificateChain),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbCertificateCustomCertificateOutputReference extends cdktf.ComplexObject {
@@ -112,13 +131,13 @@ export class LbCertificateCustomCertificateOutputReference extends cdktf.Complex
 export interface LbCertificateLetsencrypt {
   /**
   * The main domain name of the certificate
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#common_name LbCertificate#common_name}
   */
   readonly commonName: string;
   /**
   * The alternative domain names of the certificate
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#subject_alternative_name LbCertificate#subject_alternative_name}
   */
   readonly subjectAlternativeName?: string[];
@@ -133,6 +152,31 @@ export function lbCertificateLetsencryptToTerraform(struct?: LbCertificateLetsen
     common_name: cdktf.stringToTerraform(struct!.commonName),
     subject_alternative_name: cdktf.listMapper(cdktf.stringToTerraform, false)(struct!.subjectAlternativeName),
   }
+}
+
+
+export function lbCertificateLetsencryptToHclTerraform(struct?: LbCertificateLetsencryptOutputReference | LbCertificateLetsencrypt): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    common_name: {
+      value: cdktf.stringToHclTerraform(struct!.commonName),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    subject_alternative_name: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.subjectAlternativeName),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbCertificateLetsencryptOutputReference extends cdktf.ComplexObject {
@@ -237,6 +281,49 @@ export function lbCertificateTimeoutsToTerraform(struct?: LbCertificateTimeouts 
     read: cdktf.stringToTerraform(struct!.read),
     update: cdktf.stringToTerraform(struct!.update),
   }
+}
+
+
+export function lbCertificateTimeoutsToHclTerraform(struct?: LbCertificateTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    update: {
+      value: cdktf.stringToHclTerraform(struct!.update),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class LbCertificateTimeoutsOutputReference extends cdktf.ComplexObject {
@@ -395,6 +482,20 @@ export class LbCertificate extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_lb_certificate";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a LbCertificate resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the LbCertificate to import
+  * @param importFromId The id of the existing LbCertificate that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/lb_certificate#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the LbCertificate to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_lb_certificate", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -571,5 +672,49 @@ export class LbCertificate extends cdktf.TerraformResource {
       letsencrypt: lbCertificateLetsencryptToTerraform(this._letsencrypt.internalValue),
       timeouts: lbCertificateTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      lb_id: {
+        value: cdktf.stringToHclTerraform(this._lbId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      custom_certificate: {
+        value: lbCertificateCustomCertificateToHclTerraform(this._customCertificate.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "LbCertificateCustomCertificateList",
+      },
+      letsencrypt: {
+        value: lbCertificateLetsencryptToHclTerraform(this._letsencrypt.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "LbCertificateLetsencryptList",
+      },
+      timeouts: {
+        value: lbCertificateTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "LbCertificateTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

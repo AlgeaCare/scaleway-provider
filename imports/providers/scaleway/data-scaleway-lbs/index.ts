@@ -16,19 +16,19 @@ export interface DataScalewayLbsConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * LBs with a name like it are listed.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lbs#name DataScalewayLbs#name}
   */
   readonly name?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lbs#project_id DataScalewayLbs#project_id}
   */
   readonly projectId?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lbs#zone DataScalewayLbs#zone}
   */
   readonly zone?: string;
@@ -43,6 +43,17 @@ export function dataScalewayLbsLbsInstancesToTerraform(struct?: DataScalewayLbsL
   }
   return {
   }
+}
+
+
+export function dataScalewayLbsLbsInstancesToHclTerraform(struct?: DataScalewayLbsLbsInstances): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayLbsLbsInstancesOutputReference extends cdktf.ComplexObject {
@@ -132,6 +143,17 @@ export function dataScalewayLbsLbsIpsToTerraform(struct?: DataScalewayLbsLbsIps)
   }
   return {
   }
+}
+
+
+export function dataScalewayLbsLbsIpsToHclTerraform(struct?: DataScalewayLbsLbsIps): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayLbsLbsIpsOutputReference extends cdktf.ComplexObject {
@@ -226,6 +248,17 @@ export function dataScalewayLbsLbsToTerraform(struct?: DataScalewayLbsLbs): any 
   }
   return {
   }
+}
+
+
+export function dataScalewayLbsLbsToHclTerraform(struct?: DataScalewayLbsLbs): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayLbsLbsOutputReference extends cdktf.ComplexObject {
@@ -383,6 +416,20 @@ export class DataScalewayLbs extends cdktf.TerraformDataSource {
   // =================
   public static readonly tfResourceType = "scaleway_lbs";
 
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayLbs resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayLbs to import
+  * @param importFromId The id of the existing DataScalewayLbs that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lbs#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayLbs to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_lbs", importId: importFromId, provider });
+      }
+
   // ===========
   // INITIALIZER
   // ===========
@@ -506,5 +553,37 @@ export class DataScalewayLbs extends cdktf.TerraformDataSource {
       project_id: cdktf.stringToTerraform(this._projectId),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -16,25 +16,25 @@ export interface CockpitTokenConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the token
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#name CockpitToken#name}
   */
   readonly name: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#project_id CockpitToken#project_id}
   */
   readonly projectId?: string;
   /**
   * scopes block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#scopes CockpitToken#scopes}
   */
   readonly scopes?: CockpitTokenScopes;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#timeouts CockpitToken#timeouts}
   */
   readonly timeouts?: CockpitTokenTimeouts;
@@ -42,55 +42,55 @@ export interface CockpitTokenConfig extends cdktf.TerraformMetaArguments {
 export interface CockpitTokenScopes {
   /**
   * Query logs
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#query_logs CockpitToken#query_logs}
   */
   readonly queryLogs?: boolean | cdktf.IResolvable;
   /**
   * Query metrics
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#query_metrics CockpitToken#query_metrics}
   */
   readonly queryMetrics?: boolean | cdktf.IResolvable;
   /**
   * Query traces
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#query_traces CockpitToken#query_traces}
   */
   readonly queryTraces?: boolean | cdktf.IResolvable;
   /**
   * Setup alerts
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#setup_alerts CockpitToken#setup_alerts}
   */
   readonly setupAlerts?: boolean | cdktf.IResolvable;
   /**
   * Setup logs rules
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#setup_logs_rules CockpitToken#setup_logs_rules}
   */
   readonly setupLogsRules?: boolean | cdktf.IResolvable;
   /**
   * Setup metrics rules
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#setup_metrics_rules CockpitToken#setup_metrics_rules}
   */
   readonly setupMetricsRules?: boolean | cdktf.IResolvable;
   /**
   * Write logs
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#write_logs CockpitToken#write_logs}
   */
   readonly writeLogs?: boolean | cdktf.IResolvable;
   /**
   * Write metrics
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#write_metrics CockpitToken#write_metrics}
   */
   readonly writeMetrics?: boolean | cdktf.IResolvable;
   /**
   * Write traces
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#write_traces CockpitToken#write_traces}
   */
   readonly writeTraces?: boolean | cdktf.IResolvable;
@@ -112,6 +112,73 @@ export function cockpitTokenScopesToTerraform(struct?: CockpitTokenScopesOutputR
     write_metrics: cdktf.booleanToTerraform(struct!.writeMetrics),
     write_traces: cdktf.booleanToTerraform(struct!.writeTraces),
   }
+}
+
+
+export function cockpitTokenScopesToHclTerraform(struct?: CockpitTokenScopesOutputReference | CockpitTokenScopes): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    query_logs: {
+      value: cdktf.booleanToHclTerraform(struct!.queryLogs),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    query_metrics: {
+      value: cdktf.booleanToHclTerraform(struct!.queryMetrics),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    query_traces: {
+      value: cdktf.booleanToHclTerraform(struct!.queryTraces),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    setup_alerts: {
+      value: cdktf.booleanToHclTerraform(struct!.setupAlerts),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    setup_logs_rules: {
+      value: cdktf.booleanToHclTerraform(struct!.setupLogsRules),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    setup_metrics_rules: {
+      value: cdktf.booleanToHclTerraform(struct!.setupMetricsRules),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    write_logs: {
+      value: cdktf.booleanToHclTerraform(struct!.writeLogs),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    write_metrics: {
+      value: cdktf.booleanToHclTerraform(struct!.writeMetrics),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    write_traces: {
+      value: cdktf.booleanToHclTerraform(struct!.writeTraces),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class CockpitTokenScopesOutputReference extends cdktf.ComplexObject {
@@ -370,6 +437,43 @@ export function cockpitTokenTimeoutsToTerraform(struct?: CockpitTokenTimeouts | 
   }
 }
 
+
+export function cockpitTokenTimeoutsToHclTerraform(struct?: CockpitTokenTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    create: {
+      value: cdktf.stringToHclTerraform(struct!.create),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    delete: {
+      value: cdktf.stringToHclTerraform(struct!.delete),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    read: {
+      value: cdktf.stringToHclTerraform(struct!.read),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
+}
+
 export class CockpitTokenTimeoutsOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
   private resolvableValue?: cdktf.IResolvable;
@@ -505,6 +609,20 @@ export class CockpitToken extends cdktf.TerraformResource {
   // =================
   public static readonly tfResourceType = "scaleway_cockpit_token";
 
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a CockpitToken resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the CockpitToken to import
+  * @param importFromId The id of the existing CockpitToken that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/cockpit_token#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the CockpitToken to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_cockpit_token", importId: importFromId, provider });
+      }
+
   // ===========
   // INITIALIZER
   // ===========
@@ -637,5 +755,43 @@ export class CockpitToken extends cdktf.TerraformResource {
       scopes: cockpitTokenScopesToTerraform(this._scopes.internalValue),
       timeouts: cockpitTokenTimeoutsToTerraform(this._timeouts.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      scopes: {
+        value: cockpitTokenScopesToHclTerraform(this._scopes.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "CockpitTokenScopesList",
+      },
+      timeouts: {
+        value: cockpitTokenTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "CockpitTokenTimeouts",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

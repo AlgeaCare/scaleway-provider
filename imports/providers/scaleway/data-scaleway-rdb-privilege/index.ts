@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayRdbPrivilegeConfig extends cdktf.TerraformMetaArguments {
   /**
   * Database name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_privilege#database_name DataScalewayRdbPrivilege#database_name}
   */
   readonly databaseName: string;
@@ -22,19 +22,19 @@ export interface DataScalewayRdbPrivilegeConfig extends cdktf.TerraformMetaArgum
   readonly id?: string;
   /**
   * Instance on which the database is created
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_privilege#instance_id DataScalewayRdbPrivilege#instance_id}
   */
   readonly instanceId: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_privilege#region DataScalewayRdbPrivilege#region}
   */
   readonly region?: string;
   /**
   * User name
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_privilege#user_name DataScalewayRdbPrivilege#user_name}
   */
   readonly userName: string;
@@ -49,6 +49,20 @@ export class DataScalewayRdbPrivilege extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_rdb_privilege";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayRdbPrivilege resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayRdbPrivilege to import
+  * @param importFromId The id of the existing DataScalewayRdbPrivilege that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/rdb_privilege#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayRdbPrivilege to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_rdb_privilege", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -176,5 +190,43 @@ export class DataScalewayRdbPrivilege extends cdktf.TerraformDataSource {
       region: cdktf.stringToTerraform(this._region),
       user_name: cdktf.stringToTerraform(this._userName),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      database_name: {
+        value: cdktf.stringToHclTerraform(this._databaseName),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      instance_id: {
+        value: cdktf.stringToHclTerraform(this._instanceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      user_name: {
+        value: cdktf.stringToHclTerraform(this._userName),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

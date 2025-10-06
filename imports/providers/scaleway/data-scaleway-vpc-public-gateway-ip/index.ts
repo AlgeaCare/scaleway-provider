@@ -16,7 +16,7 @@ export interface DataScalewayVpcPublicGatewayIpConfig extends cdktf.TerraformMet
   readonly id?: string;
   /**
   * The ID of the IP
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_ip#ip_id DataScalewayVpcPublicGatewayIp#ip_id}
   */
   readonly ipId?: string;
@@ -31,6 +31,20 @@ export class DataScalewayVpcPublicGatewayIp extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_vpc_public_gateway_ip";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayVpcPublicGatewayIp resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayVpcPublicGatewayIp to import
+  * @param importFromId The id of the existing DataScalewayVpcPublicGatewayIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/vpc_public_gateway_ip#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayVpcPublicGatewayIp to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_vpc_public_gateway_ip", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -148,5 +162,25 @@ export class DataScalewayVpcPublicGatewayIp extends cdktf.TerraformDataSource {
       id: cdktf.stringToTerraform(this._id),
       ip_id: cdktf.stringToTerraform(this._ipId),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      ip_id: {
+        value: cdktf.stringToHclTerraform(this._ipId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

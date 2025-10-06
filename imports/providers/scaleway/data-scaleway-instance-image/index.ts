@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayInstanceImageConfig extends cdktf.TerraformMetaArguments {
   /**
   * Architecture of the desired image
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_image#architecture DataScalewayInstanceImage#architecture}
   */
   readonly architecture?: string;
@@ -22,31 +22,31 @@ export interface DataScalewayInstanceImageConfig extends cdktf.TerraformMetaArgu
   readonly id?: string;
   /**
   * ID of the desired image
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_image#image_id DataScalewayInstanceImage#image_id}
   */
   readonly imageId?: string;
   /**
   * Select most recent image if multiple match
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_image#latest DataScalewayInstanceImage#latest}
   */
   readonly latest?: boolean | cdktf.IResolvable;
   /**
   * Exact name of the desired image
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_image#name DataScalewayInstanceImage#name}
   */
   readonly name?: string;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_image#project_id DataScalewayInstanceImage#project_id}
   */
   readonly projectId?: string;
   /**
   * The zone you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_image#zone DataScalewayInstanceImage#zone}
   */
   readonly zone?: string;
@@ -61,6 +61,20 @@ export class DataScalewayInstanceImage extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_instance_image";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayInstanceImage resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayInstanceImage to import
+  * @param importFromId The id of the existing DataScalewayInstanceImage that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/instance_image#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayInstanceImage to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_instance_image", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -273,5 +287,55 @@ export class DataScalewayInstanceImage extends cdktf.TerraformDataSource {
       project_id: cdktf.stringToTerraform(this._projectId),
       zone: cdktf.stringToTerraform(this._zone),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      architecture: {
+        value: cdktf.stringToHclTerraform(this._architecture),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      image_id: {
+        value: cdktf.stringToHclTerraform(this._imageId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      latest: {
+        value: cdktf.booleanToHclTerraform(this._latest),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

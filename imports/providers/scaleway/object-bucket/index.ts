@@ -9,13 +9,13 @@ import * as cdktf from 'cdktf';
 export interface ObjectBucketConfig extends cdktf.TerraformMetaArguments {
   /**
   * ACL of the bucket: either 'public-read' or 'private'.
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#acl ObjectBucket#acl}
   */
   readonly acl?: string;
   /**
   * Delete objects in bucket
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#force_destroy ObjectBucket#force_destroy}
   */
   readonly forceDestroy?: boolean | cdktf.IResolvable;
@@ -28,55 +28,55 @@ export interface ObjectBucketConfig extends cdktf.TerraformMetaArguments {
   readonly id?: string;
   /**
   * The name of the bucket
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#name ObjectBucket#name}
   */
   readonly name: string;
   /**
   * Enable object lock
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#object_lock_enabled ObjectBucket#object_lock_enabled}
   */
   readonly objectLockEnabled?: boolean | cdktf.IResolvable;
   /**
   * The project_id you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#project_id ObjectBucket#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#region ObjectBucket#region}
   */
   readonly region?: string;
   /**
   * The tags associated with this bucket
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#tags ObjectBucket#tags}
   */
   readonly tags?: { [key: string]: string };
   /**
   * cors_rule block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#cors_rule ObjectBucket#cors_rule}
   */
   readonly corsRule?: ObjectBucketCorsRule[] | cdktf.IResolvable;
   /**
   * lifecycle_rule block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#lifecycle_rule ObjectBucket#lifecycle_rule}
   */
   readonly lifecycleRule?: ObjectBucketLifecycleRule[] | cdktf.IResolvable;
   /**
   * timeouts block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#timeouts ObjectBucket#timeouts}
   */
   readonly timeouts?: ObjectBucketTimeouts;
   /**
   * versioning block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#versioning ObjectBucket#versioning}
   */
   readonly versioning?: ObjectBucketVersioning;
@@ -116,6 +116,49 @@ export function objectBucketCorsRuleToTerraform(struct?: ObjectBucketCorsRule | 
     expose_headers: cdktf.listMapper(cdktf.stringToTerraform, false)(struct!.exposeHeaders),
     max_age_seconds: cdktf.numberToTerraform(struct!.maxAgeSeconds),
   }
+}
+
+
+export function objectBucketCorsRuleToHclTerraform(struct?: ObjectBucketCorsRule | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    allowed_headers: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.allowedHeaders),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+    allowed_methods: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.allowedMethods),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+    allowed_origins: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.allowedOrigins),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+    expose_headers: {
+      value: cdktf.listMapperHcl(cdktf.stringToHclTerraform, false)(struct!.exposeHeaders),
+      isBlock: false,
+      type: "list",
+      storageClassType: "stringList",
+    },
+    max_age_seconds: {
+      value: cdktf.numberToHclTerraform(struct!.maxAgeSeconds),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketCorsRuleOutputReference extends cdktf.ComplexObject {
@@ -283,7 +326,7 @@ export class ObjectBucketCorsRuleList extends cdktf.ComplexList {
 export interface ObjectBucketLifecycleRuleExpiration {
   /**
   * Specifies the number of days after object creation when the specific rule action takes effect
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#days ObjectBucket#days}
   */
   readonly days: number;
@@ -297,6 +340,25 @@ export function objectBucketLifecycleRuleExpirationToTerraform(struct?: ObjectBu
   return {
     days: cdktf.numberToTerraform(struct!.days),
   }
+}
+
+
+export function objectBucketLifecycleRuleExpirationToHclTerraform(struct?: ObjectBucketLifecycleRuleExpirationOutputReference | ObjectBucketLifecycleRuleExpiration): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    days: {
+      value: cdktf.numberToHclTerraform(struct!.days),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketLifecycleRuleExpirationOutputReference extends cdktf.ComplexObject {
@@ -347,13 +409,13 @@ export class ObjectBucketLifecycleRuleExpirationOutputReference extends cdktf.Co
 export interface ObjectBucketLifecycleRuleTransition {
   /**
   * Specifies the number of days after object creation when the specific rule action takes effect
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#days ObjectBucket#days}
   */
   readonly days?: number;
   /**
   * Specifies the Scaleway Object Storage class to which you want the object to transition
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#storage_class ObjectBucket#storage_class}
   */
   readonly storageClass: string;
@@ -368,6 +430,31 @@ export function objectBucketLifecycleRuleTransitionToTerraform(struct?: ObjectBu
     days: cdktf.numberToTerraform(struct!.days),
     storage_class: cdktf.stringToTerraform(struct!.storageClass),
   }
+}
+
+
+export function objectBucketLifecycleRuleTransitionToHclTerraform(struct?: ObjectBucketLifecycleRuleTransition | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    days: {
+      value: cdktf.numberToHclTerraform(struct!.days),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+    storage_class: {
+      value: cdktf.stringToHclTerraform(struct!.storageClass),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketLifecycleRuleTransitionOutputReference extends cdktf.ComplexObject {
@@ -472,19 +559,19 @@ export class ObjectBucketLifecycleRuleTransitionList extends cdktf.ComplexList {
 export interface ObjectBucketLifecycleRule {
   /**
   * Specifies the number of days after initiating a multipart upload when the multipart upload must be completed
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#abort_incomplete_multipart_upload_days ObjectBucket#abort_incomplete_multipart_upload_days}
   */
   readonly abortIncompleteMultipartUploadDays?: number;
   /**
   * Specifies if the configuration rule is Enabled or Disabled
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#enabled ObjectBucket#enabled}
   */
   readonly enabled: boolean | cdktf.IResolvable;
   /**
   * Unique identifier for the rule
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#id ObjectBucket#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
@@ -493,25 +580,25 @@ export interface ObjectBucketLifecycleRule {
   readonly id?: string;
   /**
   * The prefix identifying one or more objects to which the rule applies
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#prefix ObjectBucket#prefix}
   */
   readonly prefix?: string;
   /**
   * The tags associated with the bucket lifecycle
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#tags ObjectBucket#tags}
   */
   readonly tags?: { [key: string]: string };
   /**
   * expiration block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#expiration ObjectBucket#expiration}
   */
   readonly expiration?: ObjectBucketLifecycleRuleExpiration;
   /**
   * transition block
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#transition ObjectBucket#transition}
   */
   readonly transition?: ObjectBucketLifecycleRuleTransition[] | cdktf.IResolvable;
@@ -531,6 +618,61 @@ export function objectBucketLifecycleRuleToTerraform(struct?: ObjectBucketLifecy
     expiration: objectBucketLifecycleRuleExpirationToTerraform(struct!.expiration),
     transition: cdktf.listMapper(objectBucketLifecycleRuleTransitionToTerraform, true)(struct!.transition),
   }
+}
+
+
+export function objectBucketLifecycleRuleToHclTerraform(struct?: ObjectBucketLifecycleRule | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    abort_incomplete_multipart_upload_days: {
+      value: cdktf.numberToHclTerraform(struct!.abortIncompleteMultipartUploadDays),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "number",
+    },
+    enabled: {
+      value: cdktf.booleanToHclTerraform(struct!.enabled),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+    id: {
+      value: cdktf.stringToHclTerraform(struct!.id),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    prefix: {
+      value: cdktf.stringToHclTerraform(struct!.prefix),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+    tags: {
+      value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(struct!.tags),
+      isBlock: false,
+      type: "map",
+      storageClassType: "stringMap",
+    },
+    expiration: {
+      value: objectBucketLifecycleRuleExpirationToHclTerraform(struct!.expiration),
+      isBlock: true,
+      type: "list",
+      storageClassType: "ObjectBucketLifecycleRuleExpirationList",
+    },
+    transition: {
+      value: cdktf.listMapperHcl(objectBucketLifecycleRuleTransitionToHclTerraform, true)(struct!.transition),
+      isBlock: true,
+      type: "set",
+      storageClassType: "ObjectBucketLifecycleRuleTransitionList",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketLifecycleRuleOutputReference extends cdktf.ComplexObject {
@@ -759,6 +901,25 @@ export function objectBucketTimeoutsToTerraform(struct?: ObjectBucketTimeouts | 
   }
 }
 
+
+export function objectBucketTimeoutsToHclTerraform(struct?: ObjectBucketTimeouts | cdktf.IResolvable): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    default: {
+      value: cdktf.stringToHclTerraform(struct!.default),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "string",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
+}
+
 export class ObjectBucketTimeoutsOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
   private resolvableValue?: cdktf.IResolvable;
@@ -820,7 +981,7 @@ export class ObjectBucketTimeoutsOutputReference extends cdktf.ComplexObject {
 export interface ObjectBucketVersioning {
   /**
   * Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#enabled ObjectBucket#enabled}
   */
   readonly enabled?: boolean | cdktf.IResolvable;
@@ -834,6 +995,25 @@ export function objectBucketVersioningToTerraform(struct?: ObjectBucketVersionin
   return {
     enabled: cdktf.booleanToTerraform(struct!.enabled),
   }
+}
+
+
+export function objectBucketVersioningToHclTerraform(struct?: ObjectBucketVersioningOutputReference | ObjectBucketVersioning): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+    enabled: {
+      value: cdktf.booleanToHclTerraform(struct!.enabled),
+      isBlock: false,
+      type: "simple",
+      storageClassType: "boolean",
+    },
+  };
+
+  // remove undefined attributes
+  return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined));
 }
 
 export class ObjectBucketVersioningOutputReference extends cdktf.ComplexObject {
@@ -894,6 +1074,20 @@ export class ObjectBucket extends cdktf.TerraformResource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_object_bucket";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a ObjectBucket resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the ObjectBucket to import
+  * @param importFromId The id of the existing ObjectBucket that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/resources/object_bucket#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the ObjectBucket to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_object_bucket", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -1158,5 +1352,85 @@ export class ObjectBucket extends cdktf.TerraformResource {
       timeouts: objectBucketTimeoutsToTerraform(this._timeouts.internalValue),
       versioning: objectBucketVersioningToTerraform(this._versioning.internalValue),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      acl: {
+        value: cdktf.stringToHclTerraform(this._acl),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      force_destroy: {
+        value: cdktf.booleanToHclTerraform(this._forceDestroy),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      object_lock_enabled: {
+        value: cdktf.booleanToHclTerraform(this._objectLockEnabled),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "boolean",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      tags: {
+        value: cdktf.hashMapperHcl(cdktf.stringToHclTerraform)(this._tags),
+        isBlock: false,
+        type: "map",
+        storageClassType: "stringMap",
+      },
+      cors_rule: {
+        value: cdktf.listMapperHcl(objectBucketCorsRuleToHclTerraform, true)(this._corsRule.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "ObjectBucketCorsRuleList",
+      },
+      lifecycle_rule: {
+        value: cdktf.listMapperHcl(objectBucketLifecycleRuleToHclTerraform, true)(this._lifecycleRule.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "ObjectBucketLifecycleRuleList",
+      },
+      timeouts: {
+        value: objectBucketTimeoutsToHclTerraform(this._timeouts.internalValue),
+        isBlock: true,
+        type: "struct",
+        storageClassType: "ObjectBucketTimeouts",
+      },
+      versioning: {
+        value: objectBucketVersioningToHclTerraform(this._versioning.internalValue),
+        isBlock: true,
+        type: "list",
+        storageClassType: "ObjectBucketVersioningList",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

@@ -9,7 +9,7 @@ import * as cdktf from 'cdktf';
 export interface DataScalewayK8SPoolConfig extends cdktf.TerraformMetaArguments {
   /**
   * The ID of the cluster on which this pool will be created
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_pool#cluster_id DataScalewayK8SPool#cluster_id}
   */
   readonly clusterId?: string;
@@ -22,25 +22,25 @@ export interface DataScalewayK8SPoolConfig extends cdktf.TerraformMetaArguments 
   readonly id?: string;
   /**
   * The name of the cluster
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_pool#name DataScalewayK8SPool#name}
   */
   readonly name?: string;
   /**
   * The ID of the pool
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_pool#pool_id DataScalewayK8SPool#pool_id}
   */
   readonly poolId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_pool#region DataScalewayK8SPool#region}
   */
   readonly region?: string;
   /**
   * Size of the pool
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_pool#size DataScalewayK8SPool#size}
   */
   readonly size?: number;
@@ -55,6 +55,17 @@ export function dataScalewayK8SPoolNodesToTerraform(struct?: DataScalewayK8SPool
   }
   return {
   }
+}
+
+
+export function dataScalewayK8SPoolNodesToHclTerraform(struct?: DataScalewayK8SPoolNodes): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
 }
 
 export class DataScalewayK8SPoolNodesOutputReference extends cdktf.ComplexObject {
@@ -136,6 +147,17 @@ export function dataScalewayK8SPoolUpgradePolicyToTerraform(struct?: DataScalewa
   }
 }
 
+
+export function dataScalewayK8SPoolUpgradePolicyToHclTerraform(struct?: DataScalewayK8SPoolUpgradePolicy): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
 export class DataScalewayK8SPoolUpgradePolicyOutputReference extends cdktf.ComplexObject {
   private isEmptyObject = false;
 
@@ -203,6 +225,20 @@ export class DataScalewayK8SPool extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_k8s_pool";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayK8SPool resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayK8SPool to import
+  * @param importFromId The id of the existing DataScalewayK8SPool that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/k8s_pool#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayK8SPool to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_k8s_pool", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -460,5 +496,49 @@ export class DataScalewayK8SPool extends cdktf.TerraformDataSource {
       region: cdktf.stringToTerraform(this._region),
       size: cdktf.numberToTerraform(this._size),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      cluster_id: {
+        value: cdktf.stringToHclTerraform(this._clusterId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      pool_id: {
+        value: cdktf.stringToHclTerraform(this._poolId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      size: {
+        value: cdktf.numberToHclTerraform(this._size),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

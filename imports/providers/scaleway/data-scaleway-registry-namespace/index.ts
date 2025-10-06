@@ -16,19 +16,19 @@ export interface DataScalewayRegistryNamespaceConfig extends cdktf.TerraformMeta
   readonly id?: string;
   /**
   * The name of the container registry namespace
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/registry_namespace#name DataScalewayRegistryNamespace#name}
   */
   readonly name?: string;
   /**
   * The ID of the registry namespace
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/registry_namespace#namespace_id DataScalewayRegistryNamespace#namespace_id}
   */
   readonly namespaceId?: string;
   /**
   * The region you want to attach the resource to
-  * 
+  *
   * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/registry_namespace#region DataScalewayRegistryNamespace#region}
   */
   readonly region?: string;
@@ -43,6 +43,20 @@ export class DataScalewayRegistryNamespace extends cdktf.TerraformDataSource {
   // STATIC PROPERTIES
   // =================
   public static readonly tfResourceType = "scaleway_registry_namespace";
+
+  // ==============
+  // STATIC Methods
+  // ==============
+  /**
+  * Generates CDKTF code for importing a DataScalewayRegistryNamespace resource upon running "cdktf plan <stack-name>"
+  * @param scope The scope in which to define this construct
+  * @param importToId The construct id used in the generated config for the DataScalewayRegistryNamespace to import
+  * @param importFromId The id of the existing DataScalewayRegistryNamespace that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/registry_namespace#import import section} in the documentation of this resource for the id to use
+  * @param provider? Optional instance of the provider where the DataScalewayRegistryNamespace to import is found
+  */
+  public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
+        return new cdktf.ImportableResource(scope, importToId, { terraformResourceType: "scaleway_registry_namespace", importId: importFromId, provider });
+      }
 
   // ===========
   // INITIALIZER
@@ -181,5 +195,37 @@ export class DataScalewayRegistryNamespace extends cdktf.TerraformDataSource {
       namespace_id: cdktf.stringToTerraform(this._namespaceId),
       region: cdktf.stringToTerraform(this._region),
     };
+  }
+
+  protected synthesizeHclAttributes(): { [name: string]: any } {
+    const attrs = {
+      id: {
+        value: cdktf.stringToHclTerraform(this._id),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      name: {
+        value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      namespace_id: {
+        value: cdktf.stringToHclTerraform(this._namespaceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      region: {
+        value: cdktf.stringToHclTerraform(this._region),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+    };
+
+    // remove undefined attributes
+    return Object.fromEntries(Object.entries(attrs).filter(([_, value]) => value !== undefined && value.value !== undefined ))
   }
 }

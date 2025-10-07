@@ -1,4 +1,4 @@
-// https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server
+// https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server
 // generated from terraform resource schema
 
 import { Construct } from 'constructs';
@@ -8,7 +8,7 @@ import * as cdktf from 'cdktf';
 
 export interface DataScalewayBaremetalServerConfig extends cdktf.TerraformMetaArguments {
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server#id DataScalewayBaremetalServer#id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server#id DataScalewayBaremetalServer#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
   * If you experience problems setting this value it might not be settable. Please take a look at the provider documentation to ensure it should be settable.
@@ -17,19 +17,25 @@ export interface DataScalewayBaremetalServerConfig extends cdktf.TerraformMetaAr
   /**
   * Name of the server
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server#name DataScalewayBaremetalServer#name}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server#name DataScalewayBaremetalServer#name}
   */
   readonly name?: string;
   /**
+  * The project_id you want to attach the resource to
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server#project_id DataScalewayBaremetalServer#project_id}
+  */
+  readonly projectId?: string;
+  /**
   * The ID of the server
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server#server_id DataScalewayBaremetalServer#server_id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server#server_id DataScalewayBaremetalServer#server_id}
   */
   readonly serverId?: string;
   /**
   * The zone you want to attach the resource to
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server#zone DataScalewayBaremetalServer#zone}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server#zone DataScalewayBaremetalServer#zone}
   */
   readonly zone?: string;
 }
@@ -388,6 +394,86 @@ export class DataScalewayBaremetalServerOptionsList extends cdktf.ComplexList {
     return new DataScalewayBaremetalServerOptionsOutputReference(this.terraformResource, this.terraformAttribute, index, this.wrapsSet);
   }
 }
+export interface DataScalewayBaremetalServerPrivateIps {
+}
+
+export function dataScalewayBaremetalServerPrivateIpsToTerraform(struct?: DataScalewayBaremetalServerPrivateIps): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  return {
+  }
+}
+
+
+export function dataScalewayBaremetalServerPrivateIpsToHclTerraform(struct?: DataScalewayBaremetalServerPrivateIps): any {
+  if (!cdktf.canInspect(struct) || cdktf.Tokenization.isResolvable(struct)) { return struct; }
+  if (cdktf.isComplexElement(struct)) {
+    throw new Error("A complex element was used as configuration, this is not supported: https://cdk.tf/complex-object-as-configuration");
+  }
+  const attrs = {
+  };
+  return attrs;
+}
+
+export class DataScalewayBaremetalServerPrivateIpsOutputReference extends cdktf.ComplexObject {
+  private isEmptyObject = false;
+
+  /**
+  * @param terraformResource The parent resource
+  * @param terraformAttribute The attribute on the parent resource this class is referencing
+  * @param complexObjectIndex the index of this item in the list
+  * @param complexObjectIsFromSet whether the list is wrapping a set (will add tolist() to be able to access an item via an index)
+  */
+  public constructor(terraformResource: cdktf.IInterpolatingParent, terraformAttribute: string, complexObjectIndex: number, complexObjectIsFromSet: boolean) {
+    super(terraformResource, terraformAttribute, complexObjectIsFromSet, complexObjectIndex);
+  }
+
+  public get internalValue(): DataScalewayBaremetalServerPrivateIps | undefined {
+    let hasAnyValues = this.isEmptyObject;
+    const internalValueResult: any = {};
+    return hasAnyValues ? internalValueResult : undefined;
+  }
+
+  public set internalValue(value: DataScalewayBaremetalServerPrivateIps | undefined) {
+    if (value === undefined) {
+      this.isEmptyObject = false;
+    }
+    else {
+      this.isEmptyObject = Object.keys(value).length === 0;
+    }
+  }
+
+  // address - computed: true, optional: false, required: false
+  public get address() {
+    return this.getStringAttribute('address');
+  }
+
+  // id - computed: true, optional: false, required: false
+  public get id() {
+    return this.getStringAttribute('id');
+  }
+}
+
+export class DataScalewayBaremetalServerPrivateIpsList extends cdktf.ComplexList {
+
+  /**
+  * @param terraformResource The parent resource
+  * @param terraformAttribute The attribute on the parent resource this class is referencing
+  * @param wrapsSet whether the list is wrapping a set (will add tolist() to be able to access an item via an index)
+  */
+  constructor(protected terraformResource: cdktf.IInterpolatingParent, protected terraformAttribute: string, protected wrapsSet: boolean) {
+    super(terraformResource, terraformAttribute, wrapsSet)
+  }
+
+  /**
+  * @param index the index of the item to return
+  */
+  public get(index: number): DataScalewayBaremetalServerPrivateIpsOutputReference {
+    return new DataScalewayBaremetalServerPrivateIpsOutputReference(this.terraformResource, this.terraformAttribute, index, this.wrapsSet);
+  }
+}
 export interface DataScalewayBaremetalServerPrivateNetwork {
 }
 
@@ -449,6 +535,16 @@ export class DataScalewayBaremetalServerPrivateNetworkOutputReference extends cd
     return this.getStringAttribute('id');
   }
 
+  // ipam_ip_ids - computed: true, optional: false, required: false
+  public get ipamIpIds() {
+    return this.getListAttribute('ipam_ip_ids');
+  }
+
+  // mapping_id - computed: true, optional: false, required: false
+  public get mappingId() {
+    return this.getStringAttribute('mapping_id');
+  }
+
   // status - computed: true, optional: false, required: false
   public get status() {
     return this.getStringAttribute('status');
@@ -485,7 +581,7 @@ export class DataScalewayBaremetalServerPrivateNetworkList extends cdktf.Complex
 }
 
 /**
-* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server scaleway_baremetal_server}
+* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server scaleway_baremetal_server}
 */
 export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
 
@@ -501,7 +597,7 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
   * Generates CDKTF code for importing a DataScalewayBaremetalServer resource upon running "cdktf plan <stack-name>"
   * @param scope The scope in which to define this construct
   * @param importToId The construct id used in the generated config for the DataScalewayBaremetalServer to import
-  * @param importFromId The id of the existing DataScalewayBaremetalServer that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server#import import section} in the documentation of this resource for the id to use
+  * @param importFromId The id of the existing DataScalewayBaremetalServer that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server#import import section} in the documentation of this resource for the id to use
   * @param provider? Optional instance of the provider where the DataScalewayBaremetalServer to import is found
   */
   public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
@@ -513,7 +609,7 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
   // ===========
 
   /**
-  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/baremetal_server scaleway_baremetal_server} Data Source
+  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/baremetal_server scaleway_baremetal_server} Data Source
   *
   * @param scope The scope in which to define this construct
   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope
@@ -524,8 +620,8 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
       terraformResourceType: 'scaleway_baremetal_server',
       terraformGeneratorMetadata: {
         providerName: 'scaleway',
-        providerVersion: '2.34.0',
-        providerVersionConstraint: '2.34.0'
+        providerVersion: '2.60.3',
+        providerVersionConstraint: '2.60.3'
       },
       provider: config.provider,
       dependsOn: config.dependsOn,
@@ -537,6 +633,7 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
     });
     this._id = config.id;
     this._name = config.name;
+    this._projectId = config.projectId;
     this._serverId = config.serverId;
     this._zone = config.zone;
   }
@@ -651,9 +748,20 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
     return this.getStringAttribute('os_name');
   }
 
+  // partitioning - computed: true, optional: false, required: false
+  public get partitioning() {
+    return this.getStringAttribute('partitioning');
+  }
+
   // password - computed: true, optional: false, required: false
   public get password() {
     return this.getStringAttribute('password');
+  }
+
+  // private_ips - computed: true, optional: false, required: false
+  private _privateIps = new DataScalewayBaremetalServerPrivateIpsList(this, "private_ips", false);
+  public get privateIps() {
+    return this._privateIps;
   }
 
   // private_network - computed: true, optional: false, required: false
@@ -662,9 +770,25 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
     return this._privateNetwork;
   }
 
-  // project_id - computed: true, optional: false, required: false
+  // project_id - computed: false, optional: true, required: false
+  private _projectId?: string; 
   public get projectId() {
     return this.getStringAttribute('project_id');
+  }
+  public set projectId(value: string) {
+    this._projectId = value;
+  }
+  public resetProjectId() {
+    this._projectId = undefined;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get projectIdInput() {
+    return this._projectId;
+  }
+
+  // protected - computed: true, optional: false, required: false
+  public get protected() {
+    return this.getBooleanAttribute('protected');
   }
 
   // reinstall_on_config_changes - computed: true, optional: false, required: false
@@ -737,6 +861,7 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
     return {
       id: cdktf.stringToTerraform(this._id),
       name: cdktf.stringToTerraform(this._name),
+      project_id: cdktf.stringToTerraform(this._projectId),
       server_id: cdktf.stringToTerraform(this._serverId),
       zone: cdktf.stringToTerraform(this._zone),
     };
@@ -752,6 +877,12 @@ export class DataScalewayBaremetalServer extends cdktf.TerraformDataSource {
       },
       name: {
         value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
         isBlock: false,
         type: "simple",
         storageClassType: "string",

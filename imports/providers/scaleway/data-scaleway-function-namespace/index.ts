@@ -1,4 +1,4 @@
-// https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace
+// https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace
 // generated from terraform resource schema
 
 import { Construct } from 'constructs';
@@ -8,7 +8,7 @@ import * as cdktf from 'cdktf';
 
 export interface DataScalewayFunctionNamespaceConfig extends cdktf.TerraformMetaArguments {
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace#id DataScalewayFunctionNamespace#id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace#id DataScalewayFunctionNamespace#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
   * If you experience problems setting this value it might not be settable. Please take a look at the provider documentation to ensure it should be settable.
@@ -17,25 +17,31 @@ export interface DataScalewayFunctionNamespaceConfig extends cdktf.TerraformMeta
   /**
   * The name of the function namespace
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace#name DataScalewayFunctionNamespace#name}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace#name DataScalewayFunctionNamespace#name}
   */
   readonly name?: string;
   /**
   * The ID of the function namespace
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace#namespace_id DataScalewayFunctionNamespace#namespace_id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace#namespace_id DataScalewayFunctionNamespace#namespace_id}
   */
   readonly namespaceId?: string;
   /**
+  * The project_id you want to attach the resource to
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace#project_id DataScalewayFunctionNamespace#project_id}
+  */
+  readonly projectId?: string;
+  /**
   * The region you want to attach the resource to
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace#region DataScalewayFunctionNamespace#region}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace#region DataScalewayFunctionNamespace#region}
   */
   readonly region?: string;
 }
 
 /**
-* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace scaleway_function_namespace}
+* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace scaleway_function_namespace}
 */
 export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
 
@@ -51,7 +57,7 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
   * Generates CDKTF code for importing a DataScalewayFunctionNamespace resource upon running "cdktf plan <stack-name>"
   * @param scope The scope in which to define this construct
   * @param importToId The construct id used in the generated config for the DataScalewayFunctionNamespace to import
-  * @param importFromId The id of the existing DataScalewayFunctionNamespace that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace#import import section} in the documentation of this resource for the id to use
+  * @param importFromId The id of the existing DataScalewayFunctionNamespace that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace#import import section} in the documentation of this resource for the id to use
   * @param provider? Optional instance of the provider where the DataScalewayFunctionNamespace to import is found
   */
   public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
@@ -63,7 +69,7 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
   // ===========
 
   /**
-  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/function_namespace scaleway_function_namespace} Data Source
+  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/function_namespace scaleway_function_namespace} Data Source
   *
   * @param scope The scope in which to define this construct
   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope
@@ -74,8 +80,8 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
       terraformResourceType: 'scaleway_function_namespace',
       terraformGeneratorMetadata: {
         providerName: 'scaleway',
-        providerVersion: '2.34.0',
-        providerVersionConstraint: '2.34.0'
+        providerVersion: '2.60.3',
+        providerVersionConstraint: '2.60.3'
       },
       provider: config.provider,
       dependsOn: config.dependsOn,
@@ -88,12 +94,18 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
     this._id = config.id;
     this._name = config.name;
     this._namespaceId = config.namespaceId;
+    this._projectId = config.projectId;
     this._region = config.region;
   }
 
   // ==========
   // ATTRIBUTES
   // ==========
+
+  // activate_vpc_integration - computed: true, optional: false, required: false
+  public get activateVpcIntegration() {
+    return this.getBooleanAttribute('activate_vpc_integration');
+  }
 
   // description - computed: true, optional: false, required: false
   public get description() {
@@ -159,9 +171,20 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
     return this.getStringAttribute('organization_id');
   }
 
-  // project_id - computed: true, optional: false, required: false
+  // project_id - computed: false, optional: true, required: false
+  private _projectId?: string; 
   public get projectId() {
     return this.getStringAttribute('project_id');
+  }
+  public set projectId(value: string) {
+    this._projectId = value;
+  }
+  public resetProjectId() {
+    this._projectId = undefined;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get projectIdInput() {
+    return this._projectId;
   }
 
   // region - computed: false, optional: true, required: false
@@ -196,6 +219,11 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
     return this._secretEnvironmentVariables;
   }
 
+  // tags - computed: true, optional: false, required: false
+  public get tags() {
+    return this.getListAttribute('tags');
+  }
+
   // =========
   // SYNTHESIS
   // =========
@@ -205,6 +233,7 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
       id: cdktf.stringToTerraform(this._id),
       name: cdktf.stringToTerraform(this._name),
       namespace_id: cdktf.stringToTerraform(this._namespaceId),
+      project_id: cdktf.stringToTerraform(this._projectId),
       region: cdktf.stringToTerraform(this._region),
     };
   }
@@ -225,6 +254,12 @@ export class DataScalewayFunctionNamespace extends cdktf.TerraformDataSource {
       },
       namespace_id: {
         value: cdktf.stringToHclTerraform(this._namespaceId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
         isBlock: false,
         type: "simple",
         storageClassType: "string",

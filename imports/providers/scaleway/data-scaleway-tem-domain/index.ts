@@ -1,4 +1,4 @@
-// https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain
+// https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain
 // generated from terraform resource schema
 
 import { Construct } from 'constructs';
@@ -10,11 +10,11 @@ export interface DataScalewayTemDomainConfig extends cdktf.TerraformMetaArgument
   /**
   * The ID of the tem domain
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain#domain_id DataScalewayTemDomain#domain_id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain#domain_id DataScalewayTemDomain#domain_id}
   */
   readonly domainId?: string;
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain#id DataScalewayTemDomain#id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain#id DataScalewayTemDomain#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
   * If you experience problems setting this value it might not be settable. Please take a look at the provider documentation to ensure it should be settable.
@@ -23,13 +23,19 @@ export interface DataScalewayTemDomainConfig extends cdktf.TerraformMetaArgument
   /**
   * The domain name used when sending emails
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain#name DataScalewayTemDomain#name}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain#name DataScalewayTemDomain#name}
   */
   readonly name?: string;
   /**
+  * The project_id you want to attach the resource to
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain#project_id DataScalewayTemDomain#project_id}
+  */
+  readonly projectId?: string;
+  /**
   * The region you want to attach the resource to
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain#region DataScalewayTemDomain#region}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain#region DataScalewayTemDomain#region}
   */
   readonly region?: string;
 }
@@ -130,7 +136,7 @@ export class DataScalewayTemDomainReputationList extends cdktf.ComplexList {
 }
 
 /**
-* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain scaleway_tem_domain}
+* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain scaleway_tem_domain}
 */
 export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
 
@@ -146,7 +152,7 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
   * Generates CDKTF code for importing a DataScalewayTemDomain resource upon running "cdktf plan <stack-name>"
   * @param scope The scope in which to define this construct
   * @param importToId The construct id used in the generated config for the DataScalewayTemDomain to import
-  * @param importFromId The id of the existing DataScalewayTemDomain that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain#import import section} in the documentation of this resource for the id to use
+  * @param importFromId The id of the existing DataScalewayTemDomain that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain#import import section} in the documentation of this resource for the id to use
   * @param provider? Optional instance of the provider where the DataScalewayTemDomain to import is found
   */
   public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
@@ -158,7 +164,7 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
   // ===========
 
   /**
-  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/tem_domain scaleway_tem_domain} Data Source
+  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/tem_domain scaleway_tem_domain} Data Source
   *
   * @param scope The scope in which to define this construct
   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope
@@ -169,8 +175,8 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
       terraformResourceType: 'scaleway_tem_domain',
       terraformGeneratorMetadata: {
         providerName: 'scaleway',
-        providerVersion: '2.34.0',
-        providerVersionConstraint: '2.34.0'
+        providerVersion: '2.60.3',
+        providerVersionConstraint: '2.60.3'
       },
       provider: config.provider,
       dependsOn: config.dependsOn,
@@ -183,6 +189,7 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
     this._domainId = config.domainId;
     this._id = config.id;
     this._name = config.name;
+    this._projectId = config.projectId;
     this._region = config.region;
   }
 
@@ -195,6 +202,11 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
     return this.getBooleanAttribute('accept_tos');
   }
 
+  // autoconfig - computed: true, optional: false, required: false
+  public get autoconfig() {
+    return this.getBooleanAttribute('autoconfig');
+  }
+
   // created_at - computed: true, optional: false, required: false
   public get createdAt() {
     return this.getStringAttribute('created_at');
@@ -203,6 +215,16 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
   // dkim_config - computed: true, optional: false, required: false
   public get dkimConfig() {
     return this.getStringAttribute('dkim_config');
+  }
+
+  // dmarc_config - computed: true, optional: false, required: false
+  public get dmarcConfig() {
+    return this.getStringAttribute('dmarc_config');
+  }
+
+  // dmarc_name - computed: true, optional: false, required: false
+  public get dmarcName() {
+    return this.getStringAttribute('dmarc_name');
   }
 
   // domain_id - computed: false, optional: true, required: false
@@ -273,9 +295,20 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
     return this.getStringAttribute('next_check_at');
   }
 
-  // project_id - computed: true, optional: false, required: false
+  // project_id - computed: false, optional: true, required: false
+  private _projectId?: string; 
   public get projectId() {
     return this.getStringAttribute('project_id');
+  }
+  public set projectId(value: string) {
+    this._projectId = value;
+  }
+  public resetProjectId() {
+    this._projectId = undefined;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get projectIdInput() {
+    return this._projectId;
   }
 
   // region - computed: false, optional: true, required: false
@@ -325,6 +358,11 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
     return this.getNumberAttribute('smtp_port_unsecure');
   }
 
+  // smtps_auth_user - computed: true, optional: false, required: false
+  public get smtpsAuthUser() {
+    return this.getStringAttribute('smtps_auth_user');
+  }
+
   // smtps_port - computed: true, optional: false, required: false
   public get smtpsPort() {
     return this.getNumberAttribute('smtps_port');
@@ -354,6 +392,7 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
       domain_id: cdktf.stringToTerraform(this._domainId),
       id: cdktf.stringToTerraform(this._id),
       name: cdktf.stringToTerraform(this._name),
+      project_id: cdktf.stringToTerraform(this._projectId),
       region: cdktf.stringToTerraform(this._region),
     };
   }
@@ -374,6 +413,12 @@ export class DataScalewayTemDomain extends cdktf.TerraformDataSource {
       },
       name: {
         value: cdktf.stringToHclTerraform(this._name),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
         isBlock: false,
         type: "simple",
         storageClassType: "string",

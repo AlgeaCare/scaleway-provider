@@ -1,4 +1,4 @@
-// https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip
+// https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip
 // generated from terraform resource schema
 
 import { Construct } from 'constructs';
@@ -8,7 +8,7 @@ import * as cdktf from 'cdktf';
 
 export interface DataScalewayLbIpConfig extends cdktf.TerraformMetaArguments {
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip#id DataScalewayLbIp#id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip#id DataScalewayLbIp#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
   * If you experience problems setting this value it might not be settable. Please take a look at the provider documentation to ensure it should be settable.
@@ -17,19 +17,31 @@ export interface DataScalewayLbIpConfig extends cdktf.TerraformMetaArguments {
   /**
   * The IP address
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip#ip_address DataScalewayLbIp#ip_address}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip#ip_address DataScalewayLbIp#ip_address}
   */
   readonly ipAddress?: string;
   /**
   * The ID of the IP address
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip#ip_id DataScalewayLbIp#ip_id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip#ip_id DataScalewayLbIp#ip_id}
   */
   readonly ipId?: string;
+  /**
+  * The project_id you want to attach the resource to
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip#project_id DataScalewayLbIp#project_id}
+  */
+  readonly projectId?: string;
+  /**
+  * The zone you want to attach the resource to
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip#zone DataScalewayLbIp#zone}
+  */
+  readonly zone?: string;
 }
 
 /**
-* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip scaleway_lb_ip}
+* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip scaleway_lb_ip}
 */
 export class DataScalewayLbIp extends cdktf.TerraformDataSource {
 
@@ -45,7 +57,7 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
   * Generates CDKTF code for importing a DataScalewayLbIp resource upon running "cdktf plan <stack-name>"
   * @param scope The scope in which to define this construct
   * @param importToId The construct id used in the generated config for the DataScalewayLbIp to import
-  * @param importFromId The id of the existing DataScalewayLbIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip#import import section} in the documentation of this resource for the id to use
+  * @param importFromId The id of the existing DataScalewayLbIp that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip#import import section} in the documentation of this resource for the id to use
   * @param provider? Optional instance of the provider where the DataScalewayLbIp to import is found
   */
   public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
@@ -57,7 +69,7 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
   // ===========
 
   /**
-  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.34.0/docs/data-sources/lb_ip scaleway_lb_ip} Data Source
+  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/data-sources/lb_ip scaleway_lb_ip} Data Source
   *
   * @param scope The scope in which to define this construct
   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope
@@ -68,8 +80,8 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
       terraformResourceType: 'scaleway_lb_ip',
       terraformGeneratorMetadata: {
         providerName: 'scaleway',
-        providerVersion: '2.34.0',
-        providerVersionConstraint: '2.34.0'
+        providerVersion: '2.60.3',
+        providerVersionConstraint: '2.60.3'
       },
       provider: config.provider,
       dependsOn: config.dependsOn,
@@ -82,6 +94,8 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
     this._id = config.id;
     this._ipAddress = config.ipAddress;
     this._ipId = config.ipId;
+    this._projectId = config.projectId;
+    this._zone = config.zone;
   }
 
   // ==========
@@ -136,6 +150,11 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
     return this._ipId;
   }
 
+  // is_ipv6 - computed: true, optional: false, required: false
+  public get isIpv6() {
+    return this.getBooleanAttribute('is_ipv6');
+  }
+
   // lb_id - computed: true, optional: false, required: false
   public get lbId() {
     return this.getStringAttribute('lb_id');
@@ -146,9 +165,20 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
     return this.getStringAttribute('organization_id');
   }
 
-  // project_id - computed: true, optional: false, required: false
+  // project_id - computed: false, optional: true, required: false
+  private _projectId?: string; 
   public get projectId() {
     return this.getStringAttribute('project_id');
+  }
+  public set projectId(value: string) {
+    this._projectId = value;
+  }
+  public resetProjectId() {
+    this._projectId = undefined;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get projectIdInput() {
+    return this._projectId;
   }
 
   // region - computed: true, optional: false, required: false
@@ -161,9 +191,25 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
     return this.getStringAttribute('reverse');
   }
 
-  // zone - computed: true, optional: false, required: false
+  // tags - computed: true, optional: false, required: false
+  public get tags() {
+    return this.getListAttribute('tags');
+  }
+
+  // zone - computed: false, optional: true, required: false
+  private _zone?: string; 
   public get zone() {
     return this.getStringAttribute('zone');
+  }
+  public set zone(value: string) {
+    this._zone = value;
+  }
+  public resetZone() {
+    this._zone = undefined;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get zoneInput() {
+    return this._zone;
   }
 
   // =========
@@ -175,6 +221,8 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
       id: cdktf.stringToTerraform(this._id),
       ip_address: cdktf.stringToTerraform(this._ipAddress),
       ip_id: cdktf.stringToTerraform(this._ipId),
+      project_id: cdktf.stringToTerraform(this._projectId),
+      zone: cdktf.stringToTerraform(this._zone),
     };
   }
 
@@ -194,6 +242,18 @@ export class DataScalewayLbIp extends cdktf.TerraformDataSource {
       },
       ip_id: {
         value: cdktf.stringToHclTerraform(this._ipId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      project_id: {
+        value: cdktf.stringToHclTerraform(this._projectId),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      zone: {
+        value: cdktf.stringToHclTerraform(this._zone),
         isBlock: false,
         type: "simple",
         storageClassType: "string",

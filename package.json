@@ -1,14 +1,13 @@
 {
   "name": "@algea_care/scaleway-provider",
   "description": "Scaleway provider for CDK for Terraform",
-  "version": "2.60.3",
+  "version": "2.60.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "license": "PRIVATE",
-  "private": true,
   "engineStrict": true,
   "volta": {
     "node": "18.0.0"
@@ -22,7 +21,7 @@
     "node": ">= 18"
   },
   "dependencies": {
-    "cdktf": "^0.17.0",
+    "cdktf": "^0.20.12",
     "constructs": "^10.1.128"
   },
   "devDependencies": {

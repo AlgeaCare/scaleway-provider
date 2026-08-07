@@ -3,7 +3,7 @@
   "app": "npx ts-node main.ts",
   "projectId": "3327ae90-3a40-4406-b66f-8d458c6cfa2f",
   "sendCrashReports": "true",
-  "terraformProviders": ["scaleway/scaleway@2.60.3"],
+  "terraformProviders": ["scaleway/scaleway@2.80.0"],
   "codeMakerOutput": "imports",
   "terraformModules": [],
   "context": {

@@ -1,3 +1,3 @@
 # `scaleway_rdb_database_backup`
 
-Refer to the Terraform Registry for docs: [`scaleway_rdb_database_backup`](https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/rdb_database_backup).
+Refer to the Terraform Registry for docs: [`scaleway_rdb_database_backup`](https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/rdb_database_backup).

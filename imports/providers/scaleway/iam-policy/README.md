@@ -1,3 +1,3 @@
 # `scaleway_iam_policy`
 
-Refer to the Terraform Registry for docs: [`scaleway_iam_policy`](https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/iam_policy).
+Refer to the Terraform Registry for docs: [`scaleway_iam_policy`](https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/iam_policy).

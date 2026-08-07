@@ -1,4 +1,4 @@
-// https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model
+// https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model
 // generated from terraform resource schema
 
 import { Construct } from 'constructs';
@@ -8,7 +8,7 @@ import * as cdktf from 'cdktf';
 
 export interface InferenceModelConfig extends cdktf.TerraformMetaArguments {
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#id InferenceModel#id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#id InferenceModel#id}
   *
   * Please be aware that the id field is automatically added to all resources in Terraform providers using a Terraform provider SDK version below 2.
   * If you experience problems setting this value it might not be settable. Please take a look at the provider documentation to ensure it should be settable.
@@ -17,37 +17,49 @@ export interface InferenceModelConfig extends cdktf.TerraformMetaArguments {
   /**
   * The name of the model
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#name InferenceModel#name}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#name InferenceModel#name}
   */
   readonly name: string;
   /**
   * The project_id you want to attach the resource to
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#project_id InferenceModel#project_id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#project_id InferenceModel#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#region InferenceModel#region}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#region InferenceModel#region}
   */
   readonly region?: string;
   /**
   * A token or credential used to authenticate when pulling the model from a private or gated source. For example, a Hugging Face access token with read permissions.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#secret InferenceModel#secret}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#secret InferenceModel#secret}
   */
   readonly secret?: string;
   /**
+  * A token or credential used to authenticate when pulling the model from a private or gated source in [write-only](https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/guides/using-write-only-arguments) mode. For example, a Hugging Face access token with read permissions. `secret_wo` will not be set in the Terraform state. Only one of `secret` or `secret_wo` should be specified.
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#secret_wo InferenceModel#secret_wo}
+  */
+  readonly secretWo?: string;
+  /**
+  * The version of the [write-only](https://registry.terraform.io/providers/scaleway/scaleway/latest/docs/guides/using-write-only-arguments) secret. To update the `secret_wo`, you must also update the `secret_wo_version`.
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#secret_wo_version InferenceModel#secret_wo_version}
+  */
+  readonly secretWoVersion?: number;
+  /**
   * The HTTPS URL to the model archive or repository. Typically, this is a Hugging Face repository URL (e.g., `https://huggingface.co/your-org/your-model`). The URL must be publicly accessible or require a valid secret for authentication.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#url InferenceModel#url}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#url InferenceModel#url}
   */
   readonly url: string;
   /**
   * timeouts block
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#timeouts InferenceModel#timeouts}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#timeouts InferenceModel#timeouts}
   */
   readonly timeouts?: InferenceModelTimeouts;
 }
@@ -219,15 +231,15 @@ export class InferenceModelNodesSupportList extends cdktf.ComplexList {
 }
 export interface InferenceModelTimeouts {
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#create InferenceModel#create}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#create InferenceModel#create}
   */
   readonly create?: string;
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#default InferenceModel#default}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#default InferenceModel#default}
   */
   readonly default?: string;
   /**
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#delete InferenceModel#delete}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#delete InferenceModel#delete}
   */
   readonly delete?: string;
 }
@@ -379,7 +391,7 @@ export class InferenceModelTimeoutsOutputReference extends cdktf.ComplexObject {
 }
 
 /**
-* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model scaleway_inference_model}
+* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model scaleway_inference_model}
 */
 export class InferenceModel extends cdktf.TerraformResource {
 
@@ -395,7 +407,7 @@ export class InferenceModel extends cdktf.TerraformResource {
   * Generates CDKTF code for importing a InferenceModel resource upon running "cdktf plan <stack-name>"
   * @param scope The scope in which to define this construct
   * @param importToId The construct id used in the generated config for the InferenceModel to import
-  * @param importFromId The id of the existing InferenceModel that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model#import import section} in the documentation of this resource for the id to use
+  * @param importFromId The id of the existing InferenceModel that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model#import import section} in the documentation of this resource for the id to use
   * @param provider? Optional instance of the provider where the InferenceModel to import is found
   */
   public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
@@ -407,7 +419,7 @@ export class InferenceModel extends cdktf.TerraformResource {
   // ===========
 
   /**
-  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/inference_model scaleway_inference_model} Resource
+  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.80.0/docs/resources/inference_model scaleway_inference_model} Resource
   *
   * @param scope The scope in which to define this construct
   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope
@@ -418,8 +430,8 @@ export class InferenceModel extends cdktf.TerraformResource {
       terraformResourceType: 'scaleway_inference_model',
       terraformGeneratorMetadata: {
         providerName: 'scaleway',
-        providerVersion: '2.60.3',
-        providerVersionConstraint: '2.60.3'
+        providerVersion: '2.80.0',
+        providerVersionConstraint: '2.80.0'
       },
       provider: config.provider,
       dependsOn: config.dependsOn,
@@ -434,6 +446,8 @@ export class InferenceModel extends cdktf.TerraformResource {
     this._projectId = config.projectId;
     this._region = config.region;
     this._secret = config.secret;
+    this._secretWo = config.secretWo;
+    this._secretWoVersion = config.secretWoVersion;
     this._url = config.url;
     this._timeouts.internalValue = config.timeouts;
   }
@@ -513,7 +527,7 @@ export class InferenceModel extends cdktf.TerraformResource {
     return this._projectId;
   }
 
-  // region - computed: true, optional: true, required: false
+  // region - computed: false, optional: true, required: false
   private _region?: string; 
   public get region() {
     return this.getStringAttribute('region');
@@ -543,6 +557,38 @@ export class InferenceModel extends cdktf.TerraformResource {
   // Temporarily expose input value. Use with caution.
   public get secretInput() {
     return this._secret;
+  }
+
+  // secret_wo - computed: false, optional: true, required: false
+  private _secretWo?: string; 
+  public get secretWo() {
+    return this.getStringAttribute('secret_wo');
+  }
+  public set secretWo(value: string) {
+    this._secretWo = value;
+  }
+  public resetSecretWo() {
+    this._secretWo = undefined;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get secretWoInput() {
+    return this._secretWo;
+  }
+
+  // secret_wo_version - computed: false, optional: true, required: false
+  private _secretWoVersion?: number; 
+  public get secretWoVersion() {
+    return this.getNumberAttribute('secret_wo_version');
+  }
+  public set secretWoVersion(value: number) {
+    this._secretWoVersion = value;
+  }
+  public resetSecretWoVersion() {
+    this._secretWoVersion = undefined;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get secretWoVersionInput() {
+    return this._secretWoVersion;
   }
 
   // size_bytes - computed: true, optional: false, required: false
@@ -605,6 +651,8 @@ export class InferenceModel extends cdktf.TerraformResource {
       project_id: cdktf.stringToTerraform(this._projectId),
       region: cdktf.stringToTerraform(this._region),
       secret: cdktf.stringToTerraform(this._secret),
+      secret_wo: cdktf.stringToTerraform(this._secretWo),
+      secret_wo_version: cdktf.numberToTerraform(this._secretWoVersion),
       url: cdktf.stringToTerraform(this._url),
       timeouts: inferenceModelTimeoutsToTerraform(this._timeouts.internalValue),
     };
@@ -641,6 +689,18 @@ export class InferenceModel extends cdktf.TerraformResource {
         isBlock: false,
         type: "simple",
         storageClassType: "string",
+      },
+      secret_wo: {
+        value: cdktf.stringToHclTerraform(this._secretWo),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
+      secret_wo_version: {
+        value: cdktf.numberToHclTerraform(this._secretWoVersion),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "number",
       },
       url: {
         value: cdktf.stringToHclTerraform(this._url),

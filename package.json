@@ -1,7 +1,7 @@
 {
   "name": "@algea_care/scaleway-provider",
   "description": "Scaleway provider for CDK for Terraform",
-  "version": "2.60.4",
+  "version": "2.82.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

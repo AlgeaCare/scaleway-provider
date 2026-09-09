@@ -1,4 +1,4 @@
-// https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key
+// https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key
 // generated from terraform resource schema
 
 import { Construct } from 'constructs';
@@ -8,71 +8,77 @@ import * as cdktf from 'cdktf';
 
 export interface KeyManagerKeyConfig extends cdktf.TerraformMetaArguments {
   /**
+  * Algorithm to use for the key. The valid algorithms depend on the usage type.
+  *
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#algorithm KeyManagerKey#algorithm}
+  */
+  readonly algorithm: string;
+  /**
   * Description of the key.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#description KeyManagerKey#description}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#description KeyManagerKey#description}
   */
   readonly description?: string;
   /**
   * Name of the key.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#name KeyManagerKey#name}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#name KeyManagerKey#name}
   */
   readonly name?: string;
   /**
   * Origin of the key material. Possible values: scaleway_kms (Key Manager generates the key material), external (key material comes from an external source).
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#origin KeyManagerKey#origin}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#origin KeyManagerKey#origin}
   */
   readonly origin?: string;
   /**
   * The project_id you want to attach the resource to
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#project_id KeyManagerKey#project_id}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#project_id KeyManagerKey#project_id}
   */
   readonly projectId?: string;
   /**
   * The region you want to attach the resource to
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#region KeyManagerKey#region}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#region KeyManagerKey#region}
   */
   readonly region?: string;
   /**
   * List of the key's tags.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#tags KeyManagerKey#tags}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#tags KeyManagerKey#tags}
   */
   readonly tags?: string[];
   /**
   * If true, the key is not protected against deletion.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#unprotected KeyManagerKey#unprotected}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#unprotected KeyManagerKey#unprotected}
   */
   readonly unprotected?: boolean | cdktf.IResolvable;
   /**
-  * Key usage. Keys with a usage set to 'symmetric_encryption' can encrypt and decrypt data using the AES-256-GCM key algorithm. Possible values: symmetric_encryption, asymmetric_encryption, asymmetric_signing.
+  * Key usage type. Possible values: symmetric_encryption, asymmetric_encryption, asymmetric_signing.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#usage KeyManagerKey#usage}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#usage KeyManagerKey#usage}
   */
   readonly usage: string;
   /**
   * rotation_policy block
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#rotation_policy KeyManagerKey#rotation_policy}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#rotation_policy KeyManagerKey#rotation_policy}
   */
   readonly rotationPolicy?: KeyManagerKeyRotationPolicy;
 }
 export interface KeyManagerKeyRotationPolicy {
   /**
-  * Timestamp indicating the next scheduled rotation.
+  * Timestamp indicating the next scheduled rotation. Computed from rotation_period if not set.
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#next_rotation_at KeyManagerKey#next_rotation_at}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#next_rotation_at KeyManagerKey#next_rotation_at}
   */
   readonly nextRotationAt?: string;
   /**
   * Time interval between two key rotations. The minimum duration is 24 hours and the maximum duration is 1 year (876000 hours).
   *
-  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#rotation_period KeyManagerKey#rotation_period}
+  * Docs at Terraform Registry: {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#rotation_period KeyManagerKey#rotation_period}
   */
   readonly rotationPeriod: string;
 }
@@ -151,7 +157,7 @@ export class KeyManagerKeyRotationPolicyOutputReference extends cdktf.ComplexObj
     }
   }
 
-  // next_rotation_at - computed: false, optional: true, required: false
+  // next_rotation_at - computed: true, optional: true, required: false
   private _nextRotationAt?: string; 
   public get nextRotationAt() {
     return this.getStringAttribute('next_rotation_at');
@@ -182,7 +188,7 @@ export class KeyManagerKeyRotationPolicyOutputReference extends cdktf.ComplexObj
 }
 
 /**
-* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key scaleway_key_manager_key}
+* Represents a {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key scaleway_key_manager_key}
 */
 export class KeyManagerKey extends cdktf.TerraformResource {
 
@@ -198,7 +204,7 @@ export class KeyManagerKey extends cdktf.TerraformResource {
   * Generates CDKTF code for importing a KeyManagerKey resource upon running "cdktf plan <stack-name>"
   * @param scope The scope in which to define this construct
   * @param importToId The construct id used in the generated config for the KeyManagerKey to import
-  * @param importFromId The id of the existing KeyManagerKey that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key#import import section} in the documentation of this resource for the id to use
+  * @param importFromId The id of the existing KeyManagerKey that should be imported. Refer to the {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key#import import section} in the documentation of this resource for the id to use
   * @param provider? Optional instance of the provider where the KeyManagerKey to import is found
   */
   public static generateConfigForImport(scope: Construct, importToId: string, importFromId: string, provider?: cdktf.TerraformProvider) {
@@ -210,7 +216,7 @@ export class KeyManagerKey extends cdktf.TerraformResource {
   // ===========
 
   /**
-  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.60.3/docs/resources/key_manager_key scaleway_key_manager_key} Resource
+  * Create a new {@link https://registry.terraform.io/providers/scaleway/scaleway/2.82.0/docs/resources/key_manager_key scaleway_key_manager_key} Resource
   *
   * @param scope The scope in which to define this construct
   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope
@@ -221,8 +227,8 @@ export class KeyManagerKey extends cdktf.TerraformResource {
       terraformResourceType: 'scaleway_key_manager_key',
       terraformGeneratorMetadata: {
         providerName: 'scaleway',
-        providerVersion: '2.60.3',
-        providerVersionConstraint: '2.60.3'
+        providerVersion: '2.82.0',
+        providerVersionConstraint: '2.82.0'
       },
       provider: config.provider,
       dependsOn: config.dependsOn,
@@ -232,6 +238,7 @@ export class KeyManagerKey extends cdktf.TerraformResource {
       connection: config.connection,
       forEach: config.forEach
     });
+    this._algorithm = config.algorithm;
     this._description = config.description;
     this._name = config.name;
     this._origin = config.origin;
@@ -246,6 +253,19 @@ export class KeyManagerKey extends cdktf.TerraformResource {
   // ==========
   // ATTRIBUTES
   // ==========
+
+  // algorithm - computed: false, optional: false, required: true
+  private _algorithm?: string; 
+  public get algorithm() {
+    return this.getStringAttribute('algorithm');
+  }
+  public set algorithm(value: string) {
+    this._algorithm = value;
+  }
+  // Temporarily expose input value. Use with caution.
+  public get algorithmInput() {
+    return this._algorithm;
+  }
 
   // created_at - computed: true, optional: false, required: false
   public get createdAt() {
@@ -357,6 +377,11 @@ export class KeyManagerKey extends cdktf.TerraformResource {
     return this.getNumberAttribute('rotation_count');
   }
 
+  // srn - computed: true, optional: false, required: false
+  public get srn() {
+    return this.getStringAttribute('srn');
+  }
+
   // state - computed: true, optional: false, required: false
   public get state() {
     return this.getStringAttribute('state');
@@ -434,6 +459,7 @@ export class KeyManagerKey extends cdktf.TerraformResource {
 
   protected synthesizeAttributes(): { [name: string]: any } {
     return {
+      algorithm: cdktf.stringToTerraform(this._algorithm),
       description: cdktf.stringToTerraform(this._description),
       name: cdktf.stringToTerraform(this._name),
       origin: cdktf.stringToTerraform(this._origin),
@@ -448,6 +474,12 @@ export class KeyManagerKey extends cdktf.TerraformResource {
 
   protected synthesizeHclAttributes(): { [name: string]: any } {
     const attrs = {
+      algorithm: {
+        value: cdktf.stringToHclTerraform(this._algorithm),
+        isBlock: false,
+        type: "simple",
+        storageClassType: "string",
+      },
       description: {
         value: cdktf.stringToHclTerraform(this._description),
         isBlock: false,
